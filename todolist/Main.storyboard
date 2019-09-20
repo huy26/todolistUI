@@ -505,7 +505,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Add board"/>
                                 <connections>
-                                    <action selector="onAddButton:" destination="LR6-ks-WaE" eventType="touchUpInside" id="g4r-8l-02L"/>
+                                    <action selector="onAddButton:" destination="LR6-ks-WaE" eventType="touchUpInside" id="KEa-O0-BXe"/>
                                 </connections>
                             </button>
                         </subviews>

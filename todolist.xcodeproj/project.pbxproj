@@ -9,20 +9,22 @@
 /* Begin PBXBuildFile section */
 		040891DA232254E50025EE37 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040891D9232254E50025EE37 /* AppDelegate.swift */; };
 		040891DC232254E50025EE37 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040891DB232254E50025EE37 /* ViewController.swift */; };
-		040891DF232254E50025EE37 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 040891DD232254E50025EE37 /* Main.storyboard */; };
 		040891E1232254E60025EE37 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 040891E0232254E60025EE37 /* Assets.xcassets */; };
 		040891E4232254E60025EE37 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 040891E2232254E60025EE37 /* LaunchScreen.storyboard */; };
 		040891EC23225F1D0025EE37 /* SignupViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040891EB23225F1D0025EE37 /* SignupViewViewController.swift */; };
+		042E51F92334C71C00030E5E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 042E51F82334C71B00030E5E /* Main.storyboard */; };
+		042E51FF2334C76E00030E5E /* BoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042E51FA2334C76200030E5E /* BoardViewController.swift */; };
+		042E52002334C76E00030E5E /* StatusCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042E51FB2334C76800030E5E /* StatusCollectionViewCell.swift */; };
+		042E52012334C76E00030E5E /* BoardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042E51FC2334C76A00030E5E /* BoardCollectionViewCell.swift */; };
+		042E52032334C76E00030E5E /* BoardCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042E51FE2334C76E00030E5E /* BoardCollectionViewController.swift */; };
+		042E52072334C9E800030E5E /* checkCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042E52042334C9E400030E5E /* checkCollectionViewCell.swift */; };
+		042E52082334C9E800030E5E /* DashboardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042E52052334C9E600030E5E /* DashboardCollectionViewCell.swift */; };
+		042E52092334C9E800030E5E /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042E52062334C9E800030E5E /* DashboardViewController.swift */; };
 		0438E26E2333780E00BCBEC8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0438E26D2333780D00BCBEC8 /* GoogleService-Info.plist */; };
 		043B6BC52331EF0700F264E8 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043B6BC42331EF0700F264E8 /* Task.swift */; };
-		048B549E2326039F00F4E4FC /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048B549D2326039F00F4E4FC /* DashboardViewController.swift */; };
-		048B54A0232604FE00F4E4FC /* checkCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048B549F232604FE00F4E4FC /* checkCollectionViewCell.swift */; };
 		048B54A4232611B400F4E4FC /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048B54A3232611B400F4E4FC /* TableViewCell.swift */; };
-		048C8E972327B4EF00986F0D /* DashboardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048C8E962327B4EF00986F0D /* DashboardCollectionViewCell.swift */; };
 		0491CBD32330D9AC00040E51 /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0491CBD22330D9AC00040E51 /* ForgotPasswordViewController.swift */; };
-		0498DBEB2328ED51005C5666 /* BoardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0498DBEA2328ED51005C5666 /* BoardCollectionViewCell.swift */; };
 		0498DBED2328ED70005C5666 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0498DBEC2328ED70005C5666 /* Board.swift */; };
-		0498DBEF2328ED95005C5666 /* BoardCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0498DBEE2328ED94005C5666 /* BoardCollectionViewController.swift */; };
 		04FA8FCF232F720C00EFEA29 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FA8FCE232F720C00EFEA29 /* User.swift */; };
 		04FA8FD1232F7E1E00EFEA29 /* ApiRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FA8FD0232F7E1E00EFEA29 /* ApiRequest.swift */; };
 		19487009F44A812F71221642 /* Pods_todolist.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCD6641ED4628F3A1B0A7E29 /* Pods_todolist.framework */; };
@@ -32,21 +34,23 @@
 		040891D6232254E50025EE37 /* todolist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = todolist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		040891D9232254E50025EE37 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		040891DB232254E50025EE37 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		040891DE232254E50025EE37 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		040891E0232254E60025EE37 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		040891E3232254E60025EE37 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		040891E5232254E60025EE37 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		040891EB23225F1D0025EE37 /* SignupViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewViewController.swift; sourceTree = "<group>"; };
+		042E51F82334C71B00030E5E /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		042E51FA2334C76200030E5E /* BoardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BoardViewController.swift; path = "../../../todolist file/todolist/BoardCollectionView/BoardViewController.swift"; sourceTree = "<group>"; };
+		042E51FB2334C76800030E5E /* StatusCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusCollectionViewCell.swift; sourceTree = "<group>"; };
+		042E51FC2334C76A00030E5E /* BoardCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardCollectionViewCell.swift; sourceTree = "<group>"; };
+		042E51FE2334C76E00030E5E /* BoardCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardCollectionViewController.swift; sourceTree = "<group>"; };
+		042E52042334C9E400030E5E /* checkCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = checkCollectionViewCell.swift; sourceTree = "<group>"; };
+		042E52052334C9E600030E5E /* DashboardCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardCollectionViewCell.swift; sourceTree = "<group>"; };
+		042E52062334C9E800030E5E /* DashboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardViewController.swift; sourceTree = "<group>"; };
 		0438E26D2333780D00BCBEC8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		043B6BC42331EF0700F264E8 /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
-		048B549D2326039F00F4E4FC /* DashboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewController.swift; sourceTree = "<group>"; };
-		048B549F232604FE00F4E4FC /* checkCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = checkCollectionViewCell.swift; sourceTree = "<group>"; };
 		048B54A3232611B400F4E4FC /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
-		048C8E962327B4EF00986F0D /* DashboardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardCollectionViewCell.swift; sourceTree = "<group>"; };
 		0491CBD22330D9AC00040E51 /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
-		0498DBEA2328ED51005C5666 /* BoardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardCollectionViewCell.swift; sourceTree = "<group>"; };
 		0498DBEC2328ED70005C5666 /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
-		0498DBEE2328ED94005C5666 /* BoardCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardCollectionViewController.swift; sourceTree = "<group>"; };
 		04FA8FCE232F720C00EFEA29 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		04FA8FD0232F7E1E00EFEA29 /* ApiRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiRequest.swift; sourceTree = "<group>"; };
 		1766941EBC64548E0D0C76EF /* Pods-todolist.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-todolist.debug.xcconfig"; path = "Target Support Files/Pods-todolist/Pods-todolist.debug.xcconfig"; sourceTree = "<group>"; };
@@ -103,7 +107,7 @@
 				04FA8FCD232F527900EFEA29 /* BoardCollectionView */,
 				040891DB232254E50025EE37 /* ViewController.swift */,
 				040891EB23225F1D0025EE37 /* SignupViewViewController.swift */,
-				040891DD232254E50025EE37 /* Main.storyboard */,
+				042E51F82334C71B00030E5E /* Main.storyboard */,
 				040891E0232254E60025EE37 /* Assets.xcassets */,
 				040891E2232254E60025EE37 /* LaunchScreen.storyboard */,
 				040891E5232254E60025EE37 /* Info.plist */,
@@ -127,9 +131,9 @@
 		04F8596A2333416E00DF7507 /* Dashboard */ = {
 			isa = PBXGroup;
 			children = (
-				048B549D2326039F00F4E4FC /* DashboardViewController.swift */,
-				048C8E962327B4EF00986F0D /* DashboardCollectionViewCell.swift */,
-				048B549F232604FE00F4E4FC /* checkCollectionViewCell.swift */,
+				042E52042334C9E400030E5E /* checkCollectionViewCell.swift */,
+				042E52052334C9E600030E5E /* DashboardCollectionViewCell.swift */,
+				042E52062334C9E800030E5E /* DashboardViewController.swift */,
 			);
 			path = Dashboard;
 			sourceTree = "<group>";
@@ -137,8 +141,10 @@
 		04FA8FCD232F527900EFEA29 /* BoardCollectionView */ = {
 			isa = PBXGroup;
 			children = (
-				0498DBEE2328ED94005C5666 /* BoardCollectionViewController.swift */,
-				0498DBEA2328ED51005C5666 /* BoardCollectionViewCell.swift */,
+				042E51FA2334C76200030E5E /* BoardViewController.swift */,
+				042E51FC2334C76A00030E5E /* BoardCollectionViewCell.swift */,
+				042E51FE2334C76E00030E5E /* BoardCollectionViewController.swift */,
+				042E51FB2334C76800030E5E /* StatusCollectionViewCell.swift */,
 			);
 			path = BoardCollectionView;
 			sourceTree = "<group>";
@@ -212,9 +218,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				040891E4232254E60025EE37 /* LaunchScreen.storyboard in Resources */,
+				042E51F92334C71C00030E5E /* Main.storyboard in Resources */,
 				0438E26E2333780E00BCBEC8 /* GoogleService-Info.plist in Resources */,
 				040891E1232254E60025EE37 /* Assets.xcassets in Resources */,
-				040891DF232254E50025EE37 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -268,33 +274,27 @@
 			buildActionMask = 2147483647;
 			files = (
 				040891DC232254E50025EE37 /* ViewController.swift in Sources */,
+				042E52072334C9E800030E5E /* checkCollectionViewCell.swift in Sources */,
 				04FA8FCF232F720C00EFEA29 /* User.swift in Sources */,
+				042E52012334C76E00030E5E /* BoardCollectionViewCell.swift in Sources */,
 				04FA8FD1232F7E1E00EFEA29 /* ApiRequest.swift in Sources */,
-				048B54A0232604FE00F4E4FC /* checkCollectionViewCell.swift in Sources */,
 				040891DA232254E50025EE37 /* AppDelegate.swift in Sources */,
 				048B54A4232611B400F4E4FC /* TableViewCell.swift in Sources */,
 				040891EC23225F1D0025EE37 /* SignupViewViewController.swift in Sources */,
-				048C8E972327B4EF00986F0D /* DashboardCollectionViewCell.swift in Sources */,
-				048B549E2326039F00F4E4FC /* DashboardViewController.swift in Sources */,
-				0498DBEB2328ED51005C5666 /* BoardCollectionViewCell.swift in Sources */,
 				0491CBD32330D9AC00040E51 /* ForgotPasswordViewController.swift in Sources */,
+				042E51FF2334C76E00030E5E /* BoardViewController.swift in Sources */,
 				0498DBED2328ED70005C5666 /* Board.swift in Sources */,
+				042E52032334C76E00030E5E /* BoardCollectionViewController.swift in Sources */,
+				042E52002334C76E00030E5E /* StatusCollectionViewCell.swift in Sources */,
+				042E52082334C9E800030E5E /* DashboardCollectionViewCell.swift in Sources */,
 				043B6BC52331EF0700F264E8 /* Task.swift in Sources */,
-				0498DBEF2328ED95005C5666 /* BoardCollectionViewController.swift in Sources */,
+				042E52092334C9E800030E5E /* DashboardViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		040891DD232254E50025EE37 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				040891DE232254E50025EE37 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		040891E2232254E60025EE37 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
