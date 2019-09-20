@@ -525,6 +525,7 @@
                         <outlet property="addText" destination="9eH-2I-3AZ" id="4b5-Gx-He9"/>
                         <outlet property="checkcollectionview" destination="SH6-26-ZTC" id="BQQ-fw-wTb"/>
                         <outlet property="collectionView" destination="XE0-kr-PNV" id="P6t-Fu-qSS"/>
+                        <outlet property="helloUserName" destination="Lrd-RA-h53" id="XYy-px-fBx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cs6-V1-ZJT" userLabel="First Responder" sceneMemberID="firstResponder"/>

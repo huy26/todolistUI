@@ -40,8 +40,6 @@ struct User: Encodable {
         dict["email"] =  email
         return dict
     }
-
-   
     
 }
 

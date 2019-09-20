@@ -11,13 +11,14 @@ import Firebase
 import FirebaseAuth
 
 class DashboardViewController: UIViewController {
-    var item = ["Movie","Travel","Music", "Animal"]
+    var boards = [Board(boardName: "", items: [])]
     
     var horizonalBarLeftAnchorConstraint: NSLayoutConstraint?
     
 
     //var homeController: HomeController?
     
+    @IBOutlet weak var helloUserName: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
    
     @IBOutlet weak var checkcollectionview: UICollectionView!
@@ -33,27 +34,27 @@ class DashboardViewController: UIViewController {
         
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        readBoardAPI { (error, boards) in
-//            if let error = error {
-//                self.onGetBoardError(error: error)
-//                print(error.localizedDescription)
-//                return
-//            }
-//            if let boards = boards {
-//                self.onReceivedBoards(boards: boards)
-//                self.collectionView.reloadData()
-//                self.checkcollectionview.reloadData()
-//                return
-//            }
-//        }
+        readBoardAPI { (error, boards) in
+            if let error = error {
+                self.onGetBoardError(error: error)
+                print(error.localizedDescription)
+                return
+            }
+            if let boards = boards {
+                self.onReceivedBoards(boards: boards)
+                self.collectionView.reloadData()
+                self.checkcollectionview.reloadData()
+                return
+            }
+        }
     }
     
-//    private func onReceivedBoards(boards: [Board]) {
-//        self.boards = boards
-//        print("set value")
-//    }
+    private func onReceivedBoards(boards: [Board]) {
+        self.boards = boards
+        print("set value")
+    }
     
     private func onGetBoardError(error: Error) {
         
@@ -73,7 +74,7 @@ class DashboardViewController: UIViewController {
             let index = selectedCells.map {$0.item}.sorted().reversed()
             
             for indexPath in index{
-                item.remove(at: indexPath)
+                boards.remove(at: indexPath)
             }
             collectionView.deleteItems(at: selectedCells)
         }
@@ -96,9 +97,9 @@ class DashboardViewController: UIViewController {
 
     func addBoard (){
         if !addText.text!.isEmpty {
-            //let newboard = Board(boardName: addText.text!, items: [])
-            item.append(addText.text!)
-            let indexPath = IndexPath(row: item.count - 1, section: 0)
+            let newboard = Board(boardName: addText.text!, items: [])
+            self.boards.append(newboard)
+            let indexPath = IndexPath(row: boards.count - 1, section: 0)
 //            print("number of board after added: \(Board.count)")
 //            print("indexPath: \(indexPath)")
             self.checkcollectionview.insertItems(at: [indexPath])
@@ -106,7 +107,7 @@ class DashboardViewController: UIViewController {
             self.checkcollectionview.selectItem(at: indexPath, animated: true, scrollPosition: UICollectionView.ScrollPosition.centeredHorizontally)
             self.collectionView.insertItems(at: [indexPath])
             self.collectionView.scrollToItem(at: indexPath, at: UICollectionView.ScrollPosition.centeredHorizontally, animated: true)
-            //uploadBoardAPI(board: newboard)
+            uploadBoardAPI(board: newboard)
         }
     }
 //        func addtolist (){
@@ -161,21 +162,21 @@ extension DashboardViewController: UICollectionViewDataSource,UICollectionViewDe
         //print("number of board: \(Board.getBoardCount())")
         //return Board.getBoardCount()
         //return Board.getBoardCount()
-        return item.count
+        return boards.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == self.checkcollectionview{
         let cell = checkcollectionview.dequeueReusableCell(withReuseIdentifier: "check", for: indexPath) as? checkCollectionViewCell
-            cell?.number.text = item[indexPath.item]
-        //cell?.number.text = boards[indexPath.item].boardName
+           // cell?.number.text = boards[indexPath.item]
+        cell?.number.text = boards[indexPath.item].boardName
         cell?.backgroundColor = UIColor.white
         return cell!
         }
         else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellID", for: indexPath) as? DashboardCollectionViewCell
-            cell?.Testlabel.text = item[indexPath.item]
-            //cell?.Testlabel.text = boards[indexPath.item].boardName
+           // cell?.Testlabel.text = item[indexPath.item]
+            cell?.Testlabel.text = boards[indexPath.item].boardName
             return cell!
         }
         /*else {
