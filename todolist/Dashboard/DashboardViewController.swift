@@ -17,10 +17,12 @@ class DashboardViewController: UIViewController {
     
     var horizonalBarLeftAnchorConstraint: NSLayoutConstraint?
     
+<<<<<<< HEAD
+=======
  
+>>>>>>> f6e41d20b06e7519c999a5df1537dd0a04958506
     //var homeController: HomeController?
     
-    @IBOutlet weak var helloNameLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
    
     @IBOutlet weak var checkcollectionview: UICollectionView!
@@ -51,7 +53,6 @@ class DashboardViewController: UIViewController {
                 return
             }
         }
-         //helloNameLabel.text = "Hello, \()"
     }
     
     private func onReceivedBoards(boards: [Board]) {

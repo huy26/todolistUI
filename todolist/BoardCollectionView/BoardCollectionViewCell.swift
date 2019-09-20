@@ -4,14 +4,14 @@ class BoardCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var tableView: UITableView!
     var board: Board?
-    weak var parentVC: BoardCollectionViewController?
+    weak var parentVC: BoardViewController?
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
         self.layer.masksToBounds = true
         self.layer.cornerRadius = 10.0
-        tableView.dataSource = self
+         tableView.dataSource = self
         tableView.delegate = self
         tableView.tableFooterView = UIView()
         tableView.dragInteractionEnabled = true
@@ -46,7 +46,7 @@ class BoardCollectionViewCell: UICollectionViewCell {
         
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
        
-        parentVC?.present(alertController, animated: true, completion: nil)
+       parentVC?.present(alertController,animated: true)
         
     }
 }
