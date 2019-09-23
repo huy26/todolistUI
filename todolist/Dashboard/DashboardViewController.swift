@@ -11,7 +11,7 @@ import Firebase
 import FirebaseAuth
 
 class DashboardViewController: UIViewController {
-    var boards = [Board(boardName: "", items: [])]
+    var boards = [Board(boardName: "Test", items: [])]
     
     var horizonalBarLeftAnchorConstraint: NSLayoutConstraint?
     
@@ -54,30 +54,25 @@ class DashboardViewController: UIViewController {
     private func onReceivedBoards(boards: [Board]) {
         self.boards = boards
         print("set value")
+        self.helloUserName.text = User.toPrint
+        print("User email: \(User.toPrint)")
     }
     
     private func onGetBoardError(error: Error) {
         
     }
     
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
     @IBAction func onDeleteBoard(_ sender: Any) {
-        if let selectedCells = collectionView.indexPathsForSelectedItems{
-            let index = selectedCells.map {$0.item}.sorted().reversed()
-            
-            for indexPath in index{
-                boards.remove(at: indexPath)
-            }
-            collectionView.deleteItems(at: selectedCells)
+    if let selectedCells = collectionView.indexPathsForSelectedItems{
+        let index = selectedCells.map {$0.item}.sorted().reversed()
+        
+        for indexPath in index{
+            boards.remove(at: indexPath)
         }
+        collectionView.deleteItems(at: selectedCells)
+    }
+        
     }
     @IBAction func onAddButton(_ sender: Any) {
         addBoard()
@@ -100,8 +95,8 @@ class DashboardViewController: UIViewController {
             let newboard = Board(boardName: addText.text!, items: [])
             self.boards.append(newboard)
             let indexPath = IndexPath(row: boards.count - 1, section: 0)
-//            print("number of board after added: \(Board.count)")
-//            print("indexPath: \(indexPath)")
+            print("number of board after added: \(Board.count)")
+            print("indexPath: \(indexPath)")
             self.checkcollectionview.insertItems(at: [indexPath])
             self.checkcollectionview.scrollToItem(at: indexPath, at: UICollectionView.ScrollPosition.centeredHorizontally, animated: true)
             self.checkcollectionview.selectItem(at: indexPath, animated: true, scrollPosition: UICollectionView.ScrollPosition.centeredHorizontally)
@@ -159,10 +154,10 @@ extension DashboardViewController: UICollectionViewDataSource,UICollectionViewDe
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        //print("number of board: \(Board.getBoardCount())")
-        //return Board.getBoardCount()
-        //return Board.getBoardCount()
-        return boards.count
+        print("number of board: \(Board.getBoardCount())")
+       
+        return Board.getBoardCount()
+        //return boards.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

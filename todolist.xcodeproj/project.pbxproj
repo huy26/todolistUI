@@ -12,8 +12,8 @@
 		040891E1232254E60025EE37 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 040891E0232254E60025EE37 /* Assets.xcassets */; };
 		040891E4232254E60025EE37 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 040891E2232254E60025EE37 /* LaunchScreen.storyboard */; };
 		040891EC23225F1D0025EE37 /* SignupViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040891EB23225F1D0025EE37 /* SignupViewViewController.swift */; };
+		0424541623361B7E00A0230F /* BoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0424541523361B7E00A0230F /* BoardViewController.swift */; };
 		042E51F92334C71C00030E5E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 042E51F82334C71B00030E5E /* Main.storyboard */; };
-		042E51FF2334C76E00030E5E /* BoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042E51FA2334C76200030E5E /* BoardViewController.swift */; };
 		042E52002334C76E00030E5E /* StatusCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042E51FB2334C76800030E5E /* StatusCollectionViewCell.swift */; };
 		042E52012334C76E00030E5E /* BoardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042E51FC2334C76A00030E5E /* BoardCollectionViewCell.swift */; };
 		042E52032334C76E00030E5E /* BoardCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042E51FE2334C76E00030E5E /* BoardCollectionViewController.swift */; };
@@ -38,8 +38,8 @@
 		040891E3232254E60025EE37 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		040891E5232254E60025EE37 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		040891EB23225F1D0025EE37 /* SignupViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewViewController.swift; sourceTree = "<group>"; };
+		0424541523361B7E00A0230F /* BoardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardViewController.swift; sourceTree = "<group>"; };
 		042E51F82334C71B00030E5E /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		042E51FA2334C76200030E5E /* BoardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BoardViewController.swift; path = "../../../todolist file/todolist/BoardCollectionView/BoardViewController.swift"; sourceTree = "<group>"; };
 		042E51FB2334C76800030E5E /* StatusCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusCollectionViewCell.swift; sourceTree = "<group>"; };
 		042E51FC2334C76A00030E5E /* BoardCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardCollectionViewCell.swift; sourceTree = "<group>"; };
 		042E51FE2334C76E00030E5E /* BoardCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardCollectionViewController.swift; sourceTree = "<group>"; };
@@ -102,11 +102,11 @@
 			children = (
 				040891D9232254E50025EE37 /* AppDelegate.swift */,
 				04FA8FD0232F7E1E00EFEA29 /* ApiRequest.swift */,
-				04F8596A2333416E00DF7507 /* Dashboard */,
 				0491CBCB23308B6300040E51 /* DataClass */,
+				04F8596A2333416E00DF7507 /* Dashboard */,
 				04FA8FCD232F527900EFEA29 /* BoardCollectionView */,
-				040891DB232254E50025EE37 /* ViewController.swift */,
 				040891EB23225F1D0025EE37 /* SignupViewViewController.swift */,
+				040891DB232254E50025EE37 /* ViewController.swift */,
 				042E51F82334C71B00030E5E /* Main.storyboard */,
 				040891E0232254E60025EE37 /* Assets.xcassets */,
 				040891E2232254E60025EE37 /* LaunchScreen.storyboard */,
@@ -141,10 +141,10 @@
 		04FA8FCD232F527900EFEA29 /* BoardCollectionView */ = {
 			isa = PBXGroup;
 			children = (
-				042E51FA2334C76200030E5E /* BoardViewController.swift */,
 				042E51FC2334C76A00030E5E /* BoardCollectionViewCell.swift */,
 				042E51FE2334C76E00030E5E /* BoardCollectionViewController.swift */,
 				042E51FB2334C76800030E5E /* StatusCollectionViewCell.swift */,
+				0424541523361B7E00A0230F /* BoardViewController.swift */,
 			);
 			path = BoardCollectionView;
 			sourceTree = "<group>";
@@ -282,9 +282,9 @@
 				048B54A4232611B400F4E4FC /* TableViewCell.swift in Sources */,
 				040891EC23225F1D0025EE37 /* SignupViewViewController.swift in Sources */,
 				0491CBD32330D9AC00040E51 /* ForgotPasswordViewController.swift in Sources */,
-				042E51FF2334C76E00030E5E /* BoardViewController.swift in Sources */,
 				0498DBED2328ED70005C5666 /* Board.swift in Sources */,
 				042E52032334C76E00030E5E /* BoardCollectionViewController.swift in Sources */,
+				0424541623361B7E00A0230F /* BoardViewController.swift in Sources */,
 				042E52002334C76E00030E5E /* StatusCollectionViewCell.swift in Sources */,
 				042E52082334C9E800030E5E /* DashboardCollectionViewCell.swift in Sources */,
 				043B6BC52331EF0700F264E8 /* Task.swift in Sources */,

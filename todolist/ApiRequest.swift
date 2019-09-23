@@ -14,7 +14,6 @@ import AlamofireObjectMapper
 
 let url = "http://192.168.2.48:4000/api/user"
 
-
 func getUserAPI(){
     let data = User(firstName: "", lastName: "", userPhone: "", birthDay: "", avatarURL: "", email: "")
     let currentUser = Auth.auth().currentUser
@@ -155,6 +154,7 @@ func APItask(task: Task)
 func readBoardAPI(onCompleted: @escaping ((Error?, [Board]?)-> Void)) {
     print("reading board")
     var board = Board(boardName: "", items: [""]) // alo alo
+    Board.setBoardCount(value: -1)
     var arrayboard: [Board]?
     var returnboard = [board]
     let currentUser = Auth.auth().currentUser
