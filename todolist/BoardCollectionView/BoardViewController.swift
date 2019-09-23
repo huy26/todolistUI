@@ -12,12 +12,13 @@ import FirebaseAuth
 import MobileCoreServices
 
 class BoardViewController: UIViewController {
-    var boards = [
-        Board(boardName: "Todo", items: ["Database Migration", "Schema Design", "Storage Management", "Model Abstraction"]),
-        Board(boardName: "In Progress", items: ["Push Notification", "Analytics", "Machine Learning"]),
-        Board(boardName: "Done", items: ["System Architecture", "Alert & Debugging"]),
-        Board(boardName: "Travel", items: ["Prepare"])
+    var tasks = [
+        Task(taskName: "Todo", items: ["Database Migration", "Schema Design", "Storage Management", "Model Abstraction"]),
+        Task(taskName: "In Progress", items: ["Push Notification", "Analytics", "Machine Learning"]),
+        Task(taskName: "Done", items: ["System Architecture", "Alert & Debugging"]),
+        Task(taskName: "Travel", items: ["Prepare"])
     ]
+    var boardID = ""
         
     var horizonalBarLeftAnchorConstraint: NSLayoutConstraint?
 
@@ -28,7 +29,7 @@ class BoardViewController: UIViewController {
         self.navigationController?.isNavigationBarHidden = false
         let selectedIndexPath = NSIndexPath(item: 0, section: 0)
         // Do any additional setup after loading the view.
-        setupBackbuttonItem()
+        //setupBackbuttonItem()
         setupAddButtonItem()
         setupRemoveButtonItem()
         checkCollectionview.selectItem(at: selectedIndexPath as IndexPath, animated: false, scrollPosition: .centeredHorizontally)
@@ -88,9 +89,9 @@ class BoardViewController: UIViewController {
                     return
                 }
 
-                self.boards.append(Board(boardName: text, items: []))
+                self.tasks.append(Task(taskName: text, items: []))
 
-                let addedIndexPath = IndexPath(item: self.boards.count - 1, section: 0)
+                let addedIndexPath = IndexPath(item: self.tasks.count - 1, section: 0)
                 self.checkCollectionview.insertItems(at: [addedIndexPath])
                 self.checkCollectionview.scrollToItem(at: addedIndexPath, at: UICollectionView.ScrollPosition.centeredHorizontally, animated: true)
                 self.checkCollectionview.selectItem(at: addedIndexPath, animated: true, scrollPosition: UICollectionView.ScrollPosition.centeredHorizontally)
@@ -120,13 +121,13 @@ class BoardViewController: UIViewController {
 }
 extension BoardViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return boards.count
+        return tasks.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == checkCollectionview{
             let cell = checkCollectionview.dequeueReusableCell(withReuseIdentifier: "Status", for: indexPath) as! StatusCollectionViewCell
-            cell.number.text = boards[indexPath.item].boardName
+            cell.number.text = tasks[indexPath.item].taskName
             cell.backgroundColor = UIColor.white
             return cell
         }
@@ -134,7 +135,7 @@ extension BoardViewController: UICollectionViewDataSource, UICollectionViewDeleg
             else
         {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! BoardCollectionViewCell
-        cell.setup(with: boards[indexPath.item])
+        cell.setup(with: tasks[indexPath.item])
         cell.parentVC = self
         return cell
     }
@@ -185,7 +186,7 @@ extension BoardViewController: UIDropInteractionDelegate {
                     return
                 }
                 
-                if let (dataSource, sourceIndexPath, tableView) = session.localDragSession?.localContext as? (Board, IndexPath, UITableView) {
+                if let (dataSource, sourceIndexPath, tableView) = session.localDragSession?.localContext as? (Task, IndexPath, UITableView) {
                     tableView.beginUpdates()
                     dataSource.items.remove(at: sourceIndexPath.row)
                     tableView.deleteRows(at: [sourceIndexPath], with: .automatic)

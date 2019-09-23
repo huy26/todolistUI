@@ -12,7 +12,7 @@ import Firebase
 import SwiftyJSON
 import AlamofireObjectMapper
 
-let url = "http://192.168.2.48:4000/api/user"
+let url = "http://103.221.223.126:4000/api/user"
 
 func getUserAPI(){
     let data = User(firstName: "", lastName: "", userPhone: "", birthDay: "", avatarURL: "", email: "")
@@ -89,27 +89,6 @@ func APIboard(board: Board){
 }
 
 
-func APItask(task: Task)
-{
-    let curuser = Auth.auth().currentUser
-    curuser?.getIDTokenForcingRefresh(true) { (tokenID, error) in
-        if error != nil
-        {
-            print ("Fail to get token")
-            return
-        }
-        guard let tokenID = tokenID else{return}
-        let headers: HTTPHeaders = [
-            "tokenID": tokenID
-        ]
-        AF.request(url + "/board/13/task", method: .post, parameters: task, encoder: JSONParameterEncoder.default, headers: headers).responseData(completionHandler: { data in
-            print ("Data Response: \(data)")
-        }).responseJSON(completionHandler: { dataJSON in
-            debugPrint(dataJSON)
-        })
-    }
-}
-
 func readBoardAPI(onCompleted: @escaping ((Error?, [Board]?)-> Void)) {
     print("reading board")
     var board = Board(boardName: "", items: [""]) // alo alo
@@ -132,7 +111,7 @@ func readBoardAPI(onCompleted: @escaping ((Error?, [Board]?)-> Void)) {
         ]
         //print(board.boardName)
         
-        guard let newurl = URL(string: "http://192.168.2.48:4000/api/user/boards") else { return }
+        guard let newurl = URL(string: "http://103.221.223.126:4000/api/user/boards") else { return }
         
         AF.request(
             newurl,
@@ -264,3 +243,63 @@ func deleteBoardAPI(board: Board) {
         print("http resquest succeed")
     }
 }
+
+func uploadtaskAPI(task: Task)
+{
+    let curuser = Auth.auth().currentUser
+    curuser?.getIDTokenForcingRefresh(true) { (tokenID, error) in
+        if error != nil
+        {
+            print ("Fail to get token")
+            return
+        }
+        guard let tokenID = tokenID else{return}
+        let headers: HTTPHeaders = [
+            "tokenID": tokenID
+        ]
+        AF.request(url + "/board/13/task", method: .post, parameters: task, encoder: JSONParameterEncoder.default, headers: headers).responseData(completionHandler: { data in
+            print ("Data Response: \(data)")
+        }).responseJSON(completionHandler: { dataJSON in
+            debugPrint(dataJSON)
+        })
+    }
+}
+func readTaskApi(boardID: String)
+{
+    var task = Task(taskName: "", items: [])
+    var taskarray = [Task]()
+    var returntask = [task]
+    let currentuser = Auth.auth().currentUser
+    currentuser?.getIDTokenForcingRefresh(true) { (tokenID, error) in
+        if error != nil
+        {
+            print ("Fail to get token")
+            return
+        }
+        guard let tokenID = tokenID else {return}
+        let headers: HTTPHeaders = ["tokenID": tokenID]
+        AF.request(url + "/board/\(boardID)/tasks", method: .get, parameters: returntask, encoder: URLEncodedFormParameterEncoder.default, headers: headers).responseString{ (response) in
+            switch response.result {
+            case let .success(string):
+                    debugPrint("Request success \(string)")
+                    break
+            case let .failure(error):
+                debugPrint(error)
+                break
+            }
+        }.responseArray{ (response: DataResponse<[Task]>) in
+            switch response.result {
+            case let .success(value):
+                for item in value
+                {
+                    debugPrint("TASK ID \(item.taskID)")
+                }
+                break
+            case let .failure(error):
+                debugPrint(error)
+                break
+            }
+        }
+    }
+}
+

@@ -28,8 +28,9 @@ class DashboardViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        let selectedIndexPath = NSIndexPath(item: 0, section: 0)
-         checkcollectionview.selectItem(at: selectedIndexPath as IndexPath, animated: false, scrollPosition: .centeredHorizontally)
+        let selectedIndexPath =   NSIndexPath(item: 0, section: 0)
+        checkcollectionview.selectItem(at: selectedIndexPath as IndexPath, animated: false, scrollPosition: [])
+        
         setupHorizonalBar()
         print("check number of boards: \(Board.count)")
         if User.toPrint == "" {
@@ -43,6 +44,7 @@ class DashboardViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
         //_flag = false
         readBoardAPI { (error, boards) in
             if let error = error {
@@ -145,8 +147,9 @@ extension DashboardViewController: UICollectionViewDataSource,UICollectionViewDe
         if collectionView == self.checkcollectionview{scrolltoMenuIndex(menuIndex: indexPath.item)}
         else
         {
-        let vc = storyboard?.instantiateViewController(withIdentifier: "boarddetail") as! UINavigationController
-        self.present(vc, animated: true, completion: nil)
+        let vc = storyboard?.instantiateViewController(withIdentifier: "boarddetail") as! BoardViewController
+            vc.boardID = boards[indexPath.item].boardID!
+        self.navigationController?.pushViewController(vc, animated: true)
         }
         
     }
