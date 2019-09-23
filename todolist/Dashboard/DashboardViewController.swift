@@ -14,7 +14,7 @@ class DashboardViewController: UIViewController {
     var boards = [Board(boardName: "Test", items: [])]
     
     var horizonalBarLeftAnchorConstraint: NSLayoutConstraint?
-    
+    //var _flag: Bool
 
     //var homeController: HomeController?
     
@@ -29,13 +29,21 @@ class DashboardViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         let selectedIndexPath = NSIndexPath(item: 0, section: 0)
-        checkcollectionview.selectItem(at: selectedIndexPath as IndexPath, animated: false, scrollPosition: .centeredHorizontally)
+         checkcollectionview.selectItem(at: selectedIndexPath as IndexPath, animated: false, scrollPosition: .centeredHorizontally)
         setupHorizonalBar()
+        print("check number of boards: \(Board.count)")
+        if User.toPrint == "" {
+                  User.toPrint = "Hello. "
+              } else {
+              self.helloUserName.text = User.toPrint
+              print("User email: \(User.toPrint)")
+              }
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        //_flag = false
         readBoardAPI { (error, boards) in
             if let error = error {
                 self.onGetBoardError(error: error)
@@ -54,8 +62,6 @@ class DashboardViewController: UIViewController {
     private func onReceivedBoards(boards: [Board]) {
         self.boards = boards
         print("set value")
-        self.helloUserName.text = User.toPrint
-        print("User email: \(User.toPrint)")
     }
     
     private func onGetBoardError(error: Error) {
@@ -64,13 +70,18 @@ class DashboardViewController: UIViewController {
     
 
     @IBAction func onDeleteBoard(_ sender: Any) {
-    if let selectedCells = collectionView.indexPathsForSelectedItems{
+        if let selectedCells = self.checkcollectionview.indexPathsForSelectedItems{
         let index = selectedCells.map {$0.item}.sorted().reversed()
-        
+
         for indexPath in index{
+            deleteBoardAPI(board: boards[indexPath])
             boards.remove(at: indexPath)
+            Board.setBoardCount(value: -1)
         }
-        collectionView.deleteItems(at: selectedCells)
+        self.collectionView.deleteItems(at: selectedCells)
+        self.checkcollectionview.deleteItems(at: selectedCells)
+            self.collectionView.reloadData()
+            self.checkcollectionview.reloadData()
     }
         
     }
@@ -94,6 +105,7 @@ class DashboardViewController: UIViewController {
         if !addText.text!.isEmpty {
             let newboard = Board(boardName: addText.text!, items: [])
             self.boards.append(newboard)
+            Board.setBoardCount(value: 1)
             let indexPath = IndexPath(row: boards.count - 1, section: 0)
             print("number of board after added: \(Board.count)")
             print("indexPath: \(indexPath)")
@@ -105,16 +117,7 @@ class DashboardViewController: UIViewController {
             uploadBoardAPI(board: newboard)
         }
     }
-//        func addtolist (){
-//        list.append(addText.text!)
-//        let indexPath = IndexPath(row: list.count - 1, section: 0)
-//        tableview.beginUpdates()
-//        tableview.insertRows(at: [indexPath], with: .automatic)
-//        tableview.endUpdates()
-//
-//        addText.text = ""
-//        view.endEditing(true)
-//    }
+
     func setupHorizonalBar () {
         let horizontalBarView = UIView()
         horizontalBarView.translatesAutoresizingMaskIntoConstraints = false
@@ -138,11 +141,7 @@ extension DashboardViewController: UICollectionViewDataSource,UICollectionViewDe
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        /*print(indexPath.item)
-        let x = CGFloat(indexPath.item) * collectionView.frame.width / 4
-        horizonalBarLeftAnchorConstraint?.constant = x
-        
-        UIView.animate(withDuration: 0.75, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {self.checkcollectionview.layoutIfNeeded()}, completion: nil)*/
+      
         if collectionView == self.checkcollectionview{scrolltoMenuIndex(menuIndex: indexPath.item)}
         else
         {
@@ -164,6 +163,7 @@ extension DashboardViewController: UICollectionViewDataSource,UICollectionViewDe
         if collectionView == self.checkcollectionview{
         let cell = checkcollectionview.dequeueReusableCell(withReuseIdentifier: "check", for: indexPath) as? checkCollectionViewCell
            // cell?.number.text = boards[indexPath.item]
+            print(indexPath.item)
         cell?.number.text = boards[indexPath.item].boardName
         cell?.backgroundColor = UIColor.white
         return cell!
@@ -171,6 +171,7 @@ extension DashboardViewController: UICollectionViewDataSource,UICollectionViewDe
         else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellID", for: indexPath) as? DashboardCollectionViewCell
            // cell?.Testlabel.text = item[indexPath.item]
+            print(indexPath.item)
             cell?.Testlabel.text = boards[indexPath.item].boardName
             return cell!
         }

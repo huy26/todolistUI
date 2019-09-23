@@ -17,14 +17,14 @@ class Board: Encodable, Mappable {
     var status: String? = ""
     var boardName: String? = ""
     var userID: String? = ""
-    static var count: Int = 0
+    static var count: Int = 1
     
     init(boardName: String, items: [String] ) {
         self.boardName = boardName
         self.items = items
         self.boardID = ""
         self.status = "good"
-        Board.count += 1
+        //Board.count += 1
     }
     
     required init?(map: Map) {

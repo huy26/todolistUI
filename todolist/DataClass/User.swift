@@ -19,7 +19,7 @@ struct User: Encodable {
     var birthDay: String
     var avatarURL: String
     var email: String
-    static var toPrint: String = "Test"
+    static var toPrint: String = "Hello"
     init(firstName: String, lastName: String, userPhone: String, birthDay: String, avatarURL: String, email: String){
         //self.userID = userID
         self.firstName = firstName

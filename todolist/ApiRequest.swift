@@ -88,48 +88,7 @@ func APIboard(board: Board){
     })
 }
 
-//func readAPIboard(){
-//    var arrayboard = [Board(boardName: "", items: [])]
-//    var newboard : [Board]?
-//    let currentuser = Auth.auth().currentUser
-//    currentuser?.getIDTokenForcingRefresh(true) { tokenID, error in
-//        if error != nil {
-//            print ("Fail to get token")
-//            return
-//        }
-//        guard let tokenID = tokenID else {return}
-//        let headers: HTTPHeaders = [
-//            "tokenID": tokenID,
-//        ]
-//        AF.request(url + "/boards", method: .get, parameters: newboard,encoder: URLEncodedFormParameterEncoder.default, headers: headers).responseString(completionHandler: { (response) in
-//            switch response.result {
-//            case .success(let string):
-//                debugPrint(string)
-//                break
-//            case .failure(let error):
-//                debugPrint(error)
-//                break
-//            }
-//        }).responseArray {(response: DataResponse<[Board]>) in
-//            if let status = response.response?.statusCode {
-//                switch(response.result) {
-//                case let .success(value):
-//                    arrayboard = value
-//                    for item in value {
-//                        debugPrint("BOARD: \(item.boardID)")
-//                    }
-//                    break
-//                case let .failure(error):
-//                    print("error")
-//                    debugPrint(error)
-//                    break
-//                }
-//            }
-//        }
-//        print("\(tokenID)")
-//        print ("Request succeed!!!")
-//    }
-//}
+
 func APItask(task: Task)
 {
     let curuser = Auth.auth().currentUser
@@ -154,7 +113,7 @@ func APItask(task: Task)
 func readBoardAPI(onCompleted: @escaping ((Error?, [Board]?)-> Void)) {
     print("reading board")
     var board = Board(boardName: "", items: [""]) // alo alo
-    Board.setBoardCount(value: -1)
+    //Board.setBoardCount(value: -1)
     var arrayboard: [Board]?
     var returnboard = [board]
     let currentUser = Auth.auth().currentUser
@@ -224,7 +183,6 @@ func readBoardAPI(onCompleted: @escaping ((Error?, [Board]?)-> Void)) {
 }
 func uploadBoardAPI(board: Board){
     
-    
     let currentUser = Auth.auth().currentUser
     currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
         if error != nil {
@@ -242,7 +200,6 @@ func uploadBoardAPI(board: Board){
         print(board.boardName)
         
         guard let newurl = URL(string: "http://192.168.2.48:4000/api/user/board") else { return }
-        //        AF.request(<#T##url: URLConvertible##URLConvertible#>, method: <#T##HTTPMethod#>, parameters: Encodable?, encoder: <#T##ParameterEncoder#>, headers: <#T##HTTPHeaders?#>, interceptor: <#T##RequestInterceptor?#>)
         AF.request(
             newurl,
             method: .post,
@@ -266,3 +223,44 @@ func uploadBoardAPI(board: Board){
     }
 }
 
+func deleteBoardAPI(board: Board) {
+    let currentUser = Auth.auth().currentUser
+    currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
+        if error != nil {
+            print("get token failed")
+            return;
+        }
+        
+        guard let idToken = idToken else { return }
+        // Send token to your backend via HTTPS
+        // ...
+        //let idToken = returnFirebaseToken()
+        let header: HTTPHeaders = [
+            "tokenID": idToken,
+        ]
+        print(board.boardID)
+        
+        guard let newurl = URL(string: "http://192.168.2.48:4000/api/user/board") else { return }
+        //        AF.request(<#T##url: URLConvertible##URLConvertible#>, method: <#T##HTTPMethod#>, parameters: Encodable?, encoder: <#T##ParameterEncoder#>, headers: <#T##HTTPHeaders?#>, interceptor: <#T##RequestInterceptor?#>)
+        AF.request(
+            newurl,
+            method: .delete,
+            parameters: board,
+            encoder: URLEncodedFormParameterEncoder(destination: .httpBody),
+            headers: header
+            )
+            .responseString(completionHandler: { data in
+                if let responseData = data.data {
+                    let responseString = String(data: responseData, encoding: .utf8)
+                    print("Response String \(responseString)")
+                }
+                
+                print(data.response?.statusCode)
+                print("==> Raw Data \(data)")
+            }).responseJSON(completionHandler: { response in
+                debugPrint(response)
+            })
+        print(idToken)
+        print("http resquest succeed")
+    }
+}
