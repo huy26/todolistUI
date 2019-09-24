@@ -11,10 +11,9 @@ import Firebase
 import FirebaseAuth
 
 class DashboardViewController: UIViewController {
-    var boards = [Board(boardName: "Test", items: [])]
-    
+    //var boards = [Board(boardName: "Test", items: [])]
+    var boards = [Board]()
     var horizonalBarLeftAnchorConstraint: NSLayoutConstraint?
-    //var _flag: Bool
 
     //var homeController: HomeController?
     
@@ -108,6 +107,8 @@ class DashboardViewController: UIViewController {
             let newboard = Board(boardName: addText.text!, items: [])
             self.boards.append(newboard)
             Board.setBoardCount(value: 1)
+            print(Board.count)
+            print(boards.count)
             let indexPath = IndexPath(row: boards.count - 1, section: 0)
             print("number of board after added: \(Board.count)")
             print("indexPath: \(indexPath)")

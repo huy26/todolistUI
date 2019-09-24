@@ -17,7 +17,7 @@ class Board: Encodable, Mappable {
     var status: String? = ""
     var boardName: String? = ""
     var userID: String? = ""
-    static var count: Int = 1
+    static var count: Int = 0
     
     init(boardName: String, items: [String] ) {
         self.boardName = boardName

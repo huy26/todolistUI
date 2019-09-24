@@ -12,7 +12,9 @@ import Firebase
 import SwiftyJSON
 import AlamofireObjectMapper
 
+
 let url = "http://103.221.223.126:4000/api/user"
+
 
 func getUserAPI(){
     let data = User(firstName: "", lastName: "", userPhone: "", birthDay: "", avatarURL: "", email: "")
@@ -178,7 +180,7 @@ func uploadBoardAPI(board: Board){
         ]
         print(board.boardName)
         
-        guard let newurl = URL(string: "http://192.168.2.48:4000/api/user/board") else { return }
+        guard let newurl = URL(string: "http://103.221.223.126:4000/api/user/board") else { return }
         AF.request(
             newurl,
             method: .post,
@@ -219,8 +221,8 @@ func deleteBoardAPI(board: Board) {
         ]
         print(board.boardID)
         
-        guard let newurl = URL(string: "http://192.168.2.48:4000/api/user/board") else { return }
-        //        AF.request(<#T##url: URLConvertible##URLConvertible#>, method: <#T##HTTPMethod#>, parameters: Encodable?, encoder: <#T##ParameterEncoder#>, headers: <#T##HTTPHeaders?#>, interceptor: <#T##RequestInterceptor?#>)
+        guard let newurl = URL(string: "http://103.221.223.126:4000/api/user/board") else { return }
+     
         AF.request(
             newurl,
             method: .delete,
@@ -244,7 +246,7 @@ func deleteBoardAPI(board: Board) {
     }
 }
 
-func uploadtaskAPI(task: Task)
+func uploadtaskAPI(boardID: String, task: Task)
 {
     let curuser = Auth.auth().currentUser
     curuser?.getIDTokenForcingRefresh(true) { (tokenID, error) in
@@ -257,17 +259,17 @@ func uploadtaskAPI(task: Task)
         let headers: HTTPHeaders = [
             "tokenID": tokenID
         ]
-        AF.request(url + "/board/13/task", method: .post, parameters: task, encoder: JSONParameterEncoder.default, headers: headers).responseData(completionHandler: { data in
+        AF.request(url + "/board/\(boardID)/task", method: .post, parameters: task, encoder: JSONParameterEncoder.default, headers: headers).responseData(completionHandler: { data in
             print ("Data Response: \(data)")
         }).responseJSON(completionHandler: { dataJSON in
             debugPrint(dataJSON)
         })
     }
 }
-func readTaskApi(boardID: String)
+func readTaskApi(boardID: String,onCompleted: @escaping ((Error?, [Task]?)-> Void))
 {
-    var task = Task(taskName: "", items: [])
-    var taskarray = [Task]()
+    var task = Task(taskName: "",status: "")
+    var taskarray: [Task]?
     var returntask = [task]
     let currentuser = Auth.auth().currentUser
     currentuser?.getIDTokenForcingRefresh(true) { (tokenID, error) in
@@ -278,7 +280,7 @@ func readTaskApi(boardID: String)
         }
         guard let tokenID = tokenID else {return}
         let headers: HTTPHeaders = ["tokenID": tokenID]
-        AF.request(url + "/board/\(boardID)/tasks", method: .get, parameters: returntask, encoder: URLEncodedFormParameterEncoder.default, headers: headers).responseString{ (response) in
+        AF.request(url + "/board/\(boardID)/tasks", method: .get, parameters: taskarray , encoder: URLEncodedFormParameterEncoder.default, headers: headers).responseString{ (response) in
             switch response.result {
             case let .success(string):
                     debugPrint("Request success \(string)")
@@ -290,16 +292,60 @@ func readTaskApi(boardID: String)
         }.responseArray{ (response: DataResponse<[Task]>) in
             switch response.result {
             case let .success(value):
+                print(value.count)
                 for item in value
                 {
                     debugPrint("TASK ID \(item.taskID)")
                 }
+                onCompleted(nil, value)
                 break
             case let .failure(error):
                 debugPrint(error)
+                onCompleted(error, nil)
                 break
             }
         }
     }
 }
 
+func deleteTaskAPI(task: Task, boardID: String) {
+    let currentUser = Auth.auth().currentUser
+    currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
+        if error != nil {
+            print("get token failed")
+            return;
+        }
+        
+        guard let idToken = idToken else { return }
+        // Send token to your backend via HTTPS
+        // ...
+        //let idToken = returnFirebaseToken()
+        let header: HTTPHeaders = [
+            "tokenID": idToken,
+        ]
+        print(task.taskID)
+        
+        //guard let newurl = URL(string: "http://103.221.223.126:4000/api/user/board") else { return }
+        
+        AF.request(
+            url + "/board/\(boardID)/task",
+            method: .delete,
+            parameters: task,
+            encoder: URLEncodedFormParameterEncoder(destination: .httpBody),
+            headers: header
+            )
+            .responseString(completionHandler: { data in
+                if let responseData = data.data {
+                    let responseString = String(data: responseData, encoding: .utf8)
+                    print("Response String \(responseString)")
+                }
+                
+                print(data.response?.statusCode)
+                print("==> Raw Data \(data)")
+            }).responseJSON(completionHandler: { response in
+                debugPrint(response)
+            })
+        print(idToken)
+        print("http resquest succeed")
+    }
+}

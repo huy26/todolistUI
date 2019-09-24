@@ -12,14 +12,11 @@ import FirebaseAuth
 import MobileCoreServices
 
 class BoardViewController: UIViewController {
-    var tasks = [
-        Task(taskName: "Todo", items: ["Database Migration", "Schema Design", "Storage Management", "Model Abstraction"]),
-        Task(taskName: "In Progress", items: ["Push Notification", "Analytics", "Machine Learning"]),
-        Task(taskName: "Done", items: ["System Architecture", "Alert & Debugging"]),
-        Task(taskName: "Travel", items: ["Prepare"])
-    ]
+    var tasks = [Task]()
     var boardID = ""
-        
+    
+    var status = [Status]()
+    
     var horizonalBarLeftAnchorConstraint: NSLayoutConstraint?
 
     @IBOutlet weak var checkCollectionview: BoardCollectionViewController!
@@ -32,11 +29,56 @@ class BoardViewController: UIViewController {
         //setupBackbuttonItem()
         setupAddButtonItem()
         setupRemoveButtonItem()
-        checkCollectionview.selectItem(at: selectedIndexPath as IndexPath, animated: false, scrollPosition: .centeredHorizontally)
+        checkCollectionview.selectItem(at: selectedIndexPath as IndexPath, animated: false, scrollPosition: [])
         setupHorizonalBar()
        // updateCollectionViewItem(with: view.bounds.size)
         
    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        readTaskApi(boardID: boardID) { (error, tasks) in
+            if let error = error {
+                self.getonTaskerror(error: error)
+                print(error.localizedDescription)
+                return
+            }
+            if let tasks = tasks {
+                self.onreciveTask(tasks: tasks)
+                self.collectionView.reloadData()
+                self.checkCollectionview.reloadData()
+                self.checkStatus()
+                return
+            }
+        }
+        
+    }
+    
+    func checkStatus ()
+    {
+        for j in tasks
+        {
+            var check = true
+            for i in status          {
+                 if j.status == i.name
+                {
+                    check = false
+                    i.items.append(j)
+                }
+                
+            }
+            if check == true{
+                status.append(Status(name: j.status!, items: [j]))
+            }
+        }
+    }
+    func getonTaskerror (error: Error)
+    {
+        
+    }
+    func onreciveTask (tasks: [Task])
+    {
+        self.tasks = tasks
+    }
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         updateCollectionViewItem(with: size)
@@ -82,22 +124,29 @@ class BoardViewController: UIViewController {
     
         }
         @objc func addListTapped(_ sender: Any) {
-            let alertController = UIAlertController(title: "Add List", message: nil, preferredStyle: .alert)
-            alertController.addTextField(configurationHandler: nil)
+            let alertController = UIAlertController(title: "Add Task", message: nil, preferredStyle: .alert)
+            alertController.addTextField{(textField) in
+                textField.placeholder = "Task Name"
+            }
+            alertController.addTextField{(textField) in
+                textField.placeholder = "Status"
+            }
             alertController.addAction(UIAlertAction(title: "Add", style: .default, handler: { (_) in
-                guard let text = alertController.textFields?.first?.text, !text.isEmpty else {
+                guard let text = alertController.textFields![0].text, !text.isEmpty else {
                     return
                 }
+                guard let text2 = alertController.textFields![1].text, !text2.isEmpty else
+                {return}
 
-                self.tasks.append(Task(taskName: text, items: []))
-
-                let addedIndexPath = IndexPath(item: self.tasks.count - 1, section: 0)
+                self.tasks.append(Task(taskName: text,status: text2))
+                self.status.append(Status(name: text2, items: [Task(taskName: text, status: text2)]))
+                let addedIndexPath = IndexPath(item: self.status.count - 1, section: 0)
                 self.checkCollectionview.insertItems(at: [addedIndexPath])
                 self.checkCollectionview.scrollToItem(at: addedIndexPath, at: UICollectionView.ScrollPosition.centeredHorizontally, animated: true)
                 self.checkCollectionview.selectItem(at: addedIndexPath, animated: true, scrollPosition: UICollectionView.ScrollPosition.centeredHorizontally)
                 self.collectionView.insertItems(at: [addedIndexPath])
                 self.collectionView.scrollToItem(at: addedIndexPath, at: UICollectionView.ScrollPosition.centeredHorizontally, animated: true)
-                //APIboard(board: Board(boardName: text, items: []))
+                uploadtaskAPI(boardID: self.boardID,task: Task(taskName: text,status: text2))
             }))
 
             alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
@@ -121,21 +170,21 @@ class BoardViewController: UIViewController {
 }
 extension BoardViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return tasks.count
+        return status.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == checkCollectionview{
             let cell = checkCollectionview.dequeueReusableCell(withReuseIdentifier: "Status", for: indexPath) as! StatusCollectionViewCell
-            cell.number.text = tasks[indexPath.item].taskName
+            cell.number.text = status[indexPath.item].name
             cell.backgroundColor = UIColor.white
             return cell
-        }
         
+        }
             else
         {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! BoardCollectionViewCell
-        cell.setup(with: tasks[indexPath.item])
+            cell.setup(with: status[indexPath.item], boardID: self.boardID)
         cell.parentVC = self
         return cell
     }
@@ -186,9 +235,17 @@ extension BoardViewController: UIDropInteractionDelegate {
                     return
                 }
                 
-                if let (dataSource, sourceIndexPath, tableView) = session.localDragSession?.localContext as? (Task, IndexPath, UITableView) {
+                if let (dataSource, sourceIndexPath, tableView) = session.localDragSession?.localContext as? (Status, IndexPath, UITableView) {
                     tableView.beginUpdates()
+                    let item = dataSource.items[sourceIndexPath.row]
                     dataSource.items.remove(at: sourceIndexPath.row)
+                    if let item = self.tasks.first (where: { (task) -> Bool in
+                        return task.taskID == item.taskID
+                    }){
+                        
+                    }
+                    deleteTaskAPI(task: item, boardID: self.boardID)
+                    //self.tasks.remove(at: sourceIndexPath.item)
                     tableView.deleteRows(at: [sourceIndexPath], with: .automatic)
                     tableView.endUpdates()
                 }

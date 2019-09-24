@@ -5,7 +5,8 @@ class BoardCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var tableView: UITableView!
     var task: Task?
     weak var parentVC: BoardViewController?
-    
+    var status: Status?
+    var boardID: String?
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -19,8 +20,9 @@ class BoardCollectionViewCell: UICollectionViewCell {
         tableView.dropDelegate = self
     }
     
-    func setup(with task: Task) {
-        self.task = task
+    func setup(with status: Status, boardID: String) {
+        self.status = status
+        self.boardID = boardID
         tableView.reloadData()
     }
     
@@ -32,15 +34,15 @@ class BoardCollectionViewCell: UICollectionViewCell {
                 return
             }
             
-            guard let data = self.task else {
+            guard let data = self.status else {
                 return
             }
             
-            data.items.append(text)
+            data.items.append(Task(taskName: text, status: self.status!.name!))
             let addedIndexPath = IndexPath(item: data.items.count - 1, section: 0)
-            
             self.tableView.insertRows(at: [addedIndexPath], with: .automatic)
             self.tableView.scrollToRow(at: addedIndexPath, at: UITableView.ScrollPosition.bottom, animated: true)
+            uploadtaskAPI(boardID: self.boardID!, task: Task(taskName: text, status: data.name!))
         }))
         
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
@@ -49,19 +51,21 @@ class BoardCollectionViewCell: UICollectionViewCell {
         
     }
 }
+
 extension BoardCollectionViewCell: UITableViewDataSource, UITableViewDelegate {
     
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return task?.items.count ?? 0
+        return status?.items.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return task?.taskName
+        return status?.name
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        cell.textLabel?.text = "\(task!.items[indexPath.row])"
+        cell.textLabel?.text = "\(status!.items[indexPath.row].taskName!)"
         return cell
     }
     
@@ -70,20 +74,22 @@ extension BoardCollectionViewCell: UITableViewDataSource, UITableViewDelegate {
     }
     
 }
+
+
 extension BoardCollectionViewCell: UITableViewDragDelegate {
-    
+
     func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-        guard let task = task, let stringData = task.items[indexPath.row].data(using: .utf8) else {
+        guard let status = status, let stringData = status.items[indexPath.row].taskName!.data(using: .utf8) else {
             return []
         }
-        
+
         let itemProvider = NSItemProvider(item: stringData as NSData, typeIdentifier: kUTTypePlainText as String)
         let dragItem = UIDragItem(itemProvider: itemProvider)
-        session.localContext = (task, indexPath, tableView)
-        
+        session.localContext = (status, indexPath, tableView)
+
         return [dragItem]
     }
-    
+
 }
 extension BoardCollectionViewCell: UITableViewDropDelegate {
     
@@ -104,8 +110,8 @@ extension BoardCollectionViewCell: UITableViewDropDelegate {
                         updatedIndexPaths =  (destinationIndexPath.row...sourceIndexPath.row).map { IndexPath(row: $0, section: 0) }
                     }
                     self.tableView.beginUpdates()
-                    self.task?.items.remove(at: sourceIndexPath.row)
-                    self.task?.items.insert(string, at: destinationIndexPath.row)
+                    self.status?.items.remove(at: sourceIndexPath.row)
+                    self.status?.items.insert(Task(taskName: string, status: (self.status?.name!)!), at: destinationIndexPath.row)
                     self.tableView.reloadRows(at: updatedIndexPaths, with: .automatic)
                     self.tableView.endUpdates()
                     break
@@ -114,7 +120,7 @@ extension BoardCollectionViewCell: UITableViewDropDelegate {
                     // Move data from a table to another table
                     self.removeSourceTableData(localContext: coordinator.session.localDragSession?.localContext)
                     self.tableView.beginUpdates()
-                    self.task?.items.insert(string, at: destinationIndexPath.row)
+                    self.status?.items.insert(Task(taskName: string, status: (self.status?.name!)!), at: destinationIndexPath.row)
                     self.tableView.insertRows(at: [destinationIndexPath], with: .automatic)
                     self.tableView.endUpdates()
                     break
@@ -124,8 +130,8 @@ extension BoardCollectionViewCell: UITableViewDropDelegate {
                     // Insert data from a table to another table
                     self.removeSourceTableData(localContext: coordinator.session.localDragSession?.localContext)
                     self.tableView.beginUpdates()
-                    self.task?.items.append(string)
-                    self.tableView.insertRows(at: [IndexPath(row: self.task!.items.count - 1 , section: 0)], with: .automatic)
+                    self.status?.items.append(Task(taskName: string, status: (self.status?.name!)!))
+                    self.tableView.insertRows(at: [IndexPath(row: self.status!.items.count - 1 , section: 0)], with: .automatic)
                     self.tableView.endUpdates()
                     break
                     
@@ -137,7 +143,7 @@ extension BoardCollectionViewCell: UITableViewDropDelegate {
     }
     
     func removeSourceTableData(localContext: Any?) {
-        if let (dataSource, sourceIndexPath, tableView) = localContext as? (Task, IndexPath, UITableView) {
+        if let (dataSource, sourceIndexPath, tableView) = localContext as? (Status, IndexPath, UITableView) {
             tableView.beginUpdates()
             dataSource.items.remove(at: sourceIndexPath.row)
             tableView.deleteRows(at: [sourceIndexPath], with: .automatic)

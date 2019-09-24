@@ -15,24 +15,21 @@ class Task: Encodable, Mappable
     var taskID: String? = ""
     var taskName: String? = ""
     var status: String? = ""
-    var items = [String]()
     var userID: String = ""
     
     required init?(map: Map) {
     }
     
-    init(taskName: String, items: [String])
+    init(taskName: String,status: String)
     {
         self.taskName = taskName
         self.taskID = ""
-        self.status = "good"
-        self.items = items
+        self.status = status
     }
     func mapping(map: Map) {
         self.taskID <- map["taskID"]
         self.taskName <- map["taskName"]
         self.status <- map["status"]
-        self.userID <- map["userID"]
     }
     
     
