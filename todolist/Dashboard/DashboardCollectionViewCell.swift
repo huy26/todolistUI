@@ -10,5 +10,7 @@ import UIKit
 
 class DashboardCollectionViewCell: UICollectionViewCell {
     
-    @IBOutlet weak var Testlabel: UILabel!
+   
+    @IBOutlet weak var textLabel: UILabel!
+    
 }

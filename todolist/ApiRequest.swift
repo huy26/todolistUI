@@ -5,7 +5,6 @@
 //  Created by Mac on 16/09/2019.
 //  Copyright © 2019 Mac. All rights reserved.
 //
-
 import Foundation
 import Alamofire
 import Firebase
@@ -13,11 +12,13 @@ import SwiftyJSON
 import AlamofireObjectMapper
 
 
+//let url = "http://192.168.2.48:4000/api/user"
 let url = "http://103.221.223.126:4000/api/user"
 
 
 func getUserAPI(){
-    let data = User(firstName: "", lastName: "", userPhone: "", birthDay: "", avatarURL: "", email: "")
+    //let data = User(firstName: "", lastName: "", userPhone: "", birthDay: "", avatarURL: "", email: "")
+    var data: User?
     let currentUser = Auth.auth().currentUser
     currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
         if error != nil {
@@ -30,13 +31,19 @@ func getUserAPI(){
         
         //let idToken = returnFirebaseToken()
         let header: HTTPHeaders = [
-            "tokenIDS": "\(idToken as! String)",
+            "tokenID": "\(idToken as! String)",
         ]
-        AF.request(url, method: .get, parameters: data,encoder: URLEncodedFormParameterEncoder(destination: .httpBody), headers: header).responseData(completionHandler: { data in
-            print("==> Raw Data \(data)")
-        }).responseJSON(completionHandler: { dataJson in
-            print("==> JSON Data: \(dataJson)")
-        })
+        AF.request(url, method: .get,parameters: data,encoder: URLEncodedFormParameterEncoder(destination: .httpBody), headers: header).responseData(completionHandler: { response in
+            switch response.result {
+            case .success(let string):
+                debugPrint("Request success \(string)")
+            //                    return string.replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "")
+            case .failure(let error):
+                debugPrint(error)
+                break
+            }}).responseJSON(completionHandler: { dataJson in
+                print("==> JSON Data: \(dataJson)")
+            })
         print(idToken)
         print("Get user completed")
     }
@@ -96,7 +103,6 @@ func readBoardAPI(onCompleted: @escaping ((Error?, [Board]?)-> Void)) {
     var board = Board(boardName: "", items: [""]) // alo alo
     //Board.setBoardCount(value: -1)
     var arrayboard: [Board]?
-    var returnboard = [board]
     let currentUser = Auth.auth().currentUser
     currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
         if error != nil {
@@ -140,11 +146,11 @@ func readBoardAPI(onCompleted: @escaping ((Error?, [Board]?)-> Void)) {
                 if  let status = response.response?.statusCode {
                     switch(response.result){
                     case let .success(value):
-                        returnboard = value
                         Board.resetBoardCount(value: value.count)
                         print("number of board ger from api: \(Board.getBoardCount())")
                         for item in value {
                             debugPrint("BOARD ID: \(item.boardID)")
+                            debugPrint("Board detail: \(item.detail)")
                         }
                         onCompleted(nil, value)
                         break
@@ -222,7 +228,7 @@ func deleteBoardAPI(board: Board) {
         print(board.boardID)
         
         guard let newurl = URL(string: "http://103.221.223.126:4000/api/user/board") else { return }
-     
+        
         AF.request(
             newurl,
             method: .delete,
@@ -245,6 +251,49 @@ func deleteBoardAPI(board: Board) {
         print("http resquest succeed")
     }
 }
+
+func updateBoardAPI(board: Board, newName: String) {
+    let currentUser = Auth.auth().currentUser
+    currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
+        if error != nil {
+            print("get token failed")
+            return;
+        }
+        
+        guard let idToken = idToken else { return }
+        // Send token to your backend via HTTPS
+        // ...
+        //let idToken = returnFirebaseToken()
+        let header: HTTPHeaders = [
+            "tokenID": idToken,
+        ]
+        print(board.boardID)
+        
+        guard let newurl = URL(string: "http://103.221.223.126:4000/api/user/board") else { return }
+        board.changeBoardName(value: newName)
+        AF.request(
+            newurl,
+            method: .put,
+            parameters: board,
+            encoder: URLEncodedFormParameterEncoder(destination: .httpBody),
+            headers: header
+            )
+            .responseString(completionHandler: { data in
+                if let responseData = data.data {
+                    let responseString = String(data: responseData, encoding: .utf8)
+                    print("Response String \(responseString)")
+                }
+                
+                print(data.response?.statusCode)
+                print("==> Raw Data \(data)")
+            }).responseJSON(completionHandler: { response in
+                debugPrint(response)
+            })
+        print(idToken)
+        print("http resquest succeed")
+    }
+}
+
 
 func uploadtaskAPI(boardID: String, task: Task)
 {
@@ -270,7 +319,6 @@ func readTaskApi(boardID: String,onCompleted: @escaping ((Error?, [Task]?)-> Voi
 {
     var task = Task(taskName: "",status: "")
     var taskarray: [Task]?
-    var returntask = [task]
     let currentuser = Auth.auth().currentUser
     currentuser?.getIDTokenForcingRefresh(true) { (tokenID, error) in
         if error != nil
@@ -283,27 +331,27 @@ func readTaskApi(boardID: String,onCompleted: @escaping ((Error?, [Task]?)-> Voi
         AF.request(url + "/board/\(boardID)/tasks", method: .get, parameters: taskarray , encoder: URLEncodedFormParameterEncoder.default, headers: headers).responseString{ (response) in
             switch response.result {
             case let .success(string):
-                    debugPrint("Request success \(string)")
+                debugPrint("Request success \(string)")
+                break
+            case let .failure(error):
+                debugPrint(error)
+                break
+            }
+            }.responseArray{ (response: DataResponse<[Task]>) in
+                switch response.result {
+                case let .success(value):
+                    print(value.count)
+                    for item in value
+                    {
+                        debugPrint("TASK ID \(item.taskID)")
+                    }
+                    onCompleted(nil, value)
                     break
-            case let .failure(error):
-                debugPrint(error)
-                break
-            }
-        }.responseArray{ (response: DataResponse<[Task]>) in
-            switch response.result {
-            case let .success(value):
-                print(value.count)
-                for item in value
-                {
-                    debugPrint("TASK ID \(item.taskID)")
+                case let .failure(error):
+                    debugPrint(error)
+                    onCompleted(error, nil)
+                    break
                 }
-                onCompleted(nil, value)
-                break
-            case let .failure(error):
-                debugPrint(error)
-                onCompleted(error, nil)
-                break
-            }
         }
     }
 }

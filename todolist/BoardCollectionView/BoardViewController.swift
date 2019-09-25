@@ -188,6 +188,9 @@ extension BoardViewController: UICollectionViewDataSource, UICollectionViewDeleg
         if collectionView == checkCollectionview{
             let cell = checkCollectionview.dequeueReusableCell(withReuseIdentifier: "Status", for: indexPath) as! StatusCollectionViewCell
             cell.number.text = status[indexPath.item].name
+            cell.layer.cornerRadius = 15
+            cell.layer.borderWidth = 1
+            cell.layer.borderColor = UIColor.orange.cgColor
             cell.backgroundColor = UIColor.white
             return cell
         

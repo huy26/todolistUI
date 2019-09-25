@@ -22,12 +22,13 @@
 		048B54A4232611B400F4E4FC /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048B54A3232611B400F4E4FC /* TableViewCell.swift */; };
 		0491CBD32330D9AC00040E51 /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0491CBD22330D9AC00040E51 /* ForgotPasswordViewController.swift */; };
 		0498DBED2328ED70005C5666 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0498DBEC2328ED70005C5666 /* Board.swift */; };
-		04F989642338C81800A062C4 /* checkCollectionViewCell 16-13-23-903.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F989612338C81800A062C4 /* checkCollectionViewCell 16-13-23-903.swift */; };
-		04F989652338C81800A062C4 /* DashboardCollectionViewCell 16-13-23-874.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F989622338C81800A062C4 /* DashboardCollectionViewCell 16-13-23-874.swift */; };
-		04F989662338C81800A062C4 /* DashboardViewController 16-13-23-891.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F989632338C81800A062C4 /* DashboardViewController 16-13-23-891.swift */; };
 		04F989682338D5ED00A062C4 /* Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F989672338D5ED00A062C4 /* Status.swift */; };
 		04FA8FCF232F720C00EFEA29 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FA8FCE232F720C00EFEA29 /* User.swift */; };
 		04FA8FD1232F7E1E00EFEA29 /* ApiRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FA8FD0232F7E1E00EFEA29 /* ApiRequest.swift */; };
+		04FC1595233B5ECE0091FC4E /* checkCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FC1592233B5ECE0091FC4E /* checkCollectionViewCell.swift */; };
+		04FC1596233B5ECE0091FC4E /* DashboardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FC1593233B5ECE0091FC4E /* DashboardCollectionViewCell.swift */; };
+		04FC1597233B5ECE0091FC4E /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FC1594233B5ECE0091FC4E /* DashboardViewController.swift */; };
+		04FC1599233B5FE00091FC4E /* boardDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FC1598233B5FE00091FC4E /* boardDetail.swift */; };
 		19487009F44A812F71221642 /* Pods_todolist.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCD6641ED4628F3A1B0A7E29 /* Pods_todolist.framework */; };
 /* End PBXBuildFile section */
 
@@ -49,12 +50,13 @@
 		048B54A3232611B400F4E4FC /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		0491CBD22330D9AC00040E51 /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
 		0498DBEC2328ED70005C5666 /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
-		04F989612338C81800A062C4 /* checkCollectionViewCell 16-13-23-903.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "checkCollectionViewCell 16-13-23-903.swift"; sourceTree = "<group>"; };
-		04F989622338C81800A062C4 /* DashboardCollectionViewCell 16-13-23-874.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DashboardCollectionViewCell 16-13-23-874.swift"; sourceTree = "<group>"; };
-		04F989632338C81800A062C4 /* DashboardViewController 16-13-23-891.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DashboardViewController 16-13-23-891.swift"; sourceTree = "<group>"; };
 		04F989672338D5ED00A062C4 /* Status.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Status.swift; sourceTree = "<group>"; };
 		04FA8FCE232F720C00EFEA29 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		04FA8FD0232F7E1E00EFEA29 /* ApiRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiRequest.swift; sourceTree = "<group>"; };
+		04FC1592233B5ECE0091FC4E /* checkCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = checkCollectionViewCell.swift; sourceTree = "<group>"; };
+		04FC1593233B5ECE0091FC4E /* DashboardCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardCollectionViewCell.swift; sourceTree = "<group>"; };
+		04FC1594233B5ECE0091FC4E /* DashboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardViewController.swift; sourceTree = "<group>"; };
+		04FC1598233B5FE00091FC4E /* boardDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = boardDetail.swift; sourceTree = "<group>"; };
 		1766941EBC64548E0D0C76EF /* Pods-todolist.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-todolist.debug.xcconfig"; path = "Target Support Files/Pods-todolist/Pods-todolist.debug.xcconfig"; sourceTree = "<group>"; };
 		B0EF9BB2360CA73F00409F2E /* Pods-todolist.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-todolist.release.xcconfig"; path = "Target Support Files/Pods-todolist/Pods-todolist.release.xcconfig"; sourceTree = "<group>"; };
 		DCD6641ED4628F3A1B0A7E29 /* Pods_todolist.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_todolist.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -127,6 +129,7 @@
 				0498DBEC2328ED70005C5666 /* Board.swift */,
 				043B6BC42331EF0700F264E8 /* Task.swift */,
 				04F989672338D5ED00A062C4 /* Status.swift */,
+				04FC1598233B5FE00091FC4E /* boardDetail.swift */,
 			);
 			path = DataClass;
 			sourceTree = "<group>";
@@ -134,9 +137,9 @@
 		04F989602338C7E100A062C4 /* Dashboard */ = {
 			isa = PBXGroup;
 			children = (
-				04F989612338C81800A062C4 /* checkCollectionViewCell 16-13-23-903.swift */,
-				04F989622338C81800A062C4 /* DashboardCollectionViewCell 16-13-23-874.swift */,
-				04F989632338C81800A062C4 /* DashboardViewController 16-13-23-891.swift */,
+				04FC1592233B5ECE0091FC4E /* checkCollectionViewCell.swift */,
+				04FC1593233B5ECE0091FC4E /* DashboardCollectionViewCell.swift */,
+				04FC1594233B5ECE0091FC4E /* DashboardViewController.swift */,
 			);
 			path = Dashboard;
 			sourceTree = "<group>";
@@ -277,22 +280,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				040891DC232254E50025EE37 /* ViewController.swift in Sources */,
+				04FC1596233B5ECE0091FC4E /* DashboardCollectionViewCell.swift in Sources */,
 				04FA8FCF232F720C00EFEA29 /* User.swift in Sources */,
 				042E52012334C76E00030E5E /* BoardCollectionViewCell.swift in Sources */,
 				04F989682338D5ED00A062C4 /* Status.swift in Sources */,
 				04FA8FD1232F7E1E00EFEA29 /* ApiRequest.swift in Sources */,
 				040891DA232254E50025EE37 /* AppDelegate.swift in Sources */,
-				04F989662338C81800A062C4 /* DashboardViewController 16-13-23-891.swift in Sources */,
+				04FC1595233B5ECE0091FC4E /* checkCollectionViewCell.swift in Sources */,
 				048B54A4232611B400F4E4FC /* TableViewCell.swift in Sources */,
 				040891EC23225F1D0025EE37 /* SignupViewViewController.swift in Sources */,
-				04F989642338C81800A062C4 /* checkCollectionViewCell 16-13-23-903.swift in Sources */,
 				0491CBD32330D9AC00040E51 /* ForgotPasswordViewController.swift in Sources */,
+				04FC1599233B5FE00091FC4E /* boardDetail.swift in Sources */,
 				0498DBED2328ED70005C5666 /* Board.swift in Sources */,
 				042E52032334C76E00030E5E /* BoardCollectionViewController.swift in Sources */,
 				0424541623361B7E00A0230F /* BoardViewController.swift in Sources */,
-				04F989652338C81800A062C4 /* DashboardCollectionViewCell 16-13-23-874.swift in Sources */,
 				042E52002334C76E00030E5E /* StatusCollectionViewCell.swift in Sources */,
 				043B6BC52331EF0700F264E8 /* Task.swift in Sources */,
+				04FC1597233B5ECE0091FC4E /* DashboardViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

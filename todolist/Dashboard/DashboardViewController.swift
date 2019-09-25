@@ -9,9 +9,12 @@
 import UIKit
 import Firebase
 import FirebaseAuth
+import Foundation
 
 class DashboardViewController: UIViewController {
     //var boards = [Board(boardName: "Test", items: [])]
+    
+    
     var boards = [Board]()
     var horizonalBarLeftAnchorConstraint: NSLayoutConstraint?
 
@@ -20,6 +23,7 @@ class DashboardViewController: UIViewController {
     @IBOutlet weak var helloUserName: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
    
+    @IBOutlet weak var calendarLabel: UILabel!
     @IBOutlet weak var checkcollectionview: UICollectionView!
     @IBOutlet weak var addText: UITextField!
     
@@ -27,23 +31,15 @@ class DashboardViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        let selectedIndexPath =   NSIndexPath(item: 0, section: 0)
-        checkcollectionview.selectItem(at: selectedIndexPath as IndexPath, animated: false, scrollPosition: [])
-        
+        let selectedIndexPath = NSIndexPath(item: 0, section: 0)
+         checkcollectionview.selectItem(at: selectedIndexPath as IndexPath, animated: false, scrollPosition: [])
         setupHorizonalBar()
         print("check number of boards: \(Board.count)")
-        if User.toPrint == "" {
-                  User.toPrint = "Hello. "
-              } else {
-              self.helloUserName.text = User.toPrint
-              print("User email: \(User.toPrint)")
-              }
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
         //_flag = false
         readBoardAPI { (error, boards) in
             if let error = error {
@@ -58,6 +54,14 @@ class DashboardViewController: UIViewController {
                 return
             }
         }
+        if User.toPrint == "" {
+                  User.toPrint = "Hello, "
+              } else {
+              self.helloUserName.text = User.toPrint
+              print("User email: \(User.toPrint)")
+              }
+        getCurrentDateTime()
+        
     }
     
     private func onReceivedBoards(boards: [Board]) {
@@ -103,13 +107,20 @@ class DashboardViewController: UIViewController {
     }
 
     func addBoard (){
-        if !addText.text!.isEmpty {
-            let newboard = Board(boardName: addText.text!, items: [])
+        let alertController = UIAlertController(title: "Add Board", message: nil, preferredStyle: .alert)
+        alertController.addTextField{(textField) in
+            textField.placeholder = "Board Name"
+        }
+        alertController.addAction(UIAlertAction(title: "Add", style: .default, handler: { (_) in
+            guard let text = alertController.textFields?.first?.text, !text.isEmpty else {
+                return
+            }
+            let newboard = Board(boardName: text, items: [])
             self.boards.append(newboard)
             Board.setBoardCount(value: 1)
             print(Board.count)
-            print(boards.count)
-            let indexPath = IndexPath(row: boards.count - 1, section: 0)
+            print(self.boards.count)
+            let indexPath = IndexPath(row: self.boards.count - 1, section: 0)
             print("number of board after added: \(Board.count)")
             print("indexPath: \(indexPath)")
             self.checkcollectionview.insertItems(at: [indexPath])
@@ -118,7 +129,10 @@ class DashboardViewController: UIViewController {
             self.collectionView.insertItems(at: [indexPath])
             self.collectionView.scrollToItem(at: indexPath, at: UICollectionView.ScrollPosition.centeredHorizontally, animated: true)
             uploadBoardAPI(board: newboard)
-        }
+        }))
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        present(alertController, animated: true)
+        
     }
 
     func setupHorizonalBar () {
@@ -149,8 +163,8 @@ extension DashboardViewController: UICollectionViewDataSource,UICollectionViewDe
         else
         {
         let vc = storyboard?.instantiateViewController(withIdentifier: "boarddetail") as! BoardViewController
-            vc.boardID = boards[indexPath.item].boardID!
-        self.navigationController?.pushViewController(vc, animated: true)
+            vc.boardID = self.boards[indexPath.item].boardID!
+            self.navigationController?.pushViewController(vc, animated: true)
         }
         
     }
@@ -168,6 +182,9 @@ extension DashboardViewController: UICollectionViewDataSource,UICollectionViewDe
         let cell = checkcollectionview.dequeueReusableCell(withReuseIdentifier: "check", for: indexPath) as? checkCollectionViewCell
            // cell?.number.text = boards[indexPath.item]
             print(indexPath.item)
+            cell?.layer.cornerRadius = 15
+            cell?.layer.borderWidth = 1
+            cell?.layer.borderColor = UIColor.orange.cgColor
         cell?.number.text = boards[indexPath.item].boardName
         cell?.backgroundColor = UIColor.white
         return cell!
@@ -175,8 +192,21 @@ extension DashboardViewController: UICollectionViewDataSource,UICollectionViewDe
         else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellID", for: indexPath) as? DashboardCollectionViewCell
            // cell?.Testlabel.text = item[indexPath.item]
+            
             print(indexPath.item)
-            cell?.Testlabel.text = boards[indexPath.item].boardName
+            var text = ""
+            for items in boards[indexPath.item].detail{
+                let totalTask = boards[indexPath.item].totalTasks
+                print("status: \(items.status)")
+                print("number of this status: \(items.count)")
+                let itemText = "\(items.status!): \(items.count!)/\(totalTask)\n"
+                text = String(format: "%@ %@", text, itemText)
+                
+            }
+            cell?.layer.cornerRadius = 20
+            cell?.layer.borderWidth = 1
+            cell?.layer.borderColor = UIColor.orange.cgColor
+            cell?.textLabel.text = text
             return cell!
         }
         /*else {
@@ -186,6 +216,9 @@ extension DashboardViewController: UICollectionViewDataSource,UICollectionViewDe
         }*/
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        if collectionView == self.checkcollectionview {
+            return 5
+        }
         return 0
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
@@ -202,6 +235,13 @@ extension DashboardViewController: UICollectionViewDataSource,UICollectionViewDe
         
     }
    
+    func getCurrentDateTime() {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .long
+        formatter.dateFormat = "EE, dd MMM"
+        let str = formatter.string(from: Date())
+        calendarLabel.text = str
+    }
     
 }
 
