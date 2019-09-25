@@ -3,7 +3,7 @@ import MobileCoreServices
 class BoardCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var tableView: UITableView!
-    var task: Task?
+    //var task: Task?
     weak var parentVC: BoardViewController?
     var status: Status?
     var boardID: String?
@@ -86,7 +86,7 @@ extension BoardCollectionViewCell: UITableViewDragDelegate {
         let itemProvider = NSItemProvider(item: stringData as NSData, typeIdentifier: kUTTypePlainText as String)
         let dragItem = UIDragItem(itemProvider: itemProvider)
         session.localContext = (status, indexPath, tableView)
-
+        deleteTaskAPI(task: status.items[indexPath.item], boardID: self.boardID!)
         return [dragItem]
     }
 
@@ -94,13 +94,13 @@ extension BoardCollectionViewCell: UITableViewDragDelegate {
 extension BoardCollectionViewCell: UITableViewDropDelegate {
     
     func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {
+       
         if coordinator.session.hasItemsConforming(toTypeIdentifiers: [kUTTypePlainText as String]) {
             coordinator.session.loadObjects(ofClass: NSString.self) { (items) in
                 guard let string = items.first as? String else {
                     return
                 }
                 var updatedIndexPaths = [IndexPath]()
-                
                 switch (coordinator.items.first?.sourceIndexPath, coordinator.destinationIndexPath) {
                 case (.some(let sourceIndexPath), .some(let destinationIndexPath)):
                     // Same Table View
@@ -112,14 +112,16 @@ extension BoardCollectionViewCell: UITableViewDropDelegate {
                     self.tableView.beginUpdates()
                     self.status?.items.remove(at: sourceIndexPath.row)
                     self.status?.items.insert(Task(taskName: string, status: (self.status?.name!)!), at: destinationIndexPath.row)
+                    
                     self.tableView.reloadRows(at: updatedIndexPaths, with: .automatic)
                     self.tableView.endUpdates()
                     break
                     
                 case (nil, .some(let destinationIndexPath)):
                     // Move data from a table to another table
-                    self.removeSourceTableData(localContext: coordinator.session.localDragSession?.localContext)
+                   self.removeSourceTableData(localContext: coordinator.session.localDragSession?.localContext)
                     self.tableView.beginUpdates()
+                   let indexpath = self.tableView.indexPathForSelectedRow
                     self.status?.items.insert(Task(taskName: string, status: (self.status?.name!)!), at: destinationIndexPath.row)
                     self.tableView.insertRows(at: [destinationIndexPath], with: .automatic)
                     self.tableView.endUpdates()
@@ -138,8 +140,12 @@ extension BoardCollectionViewCell: UITableViewDropDelegate {
                 default: break
                     
                 }
+                uploadtaskAPI(boardID: self.boardID!, task: Task(taskName: string, status: (self.status?.name!)!))
+                
             }
+            
         }
+        
     }
     
     func removeSourceTableData(localContext: Any?) {

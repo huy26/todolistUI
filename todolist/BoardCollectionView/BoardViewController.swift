@@ -17,6 +17,7 @@ class BoardViewController: UIViewController {
     
     var status = [Status]()
     
+    @IBOutlet weak var tableView: UITableView!
     var horizonalBarLeftAnchorConstraint: NSLayoutConstraint?
 
     @IBOutlet weak var checkCollectionview: BoardCollectionViewController!
@@ -46,14 +47,14 @@ class BoardViewController: UIViewController {
                 self.onreciveTask(tasks: tasks)
                 self.collectionView.reloadData()
                 self.checkCollectionview.reloadData()
-                self.checkStatus()
+                self.createStatus()
                 return
             }
         }
         
     }
     
-    func checkStatus ()
+    func createStatus ()
     {
         for j in tasks
         {
@@ -70,6 +71,22 @@ class BoardViewController: UIViewController {
                 status.append(Status(name: j.status!, items: [j]))
             }
         }
+    }
+    func checkStatus() -> Bool
+    {
+        var check = true
+        for j in tasks
+        {
+            
+            for i in status          {
+                if j.status == i.name
+                {
+                    check = false
+                    return check
+                }
+            }
+        }
+        return check
     }
     func getonTaskerror (error: Error)
     {
@@ -124,10 +141,7 @@ class BoardViewController: UIViewController {
     
         }
         @objc func addListTapped(_ sender: Any) {
-            let alertController = UIAlertController(title: "Add Task", message: nil, preferredStyle: .alert)
-            alertController.addTextField{(textField) in
-                textField.placeholder = "Task Name"
-            }
+            let alertController = UIAlertController(title: "Add Status", message: nil, preferredStyle: .alert)
             alertController.addTextField{(textField) in
                 textField.placeholder = "Status"
             }
@@ -135,18 +149,15 @@ class BoardViewController: UIViewController {
                 guard let text = alertController.textFields![0].text, !text.isEmpty else {
                     return
                 }
-                guard let text2 = alertController.textFields![1].text, !text2.isEmpty else
-                {return}
 
-                self.tasks.append(Task(taskName: text,status: text2))
-                self.status.append(Status(name: text2, items: [Task(taskName: text, status: text2)]))
+                self.status.append(Status(name: text, items: []))
                 let addedIndexPath = IndexPath(item: self.status.count - 1, section: 0)
+               
                 self.checkCollectionview.insertItems(at: [addedIndexPath])
                 self.checkCollectionview.scrollToItem(at: addedIndexPath, at: UICollectionView.ScrollPosition.centeredHorizontally, animated: true)
                 self.checkCollectionview.selectItem(at: addedIndexPath, animated: true, scrollPosition: UICollectionView.ScrollPosition.centeredHorizontally)
                 self.collectionView.insertItems(at: [addedIndexPath])
                 self.collectionView.scrollToItem(at: addedIndexPath, at: UICollectionView.ScrollPosition.centeredHorizontally, animated: true)
-                uploadtaskAPI(boardID: self.boardID,task: Task(taskName: text,status: text2))
             }))
 
             alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))

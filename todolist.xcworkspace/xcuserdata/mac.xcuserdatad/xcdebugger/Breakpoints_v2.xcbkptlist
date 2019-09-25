@@ -11,12 +11,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "todolist/BoardCollectionView/BoardViewController.swift"
-            timestampString = "591009802.382816"
+            timestampString = "591017065.879559"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "65"
-            endingLineNumber = "65"
-            landmarkName = "checkStatus()"
+            startingLineNumber = "66"
+            endingLineNumber = "66"
+            landmarkName = "createStatus()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -27,11 +27,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "todolist/BoardCollectionView/BoardViewController.swift"
-            timestampString = "591009802.382926"
+            timestampString = "591017065.87968"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "241"
-            endingLineNumber = "241"
+            startingLineNumber = "252"
+            endingLineNumber = "252"
             landmarkName = "dropInteraction(_:performDrop:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -43,12 +43,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "todolist/BoardCollectionView/BoardViewController.swift"
-            timestampString = "591009802.3829859"
+            timestampString = "591017065.87975"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "247"
-            endingLineNumber = "247"
+            startingLineNumber = "258"
+            endingLineNumber = "258"
             landmarkName = "dropInteraction(_:performDrop:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "todolist/BoardCollectionView/BoardCollectionViewCell.swift"
+            timestampString = "591076080.79225"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "81"
+            endingLineNumber = "81"
+            landmarkName = "tableView(_:itemsForBeginning:at:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
