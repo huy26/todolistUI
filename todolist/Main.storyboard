@@ -455,9 +455,6 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="XE0-kr-PNV">
                                 <rect key="frame" x="24" y="354" width="366" height="302"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="302" id="ZVD-pm-M9o"/>
-                                </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="iF6-gw-2l1">
                                     <size key="itemSize" width="371" height="330"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -523,26 +520,27 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="SXi-2f-XdA" firstAttribute="trailing" secondItem="gj8-HO-4EP" secondAttribute="trailing" constant="20" id="1we-Wy-8tt"/>
-                            <constraint firstItem="TTa-7a-MoC" firstAttribute="leading" secondItem="SXi-2f-XdA" secondAttribute="leading" constant="24" id="3LI-92-ik5"/>
-                            <constraint firstItem="gj8-HO-4EP" firstAttribute="leading" secondItem="TTa-7a-MoC" secondAttribute="trailing" constant="253" id="3mQ-nO-pov"/>
                             <constraint firstItem="SXi-2f-XdA" firstAttribute="trailing" secondItem="9eH-2I-3AZ" secondAttribute="trailing" constant="24" id="4sJ-N2-820"/>
                             <constraint firstItem="LZ8-Pb-To6" firstAttribute="top" secondItem="SXi-2f-XdA" secondAttribute="top" constant="32" id="6ER-we-blN"/>
+                            <constraint firstItem="TTa-7a-MoC" firstAttribute="leading" secondItem="SXi-2f-XdA" secondAttribute="leading" constant="24" id="90X-cK-kxE"/>
                             <constraint firstItem="SXi-2f-XdA" firstAttribute="trailing" secondItem="XE0-kr-PNV" secondAttribute="trailing" constant="24" id="9E7-e9-bUU"/>
+                            <constraint firstItem="gj8-HO-4EP" firstAttribute="leading" secondItem="TTa-7a-MoC" secondAttribute="trailing" constant="253" id="Adz-09-KAy"/>
+                            <constraint firstItem="SXi-2f-XdA" firstAttribute="bottom" secondItem="TTa-7a-MoC" secondAttribute="bottom" constant="43" id="Ag0-wo-Awn"/>
                             <constraint firstItem="SXi-2f-XdA" firstAttribute="trailing" secondItem="Lrd-RA-h53" secondAttribute="trailing" constant="24" id="Fv7-Qj-fcx"/>
+                            <constraint firstItem="gj8-HO-4EP" firstAttribute="top" secondItem="9eH-2I-3AZ" secondAttribute="bottom" constant="24" id="GZd-bd-fm1"/>
+                            <constraint firstItem="TTa-7a-MoC" firstAttribute="top" secondItem="9eH-2I-3AZ" secondAttribute="bottom" constant="24" id="HiK-yu-xNs"/>
                             <constraint firstItem="LZ8-Pb-To6" firstAttribute="leading" secondItem="SXi-2f-XdA" secondAttribute="leading" constant="24" id="ObI-Iy-hEH"/>
-                            <constraint firstItem="SXi-2f-XdA" firstAttribute="bottom" secondItem="TTa-7a-MoC" secondAttribute="bottom" constant="43" id="Xd4-tO-M0G"/>
+                            <constraint firstItem="SXi-2f-XdA" firstAttribute="bottom" secondItem="gj8-HO-4EP" secondAttribute="bottom" constant="43" id="aUy-9L-qua"/>
                             <constraint firstItem="SH6-26-ZTC" firstAttribute="top" secondItem="Lrd-RA-h53" secondAttribute="bottom" constant="27" id="b4d-it-tMn"/>
-                            <constraint firstItem="SXi-2f-XdA" firstAttribute="bottom" secondItem="gj8-HO-4EP" secondAttribute="bottom" constant="43" id="eeJ-20-NVo"/>
+                            <constraint firstItem="SXi-2f-XdA" firstAttribute="trailing" secondItem="gj8-HO-4EP" secondAttribute="trailing" constant="20" id="btz-eK-6b1"/>
                             <constraint firstItem="9eH-2I-3AZ" firstAttribute="leading" secondItem="SXi-2f-XdA" secondAttribute="leading" constant="24" id="g9i-q6-hMb"/>
                             <constraint firstItem="SH6-26-ZTC" firstAttribute="leading" secondItem="SXi-2f-XdA" secondAttribute="leading" constant="20" id="iIm-YC-ahi"/>
                             <constraint firstItem="Lrd-RA-h53" firstAttribute="top" secondItem="LZ8-Pb-To6" secondAttribute="bottom" constant="8" id="j9j-fv-fSt"/>
-                            <constraint firstItem="TTa-7a-MoC" firstAttribute="top" secondItem="9eH-2I-3AZ" secondAttribute="bottom" constant="24" id="oYn-0N-orK"/>
+                            <constraint firstItem="XE0-kr-PNV" firstAttribute="top" secondItem="SH6-26-ZTC" secondAttribute="bottom" constant="41" id="ms7-Ww-Xhx"/>
                             <constraint firstItem="XE0-kr-PNV" firstAttribute="leading" secondItem="SXi-2f-XdA" secondAttribute="leading" constant="24" id="saS-aA-KWa"/>
                             <constraint firstItem="9eH-2I-3AZ" firstAttribute="top" secondItem="XE0-kr-PNV" secondAttribute="bottom" constant="30" id="snk-s9-oii"/>
                             <constraint firstItem="SXi-2f-XdA" firstAttribute="trailing" secondItem="LZ8-Pb-To6" secondAttribute="trailing" constant="116" id="urE-ap-aNQ"/>
                             <constraint firstItem="SXi-2f-XdA" firstAttribute="trailing" secondItem="SH6-26-ZTC" secondAttribute="trailing" constant="20" id="v48-1i-Ste"/>
-                            <constraint firstItem="gj8-HO-4EP" firstAttribute="leading" secondItem="TTa-7a-MoC" secondAttribute="trailing" constant="253" id="x5H-zo-Ahc"/>
                             <constraint firstItem="Lrd-RA-h53" firstAttribute="leading" secondItem="SXi-2f-XdA" secondAttribute="leading" constant="24" id="yb8-ZO-1L9"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="SXi-2f-XdA"/>
@@ -699,7 +697,7 @@
                                 </connections>
                             </collectionView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="14v-pL-ReA" customClass="BoardCollectionViewController" customModule="todolist" customModuleProvider="target">
-                                <rect key="frame" x="20" y="360" width="374" height="332"/>
+                                <rect key="frame" x="20" y="334" width="374" height="332"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="332" id="JvK-Zk-IBJ"/>
@@ -783,7 +781,7 @@
                             <constraint firstItem="hAF-hT-QTD" firstAttribute="trailing" secondItem="14v-pL-ReA" secondAttribute="trailing" constant="20" id="CKS-TT-P1c"/>
                             <constraint firstItem="14v-pL-ReA" firstAttribute="leading" secondItem="hAF-hT-QTD" secondAttribute="leading" constant="20" id="ETM-f1-2Ft"/>
                             <constraint firstItem="OzI-IV-lNk" firstAttribute="leading" secondItem="hAF-hT-QTD" secondAttribute="leading" constant="20" id="K0r-Gh-jex"/>
-                            <constraint firstItem="14v-pL-ReA" firstAttribute="top" secondItem="OzI-IV-lNk" secondAttribute="bottom" constant="41" id="fRU-r3-BDy"/>
+                            <constraint firstItem="14v-pL-ReA" firstAttribute="top" secondItem="OzI-IV-lNk" secondAttribute="bottom" constant="15" id="Kf4-kg-MSu"/>
                             <constraint firstItem="hAF-hT-QTD" firstAttribute="trailing" secondItem="TZM-OE-WRK" secondAttribute="trailing" constant="120" id="gQf-ae-2fl"/>
                             <constraint firstItem="1aq-m3-una" firstAttribute="top" secondItem="TZM-OE-WRK" secondAttribute="bottom" constant="8" id="geU-RP-U7k"/>
                             <constraint firstItem="hAF-hT-QTD" firstAttribute="trailing" secondItem="OzI-IV-lNk" secondAttribute="trailing" constant="20" id="nXP-0I-7Ld"/>
