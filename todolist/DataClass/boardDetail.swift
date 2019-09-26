@@ -8,7 +8,18 @@
 import Foundation
 import ObjectMapper
 
-class Detail: Encodable, Mappable {
+class Detail: NSObject, NSCoding, Encodable, Mappable {
+    required convenience init?(coder aDecoder: NSCoder) {
+        let status = aDecoder.decodeObject(forKey: "status") as! String
+        let count = aDecoder.decodeObject(forKey: "count") as! Int
+        self.init(status: status, count: count)
+    }
+    
+    func encode(with aCoder: NSCoder) {
+       aCoder.encode(status, forKey: "status")
+        aCoder.encode(count, forKey: "count")
+    }
+    
     
     //var title: String
     var status: String? = ""

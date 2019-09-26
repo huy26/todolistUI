@@ -9,7 +9,9 @@
 import UIKit
 
 class checkCollectionViewCell: UICollectionViewCell {
-    @IBOutlet weak var number: UILabel!
+    //@IBOutlet weak var number: UILabel!
+    
+    @IBOutlet weak var number: UITextField!
     override var isHighlighted: Bool{
         didSet{
             number.backgroundColor = isHighlighted ? UIColor(red:0.83, green:0.83, blue:0.83, alpha:1.0) : UIColor.white

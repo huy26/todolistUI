@@ -354,6 +354,7 @@ func readTaskApi(boardID: String,onCompleted: @escaping ((Error?, [Task]?)-> Voi
                 }
         }
     }
+    
 }
 
 func deleteTaskAPI(task: Task, boardID: String) {

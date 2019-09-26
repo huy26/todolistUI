@@ -547,7 +547,7 @@
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mln-kG-IIM">
-                                                                <rect key="frame" x="0.0" y="0.0" width="371" height="44"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="363" height="44"/>
                                                                 <state key="normal" title="Add"/>
                                                                 <connections>
                                                                     <action selector="addTapped:" destination="0Q4-b9-3k0" eventType="touchUpInside" id="ITH-K7-xFQ"/>
@@ -684,7 +684,7 @@
                                                 </label>
                                             </subviews>
                                         </view>
-                                        <color key="backgroundColor" red="0.96324414010000003" green="0.39574381710000001" blue="0.058216534549999997" alpha="0.90000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" red="0.96324414010000003" green="0.39574381710000001" blue="0.058216534549999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="pLW-U1-vf4" secondAttribute="trailing" id="Bp2-xK-cuo"/>
                                             <constraint firstItem="pLW-U1-vf4" firstAttribute="top" secondItem="vj0-5h-aqc" secondAttribute="top" id="Dgl-r9-TlK"/>
@@ -756,7 +756,7 @@
                                         </constraints>
                                         <size key="customSize" width="84" height="55"/>
                                         <connections>
-                                            <outlet property="number" destination="qwn-nl-6vo" id="7SC-eS-V0k"/>
+                                            <outlet property="number" destination="qwn-nl-6vo" id="sQ2-Ja-fBC"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>

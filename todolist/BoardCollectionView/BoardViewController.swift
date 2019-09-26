@@ -32,6 +32,11 @@ class BoardViewController: UIViewController {
         setupRemoveButtonItem()
         checkCollectionview.selectItem(at: selectedIndexPath as IndexPath, animated: false, scrollPosition: [])
         setupHorizonalBar()
+//        if let decoded  = UserDefaults.standard.data(forKey: "Tasks")
+//        {
+//            let decodedTasks = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! [Task]
+//            self.tasks = decodedTasks
+//        }
        // updateCollectionViewItem(with: view.bounds.size)
         
    }
@@ -44,7 +49,9 @@ class BoardViewController: UIViewController {
                 return
             }
             if let tasks = tasks {
+                //UserDefaults.standard.removeObject(forKey: "Tasks")
                 self.onreciveTask(tasks: tasks)
+
                 self.collectionView.reloadData()
                 self.checkCollectionview.reloadData()
                 self.createStatus()
@@ -53,7 +60,6 @@ class BoardViewController: UIViewController {
         }
         
     }
-    
     func createStatus ()
     {
         for j in tasks
@@ -95,6 +101,9 @@ class BoardViewController: UIViewController {
     func onreciveTask (tasks: [Task])
     {
         self.tasks = tasks
+//        let encodedData: Data = NSKeyedArchiver.archivedData(withRootObject: self.tasks)
+//        UserDefaults.standard.set(encodedData, forKey: "Tasks")
+//        UserDefaults.standard.synchronize()
     }
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)

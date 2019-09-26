@@ -10,8 +10,19 @@ import Foundation
 import Firebase
 import ObjectMapper
 
-class Task: Encodable, Mappable
+class Task: NSObject, Encodable, Mappable, NSCoding
 {
+    required convenience init?(coder aDecoder: NSCoder) {
+        let taskName = aDecoder.decodeObject(forKey: "taskName") as! String
+        let status = aDecoder.decodeObject(forKey: "status") as! String
+        self.init(taskName: taskName, status: status)
+    }
+    
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(taskName, forKey:  "taskName")
+        aCoder.encode(status, forKey:  "status")
+    }
+    
     var taskID: String? = ""
     var taskName: String? = ""
     var status: String? = ""
