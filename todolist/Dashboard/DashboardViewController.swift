@@ -52,6 +52,7 @@ class DashboardViewController: UIViewController {
                 return
             }
             if let boards = boards {
+                UserDefaults.standard.removeObject(forKey: "Board")
                 self.onReceivedBoards(boards: boards)
                 self.collectionView.reloadData()
                 self.checkcollectionview.reloadData()
@@ -76,10 +77,11 @@ class DashboardViewController: UIViewController {
     }
     
     private func onGetBoardError(error: Error) {
-        error.localizedDescription
+        print(error.localizedDescription)
     }
     
     @IBAction func onDeleteBoard(_ sender: Any) {
+        if boards.count != 0 {
         if let selectedCells = self.checkcollectionview.indexPathsForSelectedItems{
             let index = selectedCells.map {$0.item}.sorted().reversed()
             
@@ -94,6 +96,7 @@ class DashboardViewController: UIViewController {
             //self.checkcollectionview.reloadData()
             let selectedIndexPath = NSIndexPath(item: 0, section: 0)
             checkcollectionview.selectItem(at: selectedIndexPath as IndexPath, animated: false, scrollPosition: [])
+        }
         }
     }
     
@@ -137,6 +140,20 @@ class DashboardViewController: UIViewController {
             self.collectionView.insertItems(at: [indexPath])
             self.collectionView.scrollToItem(at: indexPath, at: UICollectionView.ScrollPosition.centeredHorizontally, animated: true)
             uploadBoardAPI(board: newboard)
+            readBoardAPI { (error, boards) in
+                if let error = error {
+                    self.onGetBoardError(error: error)
+                    print(error.localizedDescription)
+                    return
+                }
+                if let boards = boards {
+                    UserDefaults.standard.removeObject(forKey: "Board")
+                    self.onReceivedBoards(boards: boards)
+                    self.checkcollectionview.reloadData()
+                    self.collectionView.reloadData()
+                    return
+                }
+            }
         }))
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         present(alertController, animated: true)
@@ -302,7 +319,6 @@ extension DashboardViewController: UITextFieldDelegate {
             
             
             present(alertController,animated: true)
-            
             checkcollectionview.selectItem(at: index, animated: true, scrollPosition: [])
             scrolltoMenuIndex(menuIndex: index.item)
         }

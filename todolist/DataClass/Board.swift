@@ -21,7 +21,6 @@ class Board: NSObject, Encodable, Mappable, NSCoding {
         self.items = coder.decodeObject(forKey: "boardItems") as! [String]
         self.status = coder.decodeObject(forKey: "boardStatus") as! String
         self.totalTasks = coder.decodeInteger(forKey: "boardTotalTasks")
-        
         //self.userID = coder.decodeObject(forKey: "boardUserID") as! String
         //Board.count = coder.decodeObject(forKey: "boardCount") as! Int
         if let count = coder.decodeObject(forKey: "boardCount") {
@@ -33,8 +32,8 @@ class Board: NSObject, Encodable, Mappable, NSCoding {
         coder.encode(boardName, forKey: "boardName")
         coder.encode(boardID, forKey: "boardID")
         //coder.encode(detail, forKey: "boardDetail")
-//        let encodeData = NSKeyedArchiver.archivedData(withRootObject: self.detail)
-//        UserDefaults.standard.set(encodeData, forKey: "boardDetail")
+        let encodeData = NSKeyedArchiver.archivedData(withRootObject: self.detail)
+        UserDefaults.standard.set(encodeData, forKey: "boardDetail")
         coder.encode(items, forKey: "boardItems")
         //coder.encode(userID, forKey: "boardUserID")
         coder.encode(status, forKey: "boardStatus")

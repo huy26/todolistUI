@@ -17,6 +17,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var Signup: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.passwordTextField.delegate = self
+        self.usernameTextField.delegate = self
         // Do any additional setup after loading the view.
         let currentuser = Auth.auth().currentUser
         if currentuser != nil
@@ -49,3 +51,9 @@ class ViewController: UIViewController {
     }
 }
 
+extension ViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
+}

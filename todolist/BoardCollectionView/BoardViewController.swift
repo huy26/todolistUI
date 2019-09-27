@@ -14,9 +14,9 @@ import MobileCoreServices
 class BoardViewController: UIViewController {
     var tasks = [Task]()
     var boardID = ""
-    
+    static var taskID = ""
     var status = [Status]()
-    
+    var deleteTask = ""
     @IBOutlet weak var tableView: UITableView!
     var horizonalBarLeftAnchorConstraint: NSLayoutConstraint?
 
@@ -51,15 +51,16 @@ class BoardViewController: UIViewController {
             if let tasks = tasks {
                 //UserDefaults.standard.removeObject(forKey: "Tasks")
                 self.onreciveTask(tasks: tasks)
-
+                self.createStatus()
                 self.collectionView.reloadData()
                 self.checkCollectionview.reloadData()
-                self.createStatus()
                 return
             }
         }
         
     }
+    
+    
     func createStatus ()
     {
         for j in tasks
@@ -104,6 +105,10 @@ class BoardViewController: UIViewController {
 //        let encodedData: Data = NSKeyedArchiver.archivedData(withRootObject: self.tasks)
 //        UserDefaults.standard.set(encodedData, forKey: "Tasks")
 //        UserDefaults.standard.synchronize()
+    }
+    func receiveStatus (status: [Status])
+    {
+        self.status = status
     }
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
@@ -259,18 +264,23 @@ extension BoardViewController: UIDropInteractionDelegate {
                 }
                 
                 if let (dataSource, sourceIndexPath, tableView) = session.localDragSession?.localContext as? (Status, IndexPath, UITableView) {
+                    
                     tableView.beginUpdates()
+                    for i in self.tasks
+                    {
+                        print("Task:\(i.taskName) \(i.taskID) \(i.status)")
+                    }
                     let item = dataSource.items[sourceIndexPath.row]
                     dataSource.items.remove(at: sourceIndexPath.row)
+                    
                     if let item = self.tasks.first (where: { (task) -> Bool in
                         return task.taskID == item.taskID
-                    }){
-                        
-                    }
-                    deleteTaskAPI(task: item, boardID: self.boardID)
+                    }){}
                     //self.tasks.remove(at: sourceIndexPath.item)
                     tableView.deleteRows(at: [sourceIndexPath], with: .automatic)
                     tableView.endUpdates()
+                    deleteTaskAPI(task: item, boardID: self.boardID)
+                   
                 }
             }
         }

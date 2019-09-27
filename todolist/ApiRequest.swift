@@ -10,11 +10,12 @@ import Alamofire
 import Firebase
 import SwiftyJSON
 import AlamofireObjectMapper
+import UIKit
+import MobileCoreServices
 
 
 //let url = "http://192.168.2.48:4000/api/user"
 let url = "http://103.221.223.126:4000/api/user"
-
 
 func getUserAPI(){
     //let data = User(firstName: "", lastName: "", userPhone: "", birthDay: "", avatarURL: "", email: "")
@@ -227,7 +228,7 @@ func deleteBoardAPI(board: Board) {
         ]
         print(board.boardID)
         
-        guard let newurl = URL(string: "http://103.221.223.126:4000/api/user/board") else { return }
+        guard let newurl = URL(string: "http://103.221.223.126:4000/api/user/board/\(board.boardID as! String)") else { return }
         
         AF.request(
             newurl,
@@ -269,7 +270,7 @@ func updateBoardAPI(board: Board, newName: String) {
         ]
         print(board.boardID)
         
-        guard let newurl = URL(string: "http://103.221.223.126:4000/api/user/board") else { return }
+        guard let newurl = URL(string: "http://103.221.223.126:4000/api/user/board/\(board.boardID as! String)") else { return }
         board.changeBoardName(value: newName)
         AF.request(
             newurl,
@@ -308,10 +309,11 @@ func uploadtaskAPI(boardID: String, task: Task)
         let headers: HTTPHeaders = [
             "tokenID": tokenID
         ]
-        AF.request(url + "/board/\(boardID)/task", method: .post, parameters: task, encoder: JSONParameterEncoder.default, headers: headers).responseData(completionHandler: { data in
+        AF.request(url + "/board/\(boardID)/task", method: .post, parameters: task, encoder: URLEncodedFormParameterEncoder(destination: .httpBody), headers: headers).responseData(completionHandler: { data in
             print ("Data Response: \(data)")
-        }).responseJSON(completionHandler: { dataJSON in
-            debugPrint(dataJSON)
+            
+        }).responseJSON(completionHandler: { response in
+            debugPrint(response)
         })
     }
 }
@@ -372,7 +374,7 @@ func deleteTaskAPI(task: Task, boardID: String) {
         let header: HTTPHeaders = [
             "tokenID": idToken,
         ]
-        print(task.taskID)
+        print("task id: \(task.taskID)")
         
         //guard let newurl = URL(string: "http://103.221.223.126:4000/api/user/board") else { return }
         

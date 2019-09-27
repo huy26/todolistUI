@@ -43,6 +43,22 @@ class BoardCollectionViewCell: UICollectionViewCell {
             self.tableView.insertRows(at: [addedIndexPath], with: .automatic)
             self.tableView.scrollToRow(at: addedIndexPath, at: UITableView.ScrollPosition.bottom, animated: true)
             uploadtaskAPI(boardID: self.boardID!, task: Task(taskName: text, status: data.name!))
+            readTaskApi(boardID: self.boardID!, onCompleted: { (error, tasks) in
+                if let error = error {
+                    self.parentVC?.getonTaskerror(error: error)
+                    print(error.localizedDescription)
+                    return
+                }
+                if let tasks = tasks {
+                    UserDefaults.standard.removeObject(forKey: "Board")
+                    self.parentVC?.onreciveTask(tasks: tasks)
+                    
+                    self.parentVC?.status.last?.items.last?.taskID = tasks.last?.taskID
+                    self.parentVC?.checkCollectionview.reloadData()
+                    self.parentVC?.collectionView.reloadData()
+                    return
+                }
+            })
         }))
         
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))

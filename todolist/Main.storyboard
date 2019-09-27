@@ -95,7 +95,6 @@
                             <constraint firstItem="6ec-C2-XD6" firstAttribute="top" secondItem="Boj-cy-oyQ" secondAttribute="bottom" constant="8" id="08B-61-zWB"/>
                             <constraint firstItem="6ec-C2-XD6" firstAttribute="top" secondItem="Boj-cy-oyQ" secondAttribute="bottom" constant="8" id="1vn-xf-Oic"/>
                             <constraint firstItem="MVU-5c-LsB" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="45" id="2oa-WM-t78"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="bcS-UE-rcF" secondAttribute="trailing" constant="294" id="4S4-gg-xOy"/>
                             <constraint firstItem="ZKP-p5-FfM" firstAttribute="top" secondItem="9we-ou-Ote" secondAttribute="bottom" constant="4" id="5aX-ZL-1vH"/>
                             <constraint firstItem="zBb-kU-IIF" firstAttribute="top" secondItem="V7O-qy-Ori" secondAttribute="bottom" constant="25" id="8j8-WN-ZO1"/>
                             <constraint firstItem="V7O-qy-Ori" firstAttribute="top" secondItem="bcS-UE-rcF" secondAttribute="bottom" constant="8" id="Bh6-Ck-J0A"/>
@@ -103,7 +102,6 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="6ec-C2-XD6" secondAttribute="trailing" constant="46" id="FpB-al-W2G"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="V7O-qy-Ori" secondAttribute="trailing" constant="46" id="HPg-q3-yfW"/>
                             <constraint firstItem="V7O-qy-Ori" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="46" id="Iyo-rP-Vey"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="9we-ou-Ote" secondAttribute="trailing" constant="227" id="JCg-bQ-gx8"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="1ZO-g7-FML" secondAttribute="trailing" constant="145" id="Kie-o1-yIW"/>
                             <constraint firstItem="1ZO-g7-FML" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="145" id="N3M-MM-dKp"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="zBb-kU-IIF" secondAttribute="trailing" constant="134" id="O23-ei-l2E"/>
@@ -113,8 +111,6 @@
                             <constraint firstItem="Boj-cy-oyQ" firstAttribute="top" secondItem="ZKP-p5-FfM" secondAttribute="bottom" constant="35" id="SiG-WO-GoM"/>
                             <constraint firstItem="bcS-UE-rcF" firstAttribute="top" secondItem="6ec-C2-XD6" secondAttribute="bottom" constant="11" id="Sq3-Lg-Xsu"/>
                             <constraint firstItem="bcS-UE-rcF" firstAttribute="top" secondItem="6ec-C2-XD6" secondAttribute="bottom" constant="11" id="VeG-sI-92g"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ZKP-p5-FfM" secondAttribute="trailing" constant="185" id="WzT-lU-OOQ"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Boj-cy-oyQ" secondAttribute="trailing" constant="287" id="ZPm-Gb-I0g"/>
                             <constraint firstAttribute="bottom" secondItem="MVU-5c-LsB" secondAttribute="bottom" constant="27" id="dp6-rm-ZNo"/>
                             <constraint firstItem="9we-ou-Ote" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="103" id="g4G-MA-rkV"/>
                             <constraint firstItem="Boj-cy-oyQ" firstAttribute="top" secondItem="ZKP-p5-FfM" secondAttribute="bottom" constant="35" id="gkY-mq-8t7"/>
@@ -156,7 +152,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Finish"/>
                                 <connections>
-                                    <action selector="Finish:" destination="hxo-l8-Esh" eventType="touchUpInside" id="kQr-Q9-2eb"/>
+                                    <action selector="Finish:" destination="hxo-l8-Esh" eventType="touchUpInside" id="3lU-ef-t0p"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -263,10 +259,8 @@
                             <constraint firstItem="sNa-pg-gTW" firstAttribute="leading" secondItem="r3x-Ar-mbk" secondAttribute="leading" constant="134" id="YHo-mv-2gI"/>
                             <constraint firstItem="r3x-Ar-mbk" firstAttribute="trailing" secondItem="55H-CO-xhN" secondAttribute="trailing" constant="46" id="ZR5-su-LKg"/>
                             <constraint firstItem="N8V-Zw-EvW" firstAttribute="top" secondItem="Cbp-Te-6r3" secondAttribute="bottom" constant="11" id="dOf-qa-pFz"/>
-                            <constraint firstItem="r3x-Ar-mbk" firstAttribute="trailing" secondItem="xyX-al-0vu" secondAttribute="trailing" constant="185" id="gB7-xt-edb"/>
                             <constraint firstItem="1Cq-aF-86x" firstAttribute="top" secondItem="xyX-al-0vu" secondAttribute="bottom" constant="35" id="jKw-n1-Mxl"/>
                             <constraint firstItem="1Cq-aF-86x" firstAttribute="leading" secondItem="r3x-Ar-mbk" secondAttribute="leading" constant="48" id="ksM-SJ-ax7"/>
-                            <constraint firstItem="r3x-Ar-mbk" firstAttribute="trailing" secondItem="pwd-Ks-UGT" secondAttribute="trailing" constant="227" id="l3L-5x-cb2"/>
                             <constraint firstItem="Cbp-Te-6r3" firstAttribute="leading" secondItem="r3x-Ar-mbk" secondAttribute="leading" constant="46" id="mrj-8l-gHn"/>
                             <constraint firstItem="xyX-al-0vu" firstAttribute="leading" secondItem="r3x-Ar-mbk" secondAttribute="leading" constant="46" id="oSp-WL-ctR"/>
                             <constraint firstItem="xyX-al-0vu" firstAttribute="top" secondItem="pwd-Ks-UGT" secondAttribute="bottom" constant="4" id="ox1-wl-Yj5"/>

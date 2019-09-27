@@ -18,6 +18,9 @@ class SignupViewViewController: UIViewController {
     @IBOutlet weak var getstarted: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.usernameTextField.delegate = self
+        self.passwordTextField.delegate = self
+        self.confirmpasswordTextField.delegate = self
         getstarted.layer.cornerRadius = 10
         getstarted.layer.borderWidth = 1
         getstarted.layer.borderColor = UIColor.groupTableViewBackground.cgColor
@@ -75,4 +78,10 @@ class SignupViewViewController: UIViewController {
         self.present(homeViewcontroller, animated: true, completion: nil)
     }
 
+}
+extension SignupViewViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
 }
