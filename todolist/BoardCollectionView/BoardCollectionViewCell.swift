@@ -27,7 +27,7 @@ class BoardCollectionViewCell: UICollectionViewCell {
     }
     
     @IBAction func addTapped(_ sender: Any) {
-        let alertController = UIAlertController(title: "Add Item", message: nil, preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Add Task", message: nil, preferredStyle: .alert)
         alertController.addTextField(configurationHandler: nil)
         alertController.addAction(UIAlertAction(title: "Add", style: .default, handler: { (_) in
             guard let text = alertController.textFields?.first?.text, !text.isEmpty else {

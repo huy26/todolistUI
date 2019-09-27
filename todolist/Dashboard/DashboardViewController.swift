@@ -39,6 +39,9 @@ class DashboardViewController: UIViewController {
             checkcollectionview.reloadData()
             collectionView.reloadData()
         }
+        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController!.navigationBar.shadowImage = UIImage()
+        self.navigationController!.navigationBar.isTranslucent = true
         
     }
     
@@ -117,9 +120,9 @@ class DashboardViewController: UIViewController {
     }
     
     func addBoard (){
-        let alertController = UIAlertController(title: "Add Status", message: nil, preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Add Board", message: nil, preferredStyle: .alert)
         alertController.addTextField{(textField) in
-            textField.placeholder = "Status"
+            textField.placeholder = "Board Name"
         }
         alertController.addAction(UIAlertAction(title: "Add", style: .default, handler: { (_) in
             guard let text = alertController.textFields![0].text, !text.isEmpty else {
@@ -211,7 +214,7 @@ extension DashboardViewController: UICollectionViewDataSource,UICollectionViewDe
             let cell = checkcollectionview.dequeueReusableCell(withReuseIdentifier: "check", for: indexPath) as? checkCollectionViewCell
             // cell?.number.text = boards[indexPath.item]
             print(indexPath.item)
-            cell?.layer.cornerRadius = 25
+            cell?.layer.cornerRadius = 20
             cell?.layer.borderWidth = 1
             cell?.layer.borderColor = UIColor.orange.cgColor
             cell?.number.text = boards[indexPath.item].boardName
@@ -223,10 +226,9 @@ extension DashboardViewController: UICollectionViewDataSource,UICollectionViewDe
         else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellID", for: indexPath) as? DashboardCollectionViewCell
             // cell?.Testlabel.text = item[indexPath.item]
-            cell?.layer.cornerRadius = 0
+            cell?.layer.cornerRadius = 20
             cell?.layer.borderWidth = 0
             cell?.layer.borderColor = UIColor.orange.cgColor
-            print(indexPath.item)
             var text = ""
             for items in boards[indexPath.item].detail{
                 let totalTask = boards[indexPath.item].totalTasks
@@ -248,10 +250,7 @@ extension DashboardViewController: UICollectionViewDataSource,UICollectionViewDe
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        if collectionView == self.checkcollectionview {
-            return 5
-        }
-        return 0
+        return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {

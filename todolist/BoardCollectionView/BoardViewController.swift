@@ -20,6 +20,7 @@ class BoardViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     var horizonalBarLeftAnchorConstraint: NSLayoutConstraint?
 
+    @IBOutlet weak var Calendar: UILabel!
     @IBOutlet weak var checkCollectionview: BoardCollectionViewController!
     @IBOutlet weak var collectionView: BoardCollectionViewController!
     override func viewDidLoad() {
@@ -32,6 +33,10 @@ class BoardViewController: UIViewController {
         setupRemoveButtonItem()
         checkCollectionview.selectItem(at: selectedIndexPath as IndexPath, animated: false, scrollPosition: [])
         setupHorizonalBar()
+        getCurrentDateTime()
+        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController!.navigationBar.shadowImage = UIImage()
+        self.navigationController!.navigationBar.isTranslucent = true
 //        if let decoded  = UserDefaults.standard.data(forKey: "Tasks")
 //        {
 //            let decodedTasks = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! [Task]
@@ -58,6 +63,13 @@ class BoardViewController: UIViewController {
             }
         }
         
+    }
+    func getCurrentDateTime() {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .long
+        formatter.dateFormat = "EE, dd MMM"
+        let str = formatter.string(from: Date())
+        Calendar.text = str
     }
     
     
@@ -124,9 +136,11 @@ class BoardViewController: UIViewController {
             let button = UIButton(type: . system)
             button.setTitle("Delete", for: .normal)
             button.setTitleColor(.red, for: .normal)
+            button.frame.size = CGSize(width: 30,height: 30)
             button.addInteraction(UIDropInteraction(delegate: self))
             let removeBarButton = UIBarButtonItem(customView: button)
             toolbarItems?.append(removeBarButton)
+            
         }
         func setupBackbuttonItem() {
             let backButton = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(backtoBoard(_:)))
@@ -139,6 +153,7 @@ class BoardViewController: UIViewController {
         }
         func setupAddButtonItem() {
             let addButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addListTapped(_:)))
+            addButtonItem.tintColor = .white
             navigationItem.rightBarButtonItem = addButtonItem
         }
     
@@ -212,13 +227,15 @@ extension BoardViewController: UICollectionViewDataSource, UICollectionViewDeleg
             else
         {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! BoardCollectionViewCell
+            cell.layer.cornerRadius = 25
+            cell.layer.borderWidth = 0
             cell.setup(with: status[indexPath.item], boardID: self.boardID)
-        cell.parentVC = self
-        return cell
+            cell.parentVC = self
+            return cell
     }
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
+        return 1
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0

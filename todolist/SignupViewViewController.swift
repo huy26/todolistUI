@@ -26,6 +26,9 @@ class SignupViewViewController: UIViewController {
         getstarted.layer.borderColor = UIColor.groupTableViewBackground.cgColor
         passwordTextField.isSecureTextEntry = true
         confirmpasswordTextField.isSecureTextEntry = true
+        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController!.navigationBar.shadowImage = UIImage()
+        self.navigationController!.navigationBar.isTranslucent = true
         // Do any additional setup after loading the view.
     }
     

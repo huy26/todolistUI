@@ -28,6 +28,9 @@ class ViewController: UIViewController {
             self.present(homeViewController, animated: true, completion: nil)
         }
         passwordTextField?.isSecureTextEntry = true
+        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController!.navigationBar.shadowImage = UIImage()
+        self.navigationController!.navigationBar.isTranslucent = true
     }
     
     @IBAction func onSignup(_ sender: Any) {
