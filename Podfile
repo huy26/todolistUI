@@ -16,6 +16,12 @@ pod 'Alamofire'
 pod 'SwiftyJSON'
 pod 'AlamofireObjectMapper'
 # add pods for any other desired Firebase products
-# https://firebase.google.com/docs/ios/setup#available-pods
+# https://firebase.google.com/docs/ios/setup#available-pod
+end
 
+target 'OneSignalNotifactionServiceExtension' do
+  use_frameworks!
+  
+  pod 'OneSignal', '>= 2.6.2', '< 3.0'
+  
 end

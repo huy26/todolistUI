@@ -264,7 +264,7 @@ extension BoardViewController: UICollectionViewDataSource, UICollectionViewDeleg
 
     }
    
-} //sadqweqweasd
+} 
 
 extension BoardViewController: UIDropInteractionDelegate {
     

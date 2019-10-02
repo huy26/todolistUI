@@ -182,11 +182,6 @@ class DashboardViewController: UIViewController {
 
 extension DashboardViewController: UICollectionViewDataSource,UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
     
-    func scrolltoMenuIndex(menuIndex: Int){
-        let indexPath = NSIndexPath(item: menuIndex, section: 0)
-        collectionView?.scrollToItem(at: indexPath as IndexPath, at: [] , animated: true)
-    }
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         //        if collectionView == self.checkcollectionview{
@@ -198,14 +193,11 @@ extension DashboardViewController: UICollectionViewDataSource,UICollectionViewDe
         vc.boardID = self.boards[indexPath.item].boardID!
         self.navigationController?.pushViewController(vc, animated: true)
         //}
-        
     }
-    
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         //print("number of board: \(Board.getBoardCount())")
-        //return 2
-        print(boards.count)
+        print("number of items in section: \(boards.count)")
         return boards.count
     }
     
@@ -263,12 +255,16 @@ extension DashboardViewController: UICollectionViewDataSource,UICollectionViewDe
     }
     
     @objc func deleteBoard(sender: UIButton){
-        let indexPath: Int = sender.tag
-        deleteBoardAPI(board: boards[indexPath])
-        boards.remove(at: indexPath)
-        Board.setBoardCount(value: -1)
-        self.collectionView.reloadData()
-        
+        let alertController = UIAlertController(title: "Confirm Delete", message: "There is no way to undo this operation.", preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Delete", style: .destructive, handler:{ (_) in
+            let indexPath: Int = sender.tag
+            deleteBoardAPI(board: self.boards[indexPath])
+            self.boards.remove(at: indexPath)
+            Board.setBoardCount(value: -1)
+            self.collectionView.reloadData()
+        }))
+        alertController.addAction(UIAlertAction(title: "Cancle", style: .default, handler: nil))
+        self.present(alertController,animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -284,16 +280,22 @@ extension DashboardViewController: UICollectionViewDataSource,UICollectionViewDe
         horizonalBarLeftAnchorConstraint?.constant = scrollView.contentOffset.x / 4
     }
     
+//    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+//        let index = scrollView.contentOffset.y / scrollView.frame.height
+//        print("index: \(index)")
+//        let indexPath = IndexPath(item: Int(index + 0.5), section: 0)
+//        print("indexpath: \(indexPath)")
+//        self.collectionView.selectItem(at: indexPath, animated: true, scrollPosition: [])
+//    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         return CGSize(width: self.view.frame.size.width, height: 20)
     }
     
-    //    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-    //        let index = targetContentOffset.pointee.x / scrollView.frame.width
-    //        let indexPath = IndexPath(item: Int(index), section: 0)
-    //        checkcollectionview.selectItem(at: indexPath, animated: true, scrollPosition: [])
-    //
-    //    }
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//        let size = CGSize(width: view.frame.width, height: view.frame.height)
+//        return size
+//    }
     
     func getCurrentDateTime() {
         let formatter = DateFormatter()

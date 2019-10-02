@@ -12,6 +12,7 @@ import SwiftyJSON
 import AlamofireObjectMapper
 import UIKit
 import MobileCoreServices
+import OneSignal
 
 
 //let url = "http://192.168.2.48:4000/api/user"
@@ -44,6 +45,11 @@ func getUserAPI(){
                 break
             }}).responseJSON(completionHandler: { dataJson in
                 print("==> JSON Data: \(dataJson)")
+                
+                let dict = ["username": ""]
+                OneSignal.sendTags(dict)
+                
+                //OneSignal.sendTag("username", value: <#T##String!#>)
             })
         print(idToken)
         print("Get user completed")
