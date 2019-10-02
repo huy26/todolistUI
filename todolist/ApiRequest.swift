@@ -48,6 +48,7 @@ func getUserAPI(){
                 
                 let dict = ["username": ""]
                 OneSignal.sendTags(dict)
+                //OneSignal.deleteTag(dict)
                 
                 //OneSignal.sendTag("username", value: <#T##String!#>)
             })
