@@ -19,7 +19,7 @@ class Board: NSObject, Encodable, Mappable, NSCoding {
         }
         
         self.items = coder.decodeObject(forKey: "boardItems") as! [String]
-        self.status = coder.decodeObject(forKey: "boardStatus") as! String
+//        self.status = coder.decodeObject(forKey: "boardStatus") as! String
         self.totalTasks = coder.decodeInteger(forKey: "boardTotalTasks")
         //self.userID = coder.decodeObject(forKey: "boardUserID") as! String
         //Board.count = coder.decodeObject(forKey: "boardCount") as! Int

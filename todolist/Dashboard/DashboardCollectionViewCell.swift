@@ -10,8 +10,11 @@ import UIKit
 
 class DashboardCollectionViewCell: UICollectionViewCell {
     
-   
+    var btnTapAction: (() -> ())?
+    
     @IBOutlet weak var boardTitleLabel: UILabel!
     @IBOutlet weak var textLabel: UILabel!
+    
+    @IBOutlet weak var deleteBoardBtn: UIButton!
     
 }
