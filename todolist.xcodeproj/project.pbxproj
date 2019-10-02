@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04061FEC23435EBA0068B0BB /* Boards@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04061FEB23435EBA0068B0BB /* Boards@3x.png */; };
 		040891DA232254E50025EE37 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040891D9232254E50025EE37 /* AppDelegate.swift */; };
 		040891DC232254E50025EE37 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040891DB232254E50025EE37 /* ViewController.swift */; };
 		040891E1232254E60025EE37 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 040891E0232254E60025EE37 /* Assets.xcassets */; };
@@ -33,6 +34,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		04061FEB23435EBA0068B0BB /* Boards@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Boards@3x.png"; path = "Assets.xcassets/Boards@3x.png"; sourceTree = "<group>"; };
 		040891D6232254E50025EE37 /* todolist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = todolist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		040891D9232254E50025EE37 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		040891DB232254E50025EE37 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 			isa = PBXGroup;
 			children = (
 				040891D9232254E50025EE37 /* AppDelegate.swift */,
+				04061FEB23435EBA0068B0BB /* Boards@3x.png */,
 				04FA8FD0232F7E1E00EFEA29 /* ApiRequest.swift */,
 				04F989602338C7E100A062C4 /* Dashboard */,
 				0491CBCB23308B6300040E51 /* DataClass */,
@@ -226,6 +229,7 @@
 				040891E4232254E60025EE37 /* LaunchScreen.storyboard in Resources */,
 				042E51F92334C71C00030E5E /* Main.storyboard in Resources */,
 				0438E26E2333780E00BCBEC8 /* GoogleService-Info.plist in Resources */,
+				04061FEC23435EBA0068B0BB /* Boards@3x.png in Resources */,
 				040891E1232254E60025EE37 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

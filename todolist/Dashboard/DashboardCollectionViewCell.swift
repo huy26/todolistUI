@@ -11,6 +11,7 @@ import UIKit
 class DashboardCollectionViewCell: UICollectionViewCell {
     
    
+    @IBOutlet weak var boardTitleLabel: UILabel!
     @IBOutlet weak var textLabel: UILabel!
     
 }
