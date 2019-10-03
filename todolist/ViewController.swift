@@ -32,13 +32,13 @@ class ViewController: UIViewController {
 //        self.passwordTextField.delegate = self
 //        self.usernameTextField.delegate = self
 //        // Do any additional setup after loading the view.
-//        let currentuser = Auth.auth().currentUser
-//        if currentuser != nil
-//        {
-//            getUserAPI()
-//            let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "HomeVC") as! UINavigationController
-//            self.present(homeViewController, animated: true, completion: nil)
-//        }
+        let currentuser = Auth.auth().currentUser
+        if currentuser != nil
+        {
+            getUserAPI()
+            let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "HomeVC") as! UINavigationController
+            self.present(homeViewController, animated: true, completion: nil)
+        }
 //        passwordTextField?.isSecureTextEntry = true
 //        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), for: .default)
 //        self.navigationController!.navigationBar.shadowImage = UIImage()
@@ -124,6 +124,7 @@ class ViewController: UIViewController {
         }
         passwordTextField.borderStyle = .roundedRect
         passwordTextField.autocapitalizationType = .none
+        passwordTextField.isSecureTextEntry = true
     }
     
     func setupForgotBtn(){
@@ -136,7 +137,7 @@ class ViewController: UIViewController {
         forgotPasswordBtn.setTitleColor(.lightGray, for: .normal)
         forgotPasswordBtn.layer.cornerRadius = 10
         forgotPasswordBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .light)
-        //forgotPasswordBtn.addTarget(self, action: #selector(signinTapped(_:)), for: .touchUpInside)  // To-do : add function move to forgot password view
+        forgotPasswordBtn.addTarget(self, action: #selector(swithedToForgotView(_:)), for: .touchUpInside)  // To-do : add function move to forgot password view
     }
     
     func setupGetStartedBtn(){
@@ -185,9 +186,13 @@ class ViewController: UIViewController {
                 getUserAPI()
                 let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "HomeVC") as! UINavigationController
                 self.present(homeViewController, animated: true, completion: nil)
-                
             }
         }
+    }
+    
+    @objc func swithedToForgotView(_ sender: Any) {
+        let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "forgotView") as! UIViewController
+        self.present(homeViewController, animated: true, completion: nil)
     }
 }
 

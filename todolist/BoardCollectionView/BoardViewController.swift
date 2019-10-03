@@ -261,7 +261,6 @@ extension BoardViewController: UICollectionViewDataSource, UICollectionViewDeleg
         let index = targetContentOffset.pointee.x / scrollView.frame.width
         let indexPath = IndexPath(item: Int(index + 0.1), section: 0)
         checkCollectionview.selectItem(at: indexPath, animated: true, scrollPosition: [])
-
     }
    
 } 

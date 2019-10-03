@@ -19,30 +19,97 @@ class DashboardViewController: UIViewController {
     var horizonalBarLeftAnchorConstraint: NSLayoutConstraint?
     
     //var homeController: HomeController?
-    @IBOutlet weak var helloUserName: UILabel!
-    @IBOutlet weak var collectionView: UICollectionView!
+    var calendarLabel = UILabel()
+    var helloUserName = UILabel()
+    var addBoardBtn = UIButton()
+    var barView = UIView()
     
-    @IBOutlet weak var calendarLabel: UILabel!
+    var collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
+    private let cellReuseIndentifier = "cellID"
     //@IBOutlet weak var checkcollectionview: UICollectionView!
     @IBOutlet weak var addText: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
-        let selectedIndexPath = NSIndexPath(item: 0, section: 0)
-        //checkcollectionview.selectItem(at: selectedIndexPath as IndexPath, animated: false, scrollPosition: [])
+        
         //setupHorizonalBar()
-        if let decoded  = UserDefaults.standard.data(forKey: "Board") {
-            let decodedTeams = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! [Board]
-            self.boards = decodedTeams
-            //checkcollectionview.reloadData()
-            collectionView.reloadData()
-        }
+        collectionView.register(DashboardCollectionViewCell.self, forCellWithReuseIdentifier: cellReuseIndentifier)
+        self.collectionView.delegate = self
+        self.collectionView.dataSource = self
+        
+//        if let decoded  = UserDefaults.standard.data(forKey: "Board") {
+//            let decodedTeams = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! [Board]
+//            self.boards = decodedTeams
+//            //checkcollectionview.reloadData()
+//            collectionView.reloadData()
+//        }
+        
         self.navigationController!.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController!.navigationBar.shadowImage = UIImage()
         self.navigationController!.navigationBar.isTranslucent = true
         
+        setupBoardUI()
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        self.collectionView.collectionViewLayout = layout
+    }
+    // MARK:- Setup View
+    
+    func setupBoardUI(){
+        setupTitle()
+        setupCollectionView()
+    }
+    
+    func setupTitle(){
+        self.view.addSubview(calendarLabel)
+        calendarLabel.snp.makeConstraints{ make in
+            make.top.equalToSuperview().offset(50)
+            make.left.equalToSuperview().offset(30)
+        }
+        calendarLabel.text = "Day"
+        calendarLabel.font = UIFont.systemFont(ofSize: 19)
+        
+        self.view.addSubview(helloUserName)
+        helloUserName.snp.makeConstraints{ make in
+            make.top.equalTo(calendarLabel).offset(27)
+            make.left.equalToSuperview().offset(30)
+        }
+        helloUserName.text = "Hello"
+        helloUserName.font = UIFont.systemFont(ofSize: 32)
+        
+        self.view.addSubview(addBoardBtn)
+        addBoardBtn.snp.makeConstraints{ make in
+            make.top.equalTo(helloUserName)
+            make.right.equalToSuperview().offset(-30)
+            make.size.equalTo(30)
+        }
+        let addIcon = UIImage(named: "plus icon")
+        addBoardBtn.setBackgroundImage(addIcon, for: .normal)
+        addBoardBtn.addTarget(self, action: #selector(addBoard(_:)), for: .touchUpInside)
+        
+        self.view.addSubview(barView)
+        barView.snp.makeConstraints{ make in
+            make.bottom.equalTo(helloUserName)
+            make.width.equalToSuperview()
+            make.height.equalTo(1)
+        }
+        barView.backgroundColor = .lightGray
+    }
+    
+    func setupCollectionView(){
+        self.view.addSubview(collectionView)
+        collectionView.snp.makeConstraints{ make in
+            make.top.equalTo(barView.snp.bottom).offset(40)
+            make.left.equalToSuperview().offset(30)
+            make.right.equalToSuperview().offset(-30)
+            make.bottom.equalToSuperview()
+        }
+        collectionView.backgroundColor = .white
+        collectionView.bounces = true
+        collectionView.alwaysBounceVertical = true
+        collectionView.showsVerticalScrollIndicator = true
+        collectionView.isScrollEnabled = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -102,10 +169,6 @@ class DashboardViewController: UIViewController {
     //        }
     //    }
     
-    @IBAction func onAddButton(_ sender: Any) {
-        addBoard()
-    }
-    
     @IBAction func onLogout(_ sender: Any) {
         let firebaseAuth = Auth.auth()
         do {
@@ -118,10 +181,10 @@ class DashboardViewController: UIViewController {
         }
     }
     
-    func addBoard (){
-        let alertController = UIAlertController(title: "Add Board", message: nil, preferredStyle: .alert)
+    @objc func addBoard (_ sender: Any){
+        let alertController = UIAlertController(title: "Add Board", message: "create new board", preferredStyle: .alert)
         alertController.addTextField{(textField) in
-            textField.placeholder = "Board Name"
+            //textField.placeholder = "Board Name"
         }
         alertController.addAction(UIAlertAction(title: "Add", style: .default, handler: { (_) in
             guard let text = alertController.textFields![0].text, !text.isEmpty else {
@@ -151,7 +214,6 @@ class DashboardViewController: UIViewController {
                 if let boards = boards {
                     UserDefaults.standard.removeObject(forKey: "Board")
                     self.onReceivedBoards(boards: boards)
-                    //self.checkcollectionview.reloadData()
                     self.collectionView.reloadData()
                     return
                 }
@@ -174,12 +236,10 @@ class DashboardViewController: UIViewController {
     //        horizontalBarView.heightAnchor.constraint(equalToConstant: 4).isActive = true
     //    }
     
-    
-    @IBAction func onEditingEndBoardTitle(_ sender: Any) {
-        print(sender.self)
-    }
+
 }
 
+// MARK:- CV datasource + delegate
 extension DashboardViewController: UICollectionViewDataSource,UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -216,7 +276,7 @@ extension DashboardViewController: UICollectionViewDataSource,UICollectionViewDe
         //            return cell!
         //        }
         //        else {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellID", for: indexPath) as? DashboardCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIndentifier, for: indexPath) as? DashboardCollectionViewCell
         // cell?.Testlabel.text = item[indexPath.item]
         cell?.layer.cornerRadius = 20
         cell?.layer.borderWidth = 0
@@ -228,7 +288,7 @@ extension DashboardViewController: UICollectionViewDataSource,UICollectionViewDe
         cell?.layer.shadowRadius = 4
         cell?.layer.shadowOpacity = 0.3
         cell?.layer.masksToBounds = false
-        //cell?.layer.shadowPath = UIBezierPath(roundedRect: cell!.bounds, cornerRadius: cell!.contentView.layer.cornerRadius).cgPath
+        
         cell?.deleteBoardBtn.tag = indexPath.item
         cell?.boardTitleLabel.text = boards[indexPath.row].boardName
         cell?.boardTitleLabel.textColor = .white
@@ -275,27 +335,33 @@ extension DashboardViewController: UICollectionViewDataSource,UICollectionViewDe
         return 0
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 300, height: 300)
+    }
+    
+   
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         // print(scrollView.contentOffset.x)
         horizonalBarLeftAnchorConstraint?.constant = scrollView.contentOffset.x / 4
     }
     
-//    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-//        let index = scrollView.contentOffset.y / scrollView.frame.height
-//        print("index: \(index)")
-//        let indexPath = IndexPath(item: Int(index + 0.5), section: 0)
-//        print("indexpath: \(indexPath)")
-//        self.collectionView.selectItem(at: indexPath, animated: true, scrollPosition: [])
+    //    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+    //        let index = scrollView.contentOffset.y / scrollView.frame.height
+    //        print("index: \(index)")
+    //        let indexPath = IndexPath(item: Int(index + 0.5), section: 0)
+    //        print("indexpath: \(indexPath)")
+    //        self.collectionView.selectItem(at: indexPath, animated: true, scrollPosition: [])
+    //    }
+    
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+//        return CGSize(width: self.view.frame.size.width, height: 20)
 //    }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        return CGSize(width: self.view.frame.size.width, height: 20)
-    }
-    
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        let size = CGSize(width: view.frame.width, height: view.frame.height)
-//        return size
-//    }
+    //    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    //        let size = CGSize(width: view.frame.width, height: view.frame.height)
+    //        return size
+    //    }
     
     func getCurrentDateTime() {
         let formatter = DateFormatter()
