@@ -20,14 +20,13 @@ final class DashboardViewController: UIViewController {
     private let barView = UIView()
     private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
     
+    let profileVC = UIViewController()
     //var horizonalBarLeftAnchorConstraint: NSLayoutConstraint?
     
     //var homeController: HomeController?
     
     var checkTextField: String?
     private let cellReuseIndentifier = "cellID"
-    
-    //@IBOutlet weak var checkcollectionview: UICollectionView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,16 +37,16 @@ final class DashboardViewController: UIViewController {
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         
-        //        if let decoded  = UserDefaults.standard.data(forKey: "Board") {
-        //            let decodedTeams = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! [Board]
-        //            self.boards = decodedTeams
-        //            //checkcollectionview.reloadData()
-        //            collectionView.reloadData()
-        //        }
-        
-        //        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        //        self.navigationController!.navigationBar.shadowImage = UIImage()
-        //        self.navigationController!.navigationBar.isTranslucent = true
+//        if let decoded  = UserDefaults.standard.data(forKey: "Board") {
+//            let decodedTeams = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! [Board]
+//            self.boards = decodedTeams
+//            //checkcollectionview.reloadData()
+//            collectionView.reloadData()
+//        }
+//
+//        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), for: .default)
+//        self.navigationController!.navigationBar.shadowImage = UIImage()
+//        self.navigationController!.navigationBar.isTranslucent = true
         
         setupBoardUI()
         let layout = UICollectionViewFlowLayout()
@@ -61,6 +60,7 @@ final class DashboardViewController: UIViewController {
         
         setupTitle()
         setupCollectionView()
+        //setupTabBar()
     }
     
     final private func setupTitle(){
@@ -118,9 +118,22 @@ final class DashboardViewController: UIViewController {
         collectionView.isScrollEnabled = true
     }
     
+    final private func setupTabBar(){
+        let dashboardVC = DashboardViewController()
+        dashboardVC.tabBarItem = UITabBarItem(tabBarSystemItem: .contacts, tag: 0)
+        
+        let profileVC = ProfileViewController()
+        profileVC.tabBarItem = UITabBarItem(tabBarSystemItem: .topRated, tag: 1)
+        
+        let tabBarList = [dashboardVC, profileVC]
+        //self.tabbarController.viewControllers = tabBarList
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         //boards = UserDefaults.standard.object(forKey: "Board") as! [Board]
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+        
         readBoardAPI { (error, boards) in
             if let error = error {
                 self.onGetBoardError(error: error)
@@ -131,7 +144,6 @@ final class DashboardViewController: UIViewController {
                 UserDefaults.standard.removeObject(forKey: "Board")
                 self.onReceivedBoards(boards: boards)
                 self.collectionView.reloadData()
-                //self.checkcollectionview.reloadData()
                 return
             }
         }
@@ -154,25 +166,6 @@ final class DashboardViewController: UIViewController {
     final private func onGetBoardError(error: Error) {
         print(error.localizedDescription)
     }
-    
-    //    @IBAction func onDeleteBoard(_ sender: Any) {
-    //        if boards.count != 0 {
-    //        if let selectedCells = self.collectionView.indexPathsForSelectedItems{
-    //            let index = selectedCells.map {$0.item}.sorted().reversed()
-    //
-    //            for indexPath in index{
-    //                deleteBoardAPI(board: boards[indexPath])
-    //                boards.remove(at: indexPath)
-    //                Board.setBoardCount(value: -1)
-    //            }
-    //            self.collectionView.deleteItems(at: selectedCells)
-    //            self.collectionView.reloadData()
-    //            //self.checkcollectionview.reloadData()
-    //            let selectedIndexPath = NSIndexPath(item: 0, section: 0)
-    //            checkcollectionview.selectItem(at: selectedIndexPath as IndexPath, animated: false, scrollPosition: [])
-    //            }
-    //        }
-    //    }
     
     @IBAction final private func onLogout(_ sender: Any) {
         let firebaseAuth = Auth.auth()
@@ -234,23 +227,14 @@ final class DashboardViewController: UIViewController {
             self.collectionView.reloadData()
         }
         //addboardVC.modalPresentationStyle = .fullScreen
-        self.show(addboardVC, sender: self)
+        //self.show(addboardVC, sender: self)
+        self.present(addboardVC, animated: true, completion: nil)
     }
     
-    //    func setupHorizonalBar () {
-    //        let horizontalBarView = UIView()
-    //        horizontalBarView.translatesAutoresizingMaskIntoConstraints = false
-    //        view.addSubview(horizontalBarView)
-    //
-    //        horizonalBarLeftAnchorConstraint = horizontalBarView.leftAnchor.constraint(equalTo: checkcollectionview.leftAnchor)
-    //        horizonalBarLeftAnchorConstraint?.isActive = true
-    //
-    //        horizontalBarView.bottomAnchor.constraint(equalTo: checkcollectionview.bottomAnchor).isActive = true
-    //        horizontalBarView.widthAnchor.constraint(equalTo: checkcollectionview.widthAnchor, multiplier:  1/4).isActive = true
-    //        horizontalBarView.heightAnchor.constraint(equalToConstant: 4).isActive = true
-    //    }
-    
-    
+    @objc final private func showProfileVC(_ sender: UIButton){
+        //addboardVC.modalPresentationStyle = .fullScreen
+        self.show(profileVC, sender: self)
+    }
 }
 
 // MARK:- CV datasource + delegate
@@ -263,9 +247,12 @@ extension DashboardViewController: UICollectionViewDataSource,UICollectionViewDe
         //            collectionView.scrollToItem(at: indexPath as IndexPath, at: [] , animated: true)
         //        }
         //        else {
-        let vc = storyboard?.instantiateViewController(withIdentifier: "boarddetail") as! BoardViewController
+//        let vc = storyboard?.instantiateViewController(withIdentifier: "boarddetail") as! BoardViewController
+//        vc.boardID = DashboardViewController.boards[indexPath.item].boardID!
+//        self.navigationController?.pushViewController(vc, animated: true)
+        let vc = BoardViewController()
         vc.boardID = DashboardViewController.boards[indexPath.item].boardID!
-        self.navigationController?.pushViewController(vc, animated: true)
+        self.show(vc, sender: self)
         //}
     }
     
@@ -276,33 +263,8 @@ extension DashboardViewController: UICollectionViewDataSource,UICollectionViewDe
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        //        if collectionView == self.checkcollectionview{
-        //            let cell = checkcollectionview.dequeueReusableCell(withReuseIdentifier: "check", for: indexPath) as? checkCollectionViewCell
-        //            // cell?.number.text = boards[indexPath.item]
-        //            print(indexPath.item)
-        //            cell?.layer.cornerRadius = 20
-        //            cell?.layer.borderWidth = 1
-        //            cell?.layer.borderColor = UIColor.orange.cgColor
-        //            cell?.number.text = boards[indexPath.item].boardName
-        //            cell?.backgroundColor = UIColor.white
-        //            cell?.number.delegate = self
-        //            cell?.number.tag = indexPath.item
-        //            return cell!
-        //        }
-        //        else {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIndentifier, for: indexPath) as? DashboardCollectionViewCell
-        // cell?.Testlabel.text = item[indexPath.item]
-//        cell?.layer.cornerRadius = 100
-//        cell?.layer.borderWidth = 0
-//        //cell?.layer.borderColor = UIColor.orange.cgColor
-//        cell?.layer.masksToBounds = true
-        
-//        cell?.layer.shadowColor = UIColor.black.cgColor
-//        cell?.layer.shadowOffset = CGSize(width: 0, height: 1.0)
-//        cell?.layer.shadowRadius = 4
-//        cell?.layer.shadowOpacity = 0.3
-//        cell?.layer.masksToBounds = false
-        
+
         cell?.deleteBoardBtn.tag = indexPath.item
         cell?.boardTitleLabel.text = DashboardViewController.boards[indexPath.row].boardName
         cell?.boardTitleLabel.textColor = .white
@@ -317,21 +279,15 @@ extension DashboardViewController: UICollectionViewDataSource,UICollectionViewDe
         }
         
         cell?.deleteBoardBtn.addTarget(self, action: #selector(deleteBoard(sender:)), for: .touchUpInside)
-        
         cell?.textLabel.text = text
+        
         return cell!
-        //}
-        /*else {
-         let cell = taskcollectionview.dequeueReusableCell(withReuseIdentifier: "taskcell", for: indexPath) as? TaskCollectionViewCell
-         cell?.Testlabel.text = taskitem[indexPath.item]
-         return cell!
-         }*/
     }
     
     @objc func deleteBoard(sender: UIButton){
         let alertController = UIAlertController(title: "Confirm Delete", message: "There is no way to undo this operation.", preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "Delete", style: .destructive, handler:{ (_) in
-            let indexPath: Int = sender.tag
+            let indexPath = sender.tag
             deleteBoardAPI(board: DashboardViewController.boards[indexPath])
             DashboardViewController.boards.remove(at: indexPath)
             Board.setBoardCount(value: -1)
@@ -360,23 +316,6 @@ extension DashboardViewController: UICollectionViewDataSource,UICollectionViewDe
 //        horizonalBarLeftAnchorConstraint?.constant = scrollView.contentOffset.x / 4
     }
     
-    //    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-    //        let index = scrollView.contentOffset.y / scrollView.frame.height
-    //        print("index: \(index)")
-    //        let indexPath = IndexPath(item: Int(index + 0.5), section: 0)
-    //        print("indexpath: \(indexPath)")
-    //        self.collectionView.selectItem(at: indexPath, animated: true, scrollPosition: [])
-    //    }
-    
-    //    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-    //        return CGSize(width: self.view.frame.size.width, height: 20)
-    //    }
-    
-    //    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    //        let size = CGSize(width: view.frame.width, height: view.frame.height)
-    //        return size
-    //    }
-    
     func getCurrentDateTime() {
         let formatter = DateFormatter()
         formatter.dateStyle = .long
@@ -395,37 +334,5 @@ extension DashboardViewController: UITextFieldDelegate {
         textField.resignFirstResponder()
         return true
     }
-    
-    //    func textFieldDidBeginEditing(_ textField: UITextField) {
-    //        self.checkTextField = textField.text
-    //
-    //        if let selectedCell = textField.superview?.superview as? UICollectionViewCell {
-    //
-    //            //let index = checkcollectionview.indexPath(for: selectedCell)!
-    //            //var checkText = textField.text
-    //
-    //            let alertController = UIAlertController(title: "Change board name", message: nil, preferredStyle: .alert)
-    //            alertController.addTextField(configurationHandler: nil)
-    //            alertController.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (_) in
-    //                guard let text = alertController.textFields?.first?.text, !text.isEmpty else {
-    //                    return
-    //                }
-    //                textField.text = text
-    //                //for indexPath in index {
-    //                updateBoardAPI(board: self.boards[index.item], newName: text)
-    //                //print("\(self.boards[indexPath].boardID)")
-    //                //}
-    //                print(index)
-    //
-    //                print(selectedCell)
-    //
-    //            }))
-    //            alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-    //
-    //
-    //            present(alertController,animated: true)
-    //            //checkcollectionview.selectItem(at: index, animated: true, scrollPosition: [])
-    //            scrolltoMenuIndex(menuIndex: index.item)
-    //        }
-    //    }
+  
 }

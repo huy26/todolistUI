@@ -36,9 +36,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         })
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
-        let initialViewController = DashboardViewController()
-        //let iniitialViewController = ViewController()
-        self.window?.rootViewController = initialViewController
+        //let initialViewController = DashboardViewController()
+        let initialViewController = ViewController()
+        //
+        self.window?.rootViewController = UINavigationController(rootViewController: ViewController())
         self.window?.makeKeyAndVisible()
         
         return true

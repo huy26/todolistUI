@@ -25,10 +25,11 @@ class ViewController: UIViewController {
     private var forgotPasswordBtn = UIButton()
     
     private let dashboard = DashboardViewController()
-    
+    private let tabbarController = TabBarController()
 //    @IBOutlet weak var passwordTextField: UITextField!
 //    @IBOutlet weak var usernameTextField: UITextField!
 //    @IBOutlet weak var Signup: UIButton!
+    // MARK:- Load View
     override func viewDidLoad() {
         super.viewDidLoad()
 //        self.passwordTextField.delegate = self
@@ -49,7 +50,7 @@ class ViewController: UIViewController {
         if currentuser != nil{
             getUserAPI()
             //let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "HomeVC") as! UINavigationController
-            self.show(dashboard, sender: self)
+            self.show(tabbarController, sender: self)
         }
     }
     
@@ -195,7 +196,7 @@ class ViewController: UIViewController {
             {
                 getUserAPI()
 //                let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "HomeVC") as! UINavigationController
-                self.show(self.dashboard, sender: self)
+                self.show(self.tabbarController, sender: self)
             }
         }
     }

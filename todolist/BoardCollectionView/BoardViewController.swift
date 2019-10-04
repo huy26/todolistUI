@@ -31,8 +31,8 @@ class BoardViewController: UIViewController {
         //setupBackbuttonItem()
         setupAddButtonItem()
         setupRemoveButtonItem()
-        checkCollectionview.selectItem(at: selectedIndexPath as IndexPath, animated: false, scrollPosition: [])
-        setupHorizonalBar()
+        //checkCollectionview.selectItem(at: selectedIndexPath as IndexPath, animated: false, scrollPosition: [])
+        //setupHorizonalBar()
         getCurrentDateTime()
         self.navigationController!.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController!.navigationBar.shadowImage = UIImage()
@@ -194,18 +194,18 @@ class BoardViewController: UIViewController {
 
         }
     
-    func setupHorizonalBar () {
-        let horizontalBarView = UIView()
-        horizontalBarView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(horizontalBarView)
-
-        horizonalBarLeftAnchorConstraint = horizontalBarView.leftAnchor.constraint(equalTo: checkCollectionview.leftAnchor)
-        horizonalBarLeftAnchorConstraint?.isActive = true
-
-        horizontalBarView.bottomAnchor.constraint(equalTo: checkCollectionview.bottomAnchor).isActive = true
-        horizontalBarView.widthAnchor.constraint(equalTo: checkCollectionview.widthAnchor, multiplier:  1/4).isActive = true
-        horizontalBarView.heightAnchor.constraint(equalToConstant: 4).isActive = true
-    }
+//    func setupHorizonalBar () {
+//        let horizontalBarView = UIView()
+//        horizontalBarView.translatesAutoresizingMaskIntoConstraints = false
+//        view.addSubview(horizontalBarView)
+//
+//        horizonalBarLeftAnchorConstraint = horizontalBarView.leftAnchor.constraint(equalTo: checkCollectionview.leftAnchor)
+//        horizonalBarLeftAnchorConstraint?.isActive = true
+//
+//        horizontalBarView.bottomAnchor.constraint(equalTo: checkCollectionview.bottomAnchor).isActive = true
+//        horizontalBarView.widthAnchor.constraint(equalTo: checkCollectionview.widthAnchor, multiplier:  1/4).isActive = true
+//        horizontalBarView.heightAnchor.constraint(equalToConstant: 4).isActive = true
+//    }
 
 }
 extension BoardViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
