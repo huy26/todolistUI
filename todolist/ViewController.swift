@@ -15,6 +15,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var Signup: UIButton!
+
+    @IBOutlet weak var appLogo: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
         self.passwordTextField.delegate = self
@@ -28,6 +30,8 @@ class ViewController: UIViewController {
             self.present(homeViewController, animated: true, completion: nil)
         }
         passwordTextField?.isSecureTextEntry = true
+        appLogo.image = UIImage(named: "icon")!
+        
         self.navigationController!.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController!.navigationBar.shadowImage = UIImage()
         self.navigationController!.navigationBar.isTranslucent = true
@@ -60,3 +64,4 @@ extension ViewController: UITextFieldDelegate {
         return false
     }
 }
+

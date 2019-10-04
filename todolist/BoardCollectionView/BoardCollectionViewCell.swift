@@ -1,47 +1,69 @@
 import UIKit
 import MobileCoreServices
 class BoardCollectionViewCell: UICollectionViewCell {
-    
-    @IBOutlet weak var tableView: UITableView!
+
+    var indexPath: IndexPath?
+    let footerID = "TableFooter"
+    var tableView = UITableView()
     //var task: Task?
-    weak var parentVC: BoardViewController?
-    var status: Status?
-    var boardID: String?
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        
-        self.layer.masksToBounds = true
-        self.layer.cornerRadius = 10.0
-         tableView.dataSource = self
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.contentView.addSubview(tableView)
+        tableView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+        tableView.register(TableViewCell.self,forCellReuseIdentifier: "Cell")
+        tableView.dataSource = self
         tableView.delegate = self
         tableView.tableFooterView = UIView()
         tableView.dragInteractionEnabled = true
         tableView.dragDelegate = self
         tableView.dropDelegate = self
+        tableView.separatorColor = UIColor.white
+        tableView.backgroundColor = .clear
+//        tableView.rowHeight = 450
+
     }
     
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    weak var parentVC: BoardViewController?
+    var status: Status?
+    var boardID: String?
+    override func awakeFromNib() {
+        super.awakeFromNib()
+
+        self.layer.masksToBounds = true
+        self.layer.cornerRadius = 10.0
+        
+    }
+
     func setup(with status: Status, boardID: String) {
         self.status = status
         self.boardID = boardID
         tableView.reloadData()
     }
+
     
-    @IBAction func addTapped(_ sender: Any) {
+    
+    @objc func addTapped(_ sender: Any) {
         let alertController = UIAlertController(title: "Add Task", message: nil, preferredStyle: .alert)
         alertController.addTextField(configurationHandler: nil)
         alertController.addAction(UIAlertAction(title: "Add", style: .default, handler: { (_) in
             guard let text = alertController.textFields?.first?.text, !text.isEmpty else {
                 return
             }
-            
+
             guard let data = self.status else {
                 return
             }
-            
+
             data.items.append(Task(taskName: text, status: self.status!.name!))
             let addedIndexPath = IndexPath(item: data.items.count - 1, section: 0)
             self.tableView.insertRows(at: [addedIndexPath], with: .automatic)
-            self.tableView.scrollToRow(at: addedIndexPath, at: UITableView.ScrollPosition.bottom, animated: true)
+            self.tableView.scrollToRow(at: addedIndexPath, at: UITableView.ScrollPosition.bottom, animated: true) 
             uploadtaskAPI(boardID: self.boardID!, task: Task(taskName: text, status: data.name!))
             readTaskApi(boardID: self.boardID!, onCompleted: { (error, tasks) in
                 if let error = error {
@@ -50,9 +72,9 @@ class BoardCollectionViewCell: UICollectionViewCell {
                     return
                 }
                 if let tasks = tasks {
-                    UserDefaults.standard.removeObject(forKey: "Board")
+                    //UserDefaults.standard.removeObject(forKey: "Board")
                     self.parentVC?.onreciveTask(tasks: tasks)
-                    
+
                     self.parentVC?.status.last?.items.last?.taskID = tasks.last?.taskID
                     self.parentVC?.checkCollectionview.reloadData()
                     self.parentVC?.collectionView.reloadData()
@@ -60,34 +82,68 @@ class BoardCollectionViewCell: UICollectionViewCell {
                 }
             })
         }))
-        
+
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-       
+
        parentVC?.present(alertController,animated: true)
-        
+
     }
 }
 
 extension BoardCollectionViewCell: UITableViewDataSource, UITableViewDelegate {
-    
-    
+
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return status?.items.count ?? 0
     }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return status?.name
-    }
+
+//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        return status?.name
+//    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        cell.textLabel?.text = "\(status!.items[indexPath.row].taskName!)"
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! TableViewCell
+        //cell.textLabel?.text = "\(status!.items[indexPath.row].taskName!)"
+        cell.layer.cornerRadius = 50
+        cell.backgroundColor = UIColor.clear
+        cell.StatusName.text = "\(status!.items[indexPath.row].taskName!)"
+        self.indexPath = indexPath
+        cell.DeleteButton.addTarget(self, action: #selector(deleteTask), for: .touchUpInside)
         return cell
     }
     
+    @objc func deleteTask (){
+        
+        tableView.beginUpdates()
+        deleteTaskAPI(task: status!.items[indexPath!.row], boardID: self.boardID!)
+        status!.items.remove(at: indexPath!.row)
+        tableView.deleteRows(at: [indexPath!], with: .automatic)
+        tableView.endUpdates()
+        
+    }
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 100
+    }
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let footer = UIView()
+        
+        let addButton = UIButton()
+        addButton.setTitle("Add Task", for: .normal)
+        addButton.setTitleColor(.black, for: .normal)
+        footer.addSubview(addButton)
+        addButton.addTarget(self, action: #selector(addTapped(_:)), for: .touchUpInside)
+        addButton.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+        footer.backgroundColor = UIColor.white
+        return footer
+    }
+    
     
 }
 
@@ -105,12 +161,13 @@ extension BoardCollectionViewCell: UITableViewDragDelegate {
         deleteTaskAPI(task: status.items[indexPath.item], boardID: self.boardID!)
         return [dragItem]
     }
+    
 
 }
 extension BoardCollectionViewCell: UITableViewDropDelegate {
-    
+
     func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {
-       
+
         if coordinator.session.hasItemsConforming(toTypeIdentifiers: [kUTTypePlainText as String]) {
             coordinator.session.loadObjects(ofClass: NSString.self) { (items) in
                 guard let string = items.first as? String else {
@@ -128,11 +185,11 @@ extension BoardCollectionViewCell: UITableViewDropDelegate {
                     self.tableView.beginUpdates()
                     self.status?.items.remove(at: sourceIndexPath.row)
                     self.status?.items.insert(Task(taskName: string, status: (self.status?.name!)!), at: destinationIndexPath.row)
-                    
+
                     self.tableView.reloadRows(at: updatedIndexPaths, with: .automatic)
                     self.tableView.endUpdates()
                     break
-                    
+
                 case (nil, .some(let destinationIndexPath)):
                     // Move data from a table to another table
                    self.removeSourceTableData(localContext: coordinator.session.localDragSession?.localContext)
@@ -142,8 +199,8 @@ extension BoardCollectionViewCell: UITableViewDropDelegate {
                     self.tableView.insertRows(at: [destinationIndexPath], with: .automatic)
                     self.tableView.endUpdates()
                     break
-                    
-                    
+
+
                 case (nil, nil):
                     // Insert data from a table to another table
                     self.removeSourceTableData(localContext: coordinator.session.localDragSession?.localContext)
@@ -152,29 +209,30 @@ extension BoardCollectionViewCell: UITableViewDropDelegate {
                     self.tableView.insertRows(at: [IndexPath(row: self.status!.items.count - 1 , section: 0)], with: .automatic)
                     self.tableView.endUpdates()
                     break
-                    
+
                 default: break
-                    
+
                 }
                 uploadtaskAPI(boardID: self.boardID!, task: Task(taskName: string, status: (self.status?.name!)!))
-                
+
             }
-            
+
         }
-        
+
     }
-    
+
     func removeSourceTableData(localContext: Any?) {
         if let (dataSource, sourceIndexPath, tableView) = localContext as? (Status, IndexPath, UITableView) {
             tableView.beginUpdates()
             dataSource.items.remove(at: sourceIndexPath.row)
             tableView.deleteRows(at: [sourceIndexPath], with: .automatic)
             tableView.endUpdates()
+            deleteTaskAPI(task: dataSource.items[sourceIndexPath.row], boardID: self.boardID!)
         }
     }
-    
+
     func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
         return UITableViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
     }
-    
+
 }

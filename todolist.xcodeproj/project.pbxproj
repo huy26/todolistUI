@@ -115,7 +115,6 @@
 				040891E0232254E60025EE37 /* Assets.xcassets */,
 				040891E2232254E60025EE37 /* LaunchScreen.storyboard */,
 				040891E5232254E60025EE37 /* Info.plist */,
-				048B54A3232611B400F4E4FC /* TableViewCell.swift */,
 				0491CBD22330D9AC00040E51 /* ForgotPasswordViewController.swift */,
 				0438E26D2333780D00BCBEC8 /* GoogleService-Info.plist */,
 			);
@@ -147,10 +146,11 @@
 		04FA8FCD232F527900EFEA29 /* BoardCollectionView */ = {
 			isa = PBXGroup;
 			children = (
-				042E51FC2334C76A00030E5E /* BoardCollectionViewCell.swift */,
-				042E51FE2334C76E00030E5E /* BoardCollectionViewController.swift */,
-				042E51FB2334C76800030E5E /* StatusCollectionViewCell.swift */,
+				048B54A3232611B400F4E4FC /* TableViewCell.swift */,
 				0424541523361B7E00A0230F /* BoardViewController.swift */,
+				042E51FC2334C76A00030E5E /* BoardCollectionViewCell.swift */,
+				042E51FB2334C76800030E5E /* StatusCollectionViewCell.swift */,
+				042E51FE2334C76E00030E5E /* BoardCollectionViewController.swift */,
 			);
 			path = BoardCollectionView;
 			sourceTree = "<group>";
