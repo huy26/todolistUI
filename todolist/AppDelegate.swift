@@ -34,6 +34,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         OneSignal.promptForPushNotifications(userResponse: { accepted in
         print("User accepted notifications: \(accepted)")
         })
+        
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        let initialViewController = DashboardViewController()
+        //let iniitialViewController = ViewController()
+        self.window?.rootViewController = initialViewController
+        self.window?.makeKeyAndVisible()
+        
         return true
     }
 

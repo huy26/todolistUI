@@ -13,8 +13,9 @@ import SnapKit
 
 class ForgotPasswordViewController: UIViewController {
 
-    var emailTextField = UITextField()
-    var getPassWordBtn = UIButton()
+    private var emailTextField = UITextField()
+    private var getPassWordBtn = UIButton()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -22,7 +23,9 @@ class ForgotPasswordViewController: UIViewController {
         setupForgotPassUI()
     }
     
-    func setupForgotPassUI() {
+    final private func setupForgotPassUI() {
+        self.view.backgroundColor = .white
+        
         self.view.addSubview(emailTextField)
         emailTextField.snp.makeConstraints{ make in
             make.center.equalToSuperview()
@@ -45,15 +48,16 @@ class ForgotPasswordViewController: UIViewController {
         getPassWordBtn.addTarget(self, action: #selector(Finish(_:)), for: .touchUpInside)
     }
 
-    @objc func Finish(_ sender: Any) {
+    @objc final private func Finish(_ sender: Any) {
         Auth.auth().sendPasswordReset(withEmail: (emailTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines))!) { (error) in
             if error != nil
             {
                 print(error!.localizedDescription)
             }
             else{
-                let homeViewcontroller = self.storyboard?.instantiateViewController(withIdentifier: "Home") as! UINavigationController
-                self.present(homeViewcontroller, animated: true, completion: nil)
+//                let homeViewcontroller = self.storyboard?.instantiateViewController(withIdentifier: "Home") as! UINavigationController
+//                self.present(homeViewcontroller, animated: true, completion: nil)
+                self.dismiss(animated: true, completion: nil)
             }
         }
     }

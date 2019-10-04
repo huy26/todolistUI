@@ -8,15 +8,14 @@
 
 import UIKit
 
-class DashboardCollectionViewCell: UICollectionViewCell {
-    
-    var btnTapAction: (() -> ())?
+final class DashboardCollectionViewCell: UICollectionViewCell {
     
     var boardTitleLabel = UILabel()
     var textLabel = UILabel()
-    var deleteBoardBtn = UIButton()
-    var barView = UIView()
-    var addUserBtn = UIButton()
+    let deleteBoardBtn = UIButton()
+    
+    private let barView = UIView()
+    private let addUserBtn = UIButton()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -31,12 +30,18 @@ class DashboardCollectionViewCell: UICollectionViewCell {
     
     func setupCell(){
         
-        self.contentView.backgroundColor = UIColor(red:0.01, green:0.71, blue:0.85, alpha:1.0)
+        self.contentView.backgroundColor = UIColor(red:1.00, green:0.19, blue:0.31, alpha:1.0)
         self.contentView.snp.makeConstraints{ make in
             make.width.equalTo(300)
-            make.height.equalTo(300)
+            make.height.equalTo(250)
             make.centerX.equalToSuperview()
         }
+        self.contentView.layer.cornerRadius = 25
+        self.contentView.layer.shadowColor = UIColor.black.cgColor
+        self.contentView.layer.shadowOffset = CGSize(width: 0, height: 1.0)
+        self.contentView.layer.shadowRadius = 4
+        self.contentView.layer.shadowOpacity = 0.3
+        self.contentView.layer.masksToBounds = false
         
         self.contentView.addSubview(boardTitleLabel)
         boardTitleLabel.snp.makeConstraints{ make in

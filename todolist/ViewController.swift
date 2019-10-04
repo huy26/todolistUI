@@ -13,16 +13,18 @@ import SnapKit
 
 class ViewController: UIViewController {
     
-    var logoImageView = UIImageView()
-    var welcomeLabel = UILabel()
-    var welcomeLabel2 = UILabel()
-    var emailLabel = UILabel()
-    var passwordLabel = UILabel()
-    var emailTextField = UITextField()
-    var passwordTextField = UITextField()
-    var getStartedBtn = UIButton()
-    var signUpBtn = UIButton()
-    var forgotPasswordBtn = UIButton()
+    private var logoImageView = UIImageView()
+    private var welcomeLabel = UILabel()
+    private var welcomeLabel2 = UILabel()
+    private var emailLabel = UILabel()
+    private var passwordLabel = UILabel()
+    private var emailTextField = UITextField()
+    private var passwordTextField = UITextField()
+    private var getStartedBtn = UIButton()
+    private var signUpBtn = UIButton()
+    private var forgotPasswordBtn = UIButton()
+    
+    private let dashboard = DashboardViewController()
     
 //    @IBOutlet weak var passwordTextField: UITextField!
 //    @IBOutlet weak var usernameTextField: UITextField!
@@ -32,21 +34,26 @@ class ViewController: UIViewController {
 //        self.passwordTextField.delegate = self
 //        self.usernameTextField.delegate = self
 //        // Do any additional setup after loading the view.
-        let currentuser = Auth.auth().currentUser
-        if currentuser != nil
-        {
-            getUserAPI()
-            let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "HomeVC") as! UINavigationController
-            self.present(homeViewController, animated: true, completion: nil)
-        }
+        self.emailTextField.delegate = self
+        self.passwordTextField.delegate = self
+        
+        dashboard.modalPresentationStyle = .fullScreen
 //        passwordTextField?.isSecureTextEntry = true
 //        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), for: .default)
 //        self.navigationController!.navigationBar.shadowImage = UIImage()
 //        self.navigationController!.navigationBar.isTranslucent = true
         setupLoginUI()
+        //self.show(ViewController(), sender: self)
+        
+        let currentuser = Auth.auth().currentUser
+        if currentuser != nil{
+            getUserAPI()
+            //let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "HomeVC") as! UINavigationController
+            self.show(dashboard, sender: self)
+        }
     }
     
-    func setupLoginUI() {
+    final private func setupLoginUI() {
         self.view.backgroundColor = .white
         setupImageView()
         setupWelcomeLabel()
@@ -56,7 +63,7 @@ class ViewController: UIViewController {
         setupSignUpBtn()
     }
     
-    func setupImageView(){
+    final private func setupImageView(){
         self.view.addSubview(logoImageView)
         
         logoImageView.snp.makeConstraints{ make in
@@ -68,7 +75,7 @@ class ViewController: UIViewController {
         }
     }
     
-    func setupWelcomeLabel(){
+    final private func setupWelcomeLabel(){
         self.view.addSubview(welcomeLabel)
         
         welcomeLabel.snp.makeConstraints{ make in
@@ -77,6 +84,7 @@ class ViewController: UIViewController {
         }
         welcomeLabel.text = "Welcome,"
         welcomeLabel.font = UIFont.boldSystemFont(ofSize: 30)
+        welcomeLabel.textColor = .black
         
         
         self.view.addSubview(welcomeLabel2)
@@ -90,13 +98,14 @@ class ViewController: UIViewController {
         welcomeLabel2.textColor = .gray
     }
     
-    func setupTextField(){
+    final private func setupTextField(){
         self.view.addSubview(emailLabel)
         emailLabel.snp.makeConstraints{ make in
             make.top.equalTo(welcomeLabel2).offset(85)
             make.left.equalToSuperview().offset(49)
         }
         emailLabel.text = "Email"
+        emailLabel.textColor = .black
         
         self.view.addSubview(emailTextField)
         emailTextField.snp.makeConstraints{ make in
@@ -113,7 +122,8 @@ class ViewController: UIViewController {
             make.top.equalTo(emailTextField).offset(47)
             make.left.equalToSuperview().offset(49)
         }
-       passwordLabel.text = "Password"
+        passwordLabel.text = "Password"
+        passwordLabel.textColor = .black
         
         self.view.addSubview(passwordTextField)
         passwordTextField.snp.makeConstraints{ make in
@@ -127,7 +137,7 @@ class ViewController: UIViewController {
         passwordTextField.isSecureTextEntry = true
     }
     
-    func setupForgotBtn(){
+    final private func setupForgotBtn(){
         self.view.addSubview(forgotPasswordBtn)
         forgotPasswordBtn.snp.makeConstraints{ make in
             make.top.equalTo(passwordTextField).offset(30)
@@ -140,7 +150,7 @@ class ViewController: UIViewController {
         forgotPasswordBtn.addTarget(self, action: #selector(swithedToForgotView(_:)), for: .touchUpInside)  // To-do : add function move to forgot password view
     }
     
-    func setupGetStartedBtn(){
+    final private func setupGetStartedBtn(){
         self.view.addSubview(getStartedBtn)
         getStartedBtn.snp.makeConstraints{ make in
             make.top.equalTo(passwordTextField).offset(110)
@@ -156,7 +166,7 @@ class ViewController: UIViewController {
         getStartedBtn.addTarget(self, action: #selector(signinTapped(_:)), for: .touchUpInside)
     }
     
-    func setupSignUpBtn() {
+    final private func setupSignUpBtn() {
         self.view.addSubview(signUpBtn)
         signUpBtn.snp.makeConstraints{ make in
             make.bottom.equalToSuperview().offset(-5)
@@ -171,10 +181,10 @@ class ViewController: UIViewController {
         signUpBtn.addTarget(self, action: #selector(onSignup(_:)), for: .touchUpInside)
     }
     
-    @objc func onSignup(_ sender: Any) {
+    @objc final private func onSignup(_ sender: Any) {
     }
     
-    @objc func signinTapped(_ sender: Any) {
+    @objc final private func signinTapped(_ sender: Any) {
         let username = emailTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         let password = passwordTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
                 Auth.auth().signIn(withEmail: username, password: password) { (result, error) in
@@ -184,15 +194,16 @@ class ViewController: UIViewController {
             else
             {
                 getUserAPI()
-                let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "HomeVC") as! UINavigationController
-                self.present(homeViewController, animated: true, completion: nil)
+//                let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "HomeVC") as! UINavigationController
+                self.show(self.dashboard, sender: self)
             }
         }
     }
     
-    @objc func swithedToForgotView(_ sender: Any) {
-        let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "forgotView") as! UIViewController
-        self.present(homeViewController, animated: true, completion: nil)
+    @objc final private func swithedToForgotView(_ sender: Any) {
+//        let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "forgotView") as! UIViewController
+//        self.present(homeViewController, animated: true, completion: nil)
+        self.show(ForgotPasswordViewController() ,sender: self)
     }
 }
 

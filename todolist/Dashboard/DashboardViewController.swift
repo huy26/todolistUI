@@ -11,23 +11,23 @@ import Firebase
 import FirebaseAuth
 import Foundation
 
-class DashboardViewController: UIViewController {
-    //var boards = [Board(boardName: "Test", items: [])]
+final class DashboardViewController: UIViewController {
+    static var boards = [Board]() // Todo: create getInstance() + change to private
     
-    var checkTextField: String?
-    var boards = [Board]()
-    var horizonalBarLeftAnchorConstraint: NSLayoutConstraint?
+    private var calendarLabel = UILabel()
+    private var helloUserName = UILabel()
+    private let addBoardBtn = UIButton()
+    private let barView = UIView()
+    private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
+    
+    //var horizonalBarLeftAnchorConstraint: NSLayoutConstraint?
     
     //var homeController: HomeController?
-    var calendarLabel = UILabel()
-    var helloUserName = UILabel()
-    var addBoardBtn = UIButton()
-    var barView = UIView()
     
-    var collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
+    var checkTextField: String?
     private let cellReuseIndentifier = "cellID"
+    
     //@IBOutlet weak var checkcollectionview: UICollectionView!
-    @IBOutlet weak var addText: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,16 +38,16 @@ class DashboardViewController: UIViewController {
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         
-//        if let decoded  = UserDefaults.standard.data(forKey: "Board") {
-//            let decodedTeams = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! [Board]
-//            self.boards = decodedTeams
-//            //checkcollectionview.reloadData()
-//            collectionView.reloadData()
-//        }
+        //        if let decoded  = UserDefaults.standard.data(forKey: "Board") {
+        //            let decodedTeams = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! [Board]
+        //            self.boards = decodedTeams
+        //            //checkcollectionview.reloadData()
+        //            collectionView.reloadData()
+        //        }
         
-        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        self.navigationController!.navigationBar.shadowImage = UIImage()
-        self.navigationController!.navigationBar.isTranslucent = true
+        //        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        //        self.navigationController!.navigationBar.shadowImage = UIImage()
+        //        self.navigationController!.navigationBar.isTranslucent = true
         
         setupBoardUI()
         let layout = UICollectionViewFlowLayout()
@@ -56,12 +56,14 @@ class DashboardViewController: UIViewController {
     }
     // MARK:- Setup View
     
-    func setupBoardUI(){
+    final private func setupBoardUI(){
+        self.view.backgroundColor = .white
+        
         setupTitle()
         setupCollectionView()
     }
     
-    func setupTitle(){
+    final private func setupTitle(){
         self.view.addSubview(calendarLabel)
         calendarLabel.snp.makeConstraints{ make in
             make.top.equalToSuperview().offset(50)
@@ -69,6 +71,8 @@ class DashboardViewController: UIViewController {
         }
         calendarLabel.text = "Day"
         calendarLabel.font = UIFont.systemFont(ofSize: 19)
+        calendarLabel.textColor = .black
+        getCurrentDateTime()
         
         self.view.addSubview(helloUserName)
         helloUserName.snp.makeConstraints{ make in
@@ -77,6 +81,7 @@ class DashboardViewController: UIViewController {
         }
         helloUserName.text = "Hello"
         helloUserName.font = UIFont.systemFont(ofSize: 32)
+        helloUserName.textColor = .black
         
         self.view.addSubview(addBoardBtn)
         addBoardBtn.snp.makeConstraints{ make in
@@ -86,7 +91,8 @@ class DashboardViewController: UIViewController {
         }
         let addIcon = UIImage(named: "plus icon")
         addBoardBtn.setBackgroundImage(addIcon, for: .normal)
-        addBoardBtn.addTarget(self, action: #selector(addBoard(_:)), for: .touchUpInside)
+        //addBoardBtn.addTarget(self, action: #selector(addBoard(_:)), for: .touchUpInside)
+        addBoardBtn.addTarget(self, action: #selector(showAddBoardVC(_:)), for: .touchUpInside)
         
         self.view.addSubview(barView)
         barView.snp.makeConstraints{ make in
@@ -97,7 +103,7 @@ class DashboardViewController: UIViewController {
         barView.backgroundColor = .lightGray
     }
     
-    func setupCollectionView(){
+    final private func setupCollectionView(){
         self.view.addSubview(collectionView)
         collectionView.snp.makeConstraints{ make in
             make.top.equalTo(barView.snp.bottom).offset(40)
@@ -135,18 +141,17 @@ class DashboardViewController: UIViewController {
             self.helloUserName.text = User.toPrint
             print("User email: \(User.toPrint)")
         }
-        getCurrentDateTime()
-        print(boards.count)
+        print(DashboardViewController.boards.count)
     }
     
-    private func onReceivedBoards(boards: [Board]) {
-        self.boards = boards
-        let encodeData = NSKeyedArchiver.archivedData(withRootObject: self.boards)
+    final private func onReceivedBoards(boards: [Board]) {
+        DashboardViewController.boards = boards
+        let encodeData = NSKeyedArchiver.archivedData(withRootObject: DashboardViewController.boards)
         UserDefaults.standard.set(encodeData, forKey: "Board")
         print("set value")
     }
     
-    private func onGetBoardError(error: Error) {
+    final private func onGetBoardError(error: Error) {
         print(error.localizedDescription)
     }
     
@@ -169,19 +174,18 @@ class DashboardViewController: UIViewController {
     //        }
     //    }
     
-    @IBAction func onLogout(_ sender: Any) {
+    @IBAction final private func onLogout(_ sender: Any) {
         let firebaseAuth = Auth.auth()
         do {
             try firebaseAuth.signOut()
             Board.resetBoardCount(value: 0)
-            let homeViewcontroller = storyboard?.instantiateViewController(withIdentifier: "Home") as! UINavigationController
-            self.present(homeViewcontroller, animated: true, completion: nil)
+            self.show(ViewController(), sender: nil)
         } catch let signOutError as NSError {
             print ("Error signing out: %@", signOutError)
         }
     }
     
-    @objc func addBoard (_ sender: Any){
+    @objc final private func addBoard (_ sender: Any){
         let alertController = UIAlertController(title: "Add Board", message: "create new board", preferredStyle: .alert)
         alertController.addTextField{(textField) in
             //textField.placeholder = "Board Name"
@@ -192,11 +196,11 @@ class DashboardViewController: UIViewController {
             }
             
             let newboard = Board(boardName: text, items: [])
-            self.boards.append(newboard)
+            DashboardViewController.boards.append(newboard)
             Board.setBoardCount(value: 1)
             print(Board.count)
-            print(self.boards.count)
-            let indexPath = IndexPath(row: self.boards.count - 1, section: 0)
+            print(DashboardViewController.boards.count)
+            let indexPath = IndexPath(row: DashboardViewController.boards.count - 1, section: 0)
             print("number of board after added: \(Board.count)")
             print("indexPath: \(indexPath)")
             //            self.checkcollectionview.insertItems(at: [indexPath])
@@ -223,6 +227,16 @@ class DashboardViewController: UIViewController {
         present(alertController, animated: true)
     }
     
+    @objc final private func showAddBoardVC(_ sender: UIButton){
+        let addboardVC = AddBoardViewController()
+        addboardVC.onDismiss = {
+            print("Board dismiss")
+            self.collectionView.reloadData()
+        }
+        //addboardVC.modalPresentationStyle = .fullScreen
+        self.show(addboardVC, sender: self)
+    }
+    
     //    func setupHorizonalBar () {
     //        let horizontalBarView = UIView()
     //        horizontalBarView.translatesAutoresizingMaskIntoConstraints = false
@@ -236,7 +250,7 @@ class DashboardViewController: UIViewController {
     //        horizontalBarView.heightAnchor.constraint(equalToConstant: 4).isActive = true
     //    }
     
-
+    
 }
 
 // MARK:- CV datasource + delegate
@@ -250,15 +264,15 @@ extension DashboardViewController: UICollectionViewDataSource,UICollectionViewDe
         //        }
         //        else {
         let vc = storyboard?.instantiateViewController(withIdentifier: "boarddetail") as! BoardViewController
-        vc.boardID = self.boards[indexPath.item].boardID!
+        vc.boardID = DashboardViewController.boards[indexPath.item].boardID!
         self.navigationController?.pushViewController(vc, animated: true)
         //}
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         //print("number of board: \(Board.getBoardCount())")
-        print("number of items in section: \(boards.count)")
-        return boards.count
+        print("number of items in section: \(DashboardViewController.boards.count)")
+        return DashboardViewController.boards.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -278,24 +292,24 @@ extension DashboardViewController: UICollectionViewDataSource,UICollectionViewDe
         //        else {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIndentifier, for: indexPath) as? DashboardCollectionViewCell
         // cell?.Testlabel.text = item[indexPath.item]
-        cell?.layer.cornerRadius = 20
-        cell?.layer.borderWidth = 0
-        //cell?.layer.borderColor = UIColor.orange.cgColor
-        cell?.layer.masksToBounds = true
+//        cell?.layer.cornerRadius = 100
+//        cell?.layer.borderWidth = 0
+//        //cell?.layer.borderColor = UIColor.orange.cgColor
+//        cell?.layer.masksToBounds = true
         
-        cell?.layer.shadowColor = UIColor.black.cgColor
-        cell?.layer.shadowOffset = CGSize(width: 0, height: 1.0)
-        cell?.layer.shadowRadius = 4
-        cell?.layer.shadowOpacity = 0.3
-        cell?.layer.masksToBounds = false
+//        cell?.layer.shadowColor = UIColor.black.cgColor
+//        cell?.layer.shadowOffset = CGSize(width: 0, height: 1.0)
+//        cell?.layer.shadowRadius = 4
+//        cell?.layer.shadowOpacity = 0.3
+//        cell?.layer.masksToBounds = false
         
         cell?.deleteBoardBtn.tag = indexPath.item
-        cell?.boardTitleLabel.text = boards[indexPath.row].boardName
+        cell?.boardTitleLabel.text = DashboardViewController.boards[indexPath.row].boardName
         cell?.boardTitleLabel.textColor = .white
         
         var text = ""
-        for items in boards[indexPath.item].detail{
-            let totalTask = boards[indexPath.item].totalTasks
+        for items in DashboardViewController.boards[indexPath.item].detail{
+            let totalTask = DashboardViewController.boards[indexPath.item].totalTasks
             print("status: \(items.status ?? "")")
             print("number of this status: \(items.count ?? 0)")
             let itemText = "\(items.status!): \(items.count!) / \(totalTask)\n"
@@ -318,8 +332,8 @@ extension DashboardViewController: UICollectionViewDataSource,UICollectionViewDe
         let alertController = UIAlertController(title: "Confirm Delete", message: "There is no way to undo this operation.", preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "Delete", style: .destructive, handler:{ (_) in
             let indexPath: Int = sender.tag
-            deleteBoardAPI(board: self.boards[indexPath])
-            self.boards.remove(at: indexPath)
+            deleteBoardAPI(board: DashboardViewController.boards[indexPath])
+            DashboardViewController.boards.remove(at: indexPath)
             Board.setBoardCount(value: -1)
             self.collectionView.reloadData()
         }))
@@ -336,14 +350,14 @@ extension DashboardViewController: UICollectionViewDataSource,UICollectionViewDe
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 300, height: 300)
+        return CGSize(width: 300, height: 250)
     }
     
-   
+    
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         // print(scrollView.contentOffset.x)
-        horizonalBarLeftAnchorConstraint?.constant = scrollView.contentOffset.x / 4
+//        horizonalBarLeftAnchorConstraint?.constant = scrollView.contentOffset.x / 4
     }
     
     //    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
@@ -354,9 +368,9 @@ extension DashboardViewController: UICollectionViewDataSource,UICollectionViewDe
     //        self.collectionView.selectItem(at: indexPath, animated: true, scrollPosition: [])
     //    }
     
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-//        return CGSize(width: self.view.frame.size.width, height: 20)
-//    }
+    //    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+    //        return CGSize(width: self.view.frame.size.width, height: 20)
+    //    }
     
     //    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     //        let size = CGSize(width: view.frame.width, height: view.frame.height)
