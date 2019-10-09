@@ -2,7 +2,7 @@ import UIKit
 import MobileCoreServices
 class BoardCollectionViewCell: UICollectionViewCell {
 
-    var indexPath: IndexPath?
+
     let footerID = "TableFooter"
     var tableView = UITableView()
     //var task: Task?
@@ -107,27 +107,43 @@ extension BoardCollectionViewCell: UITableViewDataSource, UITableViewDelegate {
         cell.layer.cornerRadius = 50
         cell.backgroundColor = UIColor.clear
         cell.StatusName.text = "\(status!.items[indexPath.row].taskName!)"
-        self.indexPath = indexPath
         cell.DeleteButton.addTarget(self, action: #selector(deleteTask), for: .touchUpInside)
         return cell
     }
     
-    @objc func deleteTask (){
+    @objc func deleteTask (_ sender: UIButton){
+        guard
+            let button = sender as? UIView,
+            let cell = button.nearestAncestor(ofType: UITableViewCell.self),
+            let tableView = cell.nearestAncestor(ofType: UITableView.self),
+            let indexPath = tableView.indexPath(for: cell)
+            else { return }
+        let alertController = UIAlertController(title: "Confirm Delete", message: nil, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: { (_) in
+            tableView.beginUpdates()
+            deleteTaskAPI(task: self.status!.items[indexPath.row], boardID: self.boardID!)
+            self.status!.items.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            tableView.endUpdates()
+        }))
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        parentVC?.present(alertController, animated: true, completion: nil)
         
-        tableView.beginUpdates()
-        deleteTaskAPI(task: status!.items[indexPath!.row], boardID: self.boardID!)
-        status!.items.remove(at: indexPath!.row)
-        tableView.deleteRows(at: [indexPath!], with: .automatic)
-        tableView.endUpdates()
         
     }
+  
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = TaskDetailVCViewController()
+        parentVC?.navigationController?.pushViewController(vc, animated: true)
+
+        
         tableView.deselectRow(at: indexPath, animated: true)
+        
     }
     
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 100
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 50
     }
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let footer = UIView()
@@ -147,6 +163,12 @@ extension BoardCollectionViewCell: UITableViewDataSource, UITableViewDelegate {
     
 }
 
+extension UIView {
+    func nearestAncestor<T>(ofType type: T.Type) -> T? {
+        if let me = self as? T { return me }
+        return superview?.nearestAncestor(ofType: type)
+    }
+}
 
 extension BoardCollectionViewCell: UITableViewDragDelegate {
 

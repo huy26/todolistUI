@@ -325,42 +325,6 @@
             </objects>
             <point key="canvasLocation" x="3146" y="139"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="GNe-JS-lP6">
-            <objects>
-                <navigationController storyboardIdentifier="TaskVC" automaticallyAdjustsScrollViewInsets="NO" toolbarHidden="NO" id="kBD-1p-zV1" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Ytb-oS-rIV">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="gp3-Bu-l1w">
-                        <rect key="frame" x="0.0" y="813" width="414" height="49"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </toolbar>
-                    <connections>
-                        <segue destination="eXl-rt-XwW" kind="relationship" relationship="rootViewController" id="ejs-Il-b95"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Abz-S4-dEz" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="5740.579710144928" y="138.61607142857142"/>
-        </scene>
-        <!--Board View Controller-->
-        <scene sceneID="TjT-Zw-aJV">
-            <objects>
-                <viewController storyboardIdentifier="boarddetail" id="eXl-rt-XwW" customClass="BoardViewController" customModule="todolist" customModuleProvider="target" sceneMemberID="viewController">
-                    <toolbarItems>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="1B5-Hd-sKq"/>
-                    </toolbarItems>
-                    <navigationItem key="navigationItem" id="eDb-Pa-KIf"/>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="3c5-nT-aMn" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="6871" y="139"/>
-        </scene>
         <!--Dashboard View Controller-->
         <scene sceneID="SdG-zD-Rac">
             <objects>

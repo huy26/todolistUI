@@ -13,7 +13,8 @@ class TableViewCell: UITableViewCell {
     var view = UIView()
     var StatusName = UILabel()
     var DeleteButton = UIButton()
-    
+    var line = UIView()
+    var inviteButton = UIButton()
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         
         super.init(style: .default, reuseIdentifier: "Cell")
@@ -35,19 +36,39 @@ class TableViewCell: UITableViewCell {
         
         self.view.addSubview(StatusName)
         StatusName.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().offset(40)
+            make.top.equalToSuperview().offset(60)
             make.left.equalToSuperview().offset(40)
+            make.right.equalToSuperview().offset(-40)
         }
         StatusName.textColor = .white
-        StatusName.font = UIFont.systemFont(ofSize: 40)
+        StatusName.font = UIFont.systemFont(ofSize: 30)
         
         self.view.addSubview(DeleteButton)
         DeleteButton.snp.makeConstraints { (make) in
             make.right.equalToSuperview().offset(-40)
             make.top.equalToSuperview().offset(40)
+            make.height.equalTo(20)
+            make.width.equalTo(20)
         }
-        DeleteButton.setTitle("Delete", for: .normal)
-        DeleteButton.setTitleColor(.white, for: .normal)
+        let image = UIImage(named: "deleteButton")
+        DeleteButton.setImage(image, for: .normal)
+        
+        self.view.addSubview(line)
+        line.snp.makeConstraints { (make) in
+            make.bottom.equalToSuperview().offset(-75)
+            make.left.right.equalToSuperview()
+            make.height.equalTo(1)
+        }
+        line.layer.backgroundColor = UIColor.white.cgColor
+        
+        self.view.addSubview(inviteButton)
+        inviteButton.snp.makeConstraints { (make) in
+            make.bottom.equalToSuperview().offset(-40)
+            make.right.equalToSuperview().offset(-40)
+            make.height.equalTo(25)
+            make.width.equalTo(25)
+        }
+        inviteButton.setImage(UIImage(named: "add"), for: .normal)
         
     }
     

@@ -195,7 +195,7 @@ extension DashboardViewController: UICollectionViewDataSource,UICollectionViewDe
             collectionView.scrollToItem(at: indexPath as IndexPath, at: [] , animated: true)
         }
         else {
-            let vc = storyboard?.instantiateViewController(withIdentifier: "boarddetail") as! BoardViewController
+            let vc = BoardViewController()
             vc.boardID = self.boards[indexPath.item].boardID!
             self.navigationController?.pushViewController(vc, animated: true)
         }
