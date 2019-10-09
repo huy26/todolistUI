@@ -37,8 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
         //let initialViewController = DashboardViewController()
-        let initialViewController = ViewController()
-        //
+        //let initialViewController = ViewController()
         self.window?.rootViewController = UINavigationController(rootViewController: ViewController())
         self.window?.makeKeyAndVisible()
         

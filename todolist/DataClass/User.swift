@@ -19,7 +19,9 @@ struct User: Encodable {
     var birthDay: String
     var avatarURL: String
     var email: String
-    static var toPrint: String = "Hello"
+    static var userNamePrint = "Name"
+    static var emailPrint = "Email"
+    
     init(firstName: String, lastName: String, userPhone: String, birthDay: String, avatarURL: String, email: String){
         //self.userID = userID
         self.firstName = firstName
@@ -28,7 +30,8 @@ struct User: Encodable {
         self.birthDay = birthDay
         self.avatarURL = avatarURL
         self.email = email
-        User.toPrint = email
+        User.userNamePrint = firstName
+        User.emailPrint = email
     }
     
     func toJson() -> [String: Any] {
@@ -42,12 +45,20 @@ struct User: Encodable {
         return dict
     }
     
-    func settoPrint(value: String){
-        User.toPrint = value
+    static func setNamePrint(value: String){
+        User.userNamePrint = value
     }
     
-    func gettoPrint() -> String {
-        return User.toPrint
+    static func getNamePrint() -> String {
+        return User.userNamePrint
+    }
+    
+    static func setemailPrint(value: String){
+        User.emailPrint = value
+    }
+    
+    static func getemailPrint() -> String {
+        return User.emailPrint
     }
     
 }

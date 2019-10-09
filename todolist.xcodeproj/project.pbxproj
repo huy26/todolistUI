@@ -15,6 +15,7 @@
 		040891E1232254E60025EE37 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 040891E0232254E60025EE37 /* Assets.xcassets */; };
 		040891E4232254E60025EE37 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 040891E2232254E60025EE37 /* LaunchScreen.storyboard */; };
 		040891EC23225F1D0025EE37 /* SignupViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040891EB23225F1D0025EE37 /* SignupViewViewController.swift */; };
+		040E92812349F30C006CB93B /* TestPic.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 040E92802349F30C006CB93B /* TestPic.jpg */; };
 		0424541623361B7E00A0230F /* BoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0424541523361B7E00A0230F /* BoardViewController.swift */; };
 		042E51F92334C71C00030E5E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 042E51F82334C71B00030E5E /* Main.storyboard */; };
 		042E52002334C76E00030E5E /* StatusCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042E51FB2334C76800030E5E /* StatusCollectionViewCell.swift */; };
@@ -83,6 +84,7 @@
 		040891E3232254E60025EE37 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		040891E5232254E60025EE37 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		040891EB23225F1D0025EE37 /* SignupViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewViewController.swift; sourceTree = "<group>"; };
+		040E92802349F30C006CB93B /* TestPic.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = TestPic.jpg; sourceTree = "<group>"; };
 		0424541523361B7E00A0230F /* BoardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardViewController.swift; sourceTree = "<group>"; };
 		042E51F82334C71B00030E5E /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		042E51FB2334C76800030E5E /* StatusCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -240,6 +242,7 @@
 		04FBCBC023475C15005C74F6 /* Assest */ = {
 			isa = PBXGroup;
 			children = (
+				040E92802349F30C006CB93B /* TestPic.jpg */,
 				04061FEB23435EBA0068B0BB /* Boards@3x.png */,
 				04FD9B5C23459FE000B3B937 /* plus icon.png */,
 				04FBCBBA23475B08005C74F6 /* board_default.png */,
@@ -355,6 +358,7 @@
 				040891E4232254E60025EE37 /* LaunchScreen.storyboard in Resources */,
 				042E51F92334C71C00030E5E /* Main.storyboard in Resources */,
 				04FBCBBD23475BB9005C74F6 /* logo.png in Resources */,
+				040E92812349F30C006CB93B /* TestPic.jpg in Resources */,
 				0438E26E2333780E00BCBEC8 /* GoogleService-Info.plist in Resources */,
 				04061FEC23435EBA0068B0BB /* Boards@3x.png in Resources */,
 				04FD9B5F2345B32000B3B937 /* delete.png in Resources */,

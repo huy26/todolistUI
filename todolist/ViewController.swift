@@ -26,31 +26,31 @@ class ViewController: UIViewController {
     
     private let dashboard = DashboardViewController()
     private let tabbarController = TabBarController()
-//    @IBOutlet weak var passwordTextField: UITextField!
-//    @IBOutlet weak var usernameTextField: UITextField!
-//    @IBOutlet weak var Signup: UIButton!
+
     // MARK:- Load View
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.passwordTextField.delegate = self
-//        self.usernameTextField.delegate = self
-//        // Do any additional setup after loading the view.
+
         self.emailTextField.delegate = self
         self.passwordTextField.delegate = self
         
-        dashboard.modalPresentationStyle = .fullScreen
-//        passwordTextField?.isSecureTextEntry = true
 //        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), for: .default)
 //        self.navigationController!.navigationBar.shadowImage = UIImage()
 //        self.navigationController!.navigationBar.isTranslucent = true
         setupLoginUI()
-        //self.show(ViewController(), sender: self)
         
+        tabbarController.modalPresentationStyle = .fullScreen
+        tabbarController.navigationController?.setNavigationBarHidden(true, animated: false)
+        tabbarController.navigationController?.isNavigationBarHidden = true
+        
+        // MARK:- auto login
         let currentuser = Auth.auth().currentUser
         if currentuser != nil{
-            getUserAPI()
-            //let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "HomeVC") as! UINavigationController
-            self.show(tabbarController, sender: self)
+            let user = getUserAPI()
+            //self.show(tabbarController, sender: self)
+            //self.present(tabbarController, animated: true, completion: nil)
+            self.navigationController?.isNavigationBarHidden = true
+            self.navigationController!.pushViewController(tabbarController, animated: true)
         }
     }
     
@@ -191,12 +191,21 @@ class ViewController: UIViewController {
                 Auth.auth().signIn(withEmail: username, password: password) { (result, error) in
             if error != nil {
                 print (error!.localizedDescription)
+                
+                let alertController = UIAlertController(title: "Login failed", message: "email or password is incorrect", preferredStyle: .alert)
+                alertController.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
+                self.present(alertController,animated: true)
             }
             else
             {
                 getUserAPI()
 //                let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "HomeVC") as! UINavigationController
-                self.show(self.tabbarController, sender: self)
+        
+                //self.present(self.tabbarController, animated: true, completion: nil)
+                //self.show(self.tabbarController, sender: self)
+                self.navigationController?.pushViewController(self.tabbarController, animated: true)
+                self.emailTextField.text = ""
+                self.passwordTextField.text = ""
             }
         }
     }

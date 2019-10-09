@@ -18,6 +18,7 @@ final class DashboardViewController: UIViewController {
     private var helloUserName = UILabel()
     private let addBoardBtn = UIButton()
     private let barView = UIView()
+    private let addboardVC = AddBoardViewController()
     private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
     
     let profileVC = UIViewController()
@@ -49,18 +50,16 @@ final class DashboardViewController: UIViewController {
 //        self.navigationController!.navigationBar.isTranslucent = true
         
         setupBoardUI()
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        self.collectionView.collectionViewLayout = layout
+      
     }
     // MARK:- Setup View
     
     final private func setupBoardUI(){
         self.view.backgroundColor = .white
-        
+        //self.definesPresentationContext = true
+        //self.modalPresentationStyle = .overFullScreen
         setupTitle()
         setupCollectionView()
-        //setupTabBar()
     }
     
     final private func setupTitle(){
@@ -116,23 +115,17 @@ final class DashboardViewController: UIViewController {
         collectionView.alwaysBounceVertical = true
         collectionView.showsVerticalScrollIndicator = true
         collectionView.isScrollEnabled = true
-    }
-    
-    final private func setupTabBar(){
-        let dashboardVC = DashboardViewController()
-        dashboardVC.tabBarItem = UITabBarItem(tabBarSystemItem: .contacts, tag: 0)
         
-        let profileVC = ProfileViewController()
-        profileVC.tabBarItem = UITabBarItem(tabBarSystemItem: .topRated, tag: 1)
-        
-        let tabBarList = [dashboardVC, profileVC]
-        //self.tabbarController.viewControllers = tabBarList
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        self.collectionView.collectionViewLayout = layout
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //boards = UserDefaults.standard.object(forKey: "Board") as! [Board]
+        //DashboardViewController.boards = UserDefaults.standard.object(forKey: "Board") as! [Board]
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
+        self.navigationController?.isNavigationBarHidden = true
         
         readBoardAPI { (error, boards) in
             if let error = error {
@@ -147,11 +140,11 @@ final class DashboardViewController: UIViewController {
                 return
             }
         }
-        if User.toPrint == "" {
-            User.toPrint = "Hello, "
+        if User.userNamePrint == "" {
+            User.userNamePrint = "Hello, "
         } else {
-            self.helloUserName.text = User.toPrint
-            print("User email: \(User.toPrint)")
+            self.helloUserName.text = User.userNamePrint
+            print("User email: \(User.userNamePrint)")
         }
         print(DashboardViewController.boards.count)
     }
@@ -221,20 +214,35 @@ final class DashboardViewController: UIViewController {
     }
     
     @objc final private func showAddBoardVC(_ sender: UIButton){
-        let addboardVC = AddBoardViewController()
         addboardVC.onDismiss = {
             print("Board dismiss")
             self.collectionView.reloadData()
         }
-        //addboardVC.modalPresentationStyle = .fullScreen
+        //addboardVC.modalPresentationStyle = .none
         //self.show(addboardVC, sender: self)
-        self.present(addboardVC, animated: true, completion: nil)
+        //addboardVC.definesPresentationContext = true
+//        self.present(self.addboardVC, animated: true, completion: nil)
+        self.navigationController?.pushViewController(addboardVC, animated: true)
+        //self.tabBarController?.present(addboardVC, animated: true, completion: nil)
     }
     
-    @objc final private func showProfileVC(_ sender: UIButton){
-        //addboardVC.modalPresentationStyle = .fullScreen
-        self.show(profileVC, sender: self)
-    }
+    @objc func deleteBoard(sender: UIButton){
+          let alertController = UIAlertController(title: "Confirm Delete", message: "There is no way to undo this operation.", preferredStyle: .alert)
+          alertController.addAction(UIAlertAction(title: "Delete", style: .destructive, handler:{ (_) in
+              let indexPath = sender.tag
+              deleteBoardAPI(board: DashboardViewController.boards[indexPath])
+              DashboardViewController.boards.remove(at: indexPath)
+              Board.setBoardCount(value: -1)
+              self.collectionView.reloadData()
+          }))
+          alertController.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+          self.present(alertController,animated: true)
+      }
+    
+//    @objc final private func showProfileVC(_ sender: UIButton){
+//        //addboardVC.modalPresentationStyle = .fullScreen
+//        self.show(profileVC, sender: self)
+//    }
 }
 
 // MARK:- CV datasource + delegate
@@ -266,6 +274,7 @@ extension DashboardViewController: UICollectionViewDataSource,UICollectionViewDe
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIndentifier, for: indexPath) as? DashboardCollectionViewCell
 
         cell?.deleteBoardBtn.tag = indexPath.item
+
         cell?.boardTitleLabel.text = DashboardViewController.boards[indexPath.row].boardName
         cell?.boardTitleLabel.textColor = .white
         
@@ -282,19 +291,6 @@ extension DashboardViewController: UICollectionViewDataSource,UICollectionViewDe
         cell?.textLabel.text = text
         
         return cell!
-    }
-    
-    @objc func deleteBoard(sender: UIButton){
-        let alertController = UIAlertController(title: "Confirm Delete", message: "There is no way to undo this operation.", preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "Delete", style: .destructive, handler:{ (_) in
-            let indexPath = sender.tag
-            deleteBoardAPI(board: DashboardViewController.boards[indexPath])
-            DashboardViewController.boards.remove(at: indexPath)
-            Board.setBoardCount(value: -1)
-            self.collectionView.reloadData()
-        }))
-        alertController.addAction(UIAlertAction(title: "Cancle", style: .default, handler: nil))
-        self.present(alertController,animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

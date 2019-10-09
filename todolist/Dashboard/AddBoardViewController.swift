@@ -17,6 +17,9 @@ final class AddBoardViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
+        
         setupNavBar()
         setupAddViewUI()
         setupBackbuttonItem()
@@ -79,7 +82,10 @@ final class AddBoardViewController: UIViewController {
     
     // MARK:- board function
     @objc final private func backtoBoard(_ sender: Any){
-        self.dismiss(animated: true, completion: nil)
+//        self.dismiss(animated: true, completion: nil)
+        self.navigationController?.popViewController(animated: true)
+//        self.presentingViewController?.dismiss(animated: true, completion: nil)
+        //self.show(TabBarController(), sender: self)
     }
     
     @objc final private func addBoard (_ sender: Any){

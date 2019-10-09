@@ -18,9 +18,9 @@ import OneSignal
 //let url = "http://192.168.2.48:4000/api/user"
 let url = "http://103.221.223.126:4000/api/user"
 
-func getUserAPI(){
-    //let data = User(firstName: "", lastName: "", userPhone: "", birthDay: "", avatarURL: "", email: "")
-    var data: User?
+func getUserAPI() -> User{
+    var data = User(firstName: "", lastName: "", userPhone: "", birthDay: "", avatarURL: "", email: "")
+    //var data: User?
     let currentUser = Auth.auth().currentUser
     currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
         if error != nil {
@@ -33,7 +33,7 @@ func getUserAPI(){
         
         //let idToken = returnFirebaseToken()
         let header: HTTPHeaders = [
-            "tokenID": "\(idToken as! String)",
+            "tokenID": "\(idToken!)",
         ]
         AF.request(url, method: .get,parameters: data,encoder: URLEncodedFormParameterEncoder(destination: .httpBody), headers: header).responseData(completionHandler: { response in
             switch response.result {
@@ -44,17 +44,20 @@ func getUserAPI(){
                 debugPrint(error)
                 break
             }}).responseJSON(completionHandler: { dataJson in
-                print("==> JSON Data: \(dataJson)")
-                
-                let dict = ["username": ""]
-                OneSignal.sendTags(dict)
-                //OneSignal.deleteTag(dict)
-                
-                //OneSignal.sendTag("username", value: <#T##String!#>)
+                switch dataJson.result {
+                case .success(let string):
+                    debugPrint("Request success \(string)")
+                    data = string as! User
+                //                    return string.replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "")
+                case .failure(let error):
+                    debugPrint(error)
+                    break
+                }
+                print(idToken!)
+                print("Get user completed")
             })
-        print(idToken)
-        print("Get user completed")
     }
+    return data
 }
 
 func uploadUserAPI(firstName: String, lastName: String, userPhone: String, birthDay: String, avatarURL: String, email: String){
@@ -73,7 +76,7 @@ func uploadUserAPI(firstName: String, lastName: String, userPhone: String, birth
         
         //let idToken = returnFirebaseToken()
         let header: HTTPHeaders = [
-            "tokenIDS": "\(idToken as! String)",
+            "tokenIDS": "\(idToken!)",
         ]
         AF.request(url, method: .post, parameters: data,encoder: URLEncodedFormParameterEncoder(destination: .httpBody), headers: header).responseData(completionHandler: { data in
             print("==> Raw Data \(data)")
@@ -81,7 +84,7 @@ func uploadUserAPI(firstName: String, lastName: String, userPhone: String, birth
         }).responseJSON(completionHandler: { dataJson in
             print("==> JSON Data: \(dataJson)")
         })
-        print(idToken)
+        print(idToken!)
         print(email)
         print("http resquest succeed")
     }
@@ -151,7 +154,7 @@ func readBoardAPI(onCompleted: @escaping ((Error?, [Board]?)-> Void)) {
                 
                 print("try to map")
                 //let board = response.result
-                if  let status = response.response?.statusCode {
+                if  (response.response?.statusCode) != nil {
                     switch(response.result){
                     case let .success(value):
                         Board.resetBoardCount(value: value.count)
@@ -192,7 +195,7 @@ func uploadBoardAPI(board: Board){
         let header: HTTPHeaders = [
             "tokenID": idToken,
         ]
-        print(board.boardName)
+        print(board.boardName!)
         
         guard let newurl = URL(string: "http://103.221.223.126:4000/api/user/board") else { return }
         AF.request(
@@ -233,9 +236,9 @@ func deleteBoardAPI(board: Board) {
         let header: HTTPHeaders = [
             "tokenID": idToken,
         ]
-        print(board.boardID)
+        print(board.boardID!)
         
-        guard let newurl = URL(string: "http://103.221.223.126:4000/api/user/board/\(board.boardID as! String)") else { return }
+        guard let newurl = URL(string: "http://103.221.223.126:4000/api/user/board/\(board.boardID!)") else { return }
         
         AF.request(
             newurl,
@@ -275,9 +278,9 @@ func updateBoardAPI(board: Board, newName: String) {
         let header: HTTPHeaders = [
             "tokenID": idToken,
         ]
-        print(board.boardID)
+        print(board.boardID!)
         
-        guard let newurl = URL(string: "http://103.221.223.126:4000/api/user/board/\(board.boardID as! String)") else { return }
+        guard let newurl = URL(string: "http://103.221.223.126:4000/api/user/board/\(board.boardID!)") else { return }
         board.changeBoardName(value: newName)
         AF.request(
             newurl,
