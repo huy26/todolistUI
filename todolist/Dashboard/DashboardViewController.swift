@@ -250,18 +250,10 @@ extension DashboardViewController: UICollectionViewDataSource,UICollectionViewDe
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        //        if collectionView == self.checkcollectionview{
-        //            //scrolltoMenuIndex(menuIndex: indexPath.item)
-        //            collectionView.scrollToItem(at: indexPath as IndexPath, at: [] , animated: true)
-        //        }
-        //        else {
-//        let vc = storyboard?.instantiateViewController(withIdentifier: "boarddetail") as! BoardViewController
-//        vc.boardID = DashboardViewController.boards[indexPath.item].boardID!
-//        self.navigationController?.pushViewController(vc, animated: true)
         let vc = BoardViewController()
         vc.boardID = DashboardViewController.boards[indexPath.item].boardID!
-        self.show(vc, sender: self)
-        //}
+        self.navigationController?.pushViewController(vc, animated: true)
+
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

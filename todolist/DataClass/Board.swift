@@ -18,6 +18,7 @@ class Board: NSObject, Encodable, Mappable, NSCoding {
             self.detail = decodedTeams
         }
         
+
         if let items = coder.decodeObject(forKey: "boardItems") {
             self.items = items as! [String]
         }
@@ -57,7 +58,7 @@ class Board: NSObject, Encodable, Mappable, NSCoding {
         self.boardName = boardName
         self.items = items
         self.boardID = ""
-        self.status = "good"
+        self.status = ""
         self.detail = [Detail]()
         self.totalTasks = 0
         //Board.count += 1
