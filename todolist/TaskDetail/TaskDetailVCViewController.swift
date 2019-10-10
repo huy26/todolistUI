@@ -39,7 +39,7 @@ class TaskDetailVCViewController: UIViewController {
             make.top.equalToSuperview().offset(90)
             make.left.equalToSuperview().offset(20)
         }
-        Taskname.text = "Task Name"
+        Taskname.text = task?.taskName
         Taskname.textColor = .black
         Taskname.font = UIFont.boldSystemFont(ofSize: 30)
         
@@ -48,7 +48,7 @@ class TaskDetailVCViewController: UIViewController {
             make.top.equalTo(Taskname.snp.bottom).offset(10)
             make.left.equalToSuperview().offset(20)
         }
-        status.text = "In Status: "
+        status.text = "In Status: \(task?.status as! String)"
         
         self.view.addSubview(taptoadddes)
         taptoadddes.snp.makeConstraints { (make) in
@@ -66,6 +66,8 @@ class TaskDetailVCViewController: UIViewController {
             make.top.equalTo(taptoadddes.snp.bottom).offset(150)
             make.left.right.bottom.equalToSuperview()
         }
+        
+        
         
     }
     

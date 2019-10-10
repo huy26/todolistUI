@@ -24,7 +24,7 @@ class TableViewCell: UITableViewCell {
         self.contentView.addSubview(view)
         view.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
-            make.height.equalTo(300)
+            make.height.equalTo(200)
             make.width.equalTo(368)
         }
         view.backgroundColor = UIColor.orange

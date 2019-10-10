@@ -135,6 +135,7 @@ extension BoardCollectionViewCell: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = TaskDetailVCViewController()
+        vc.task = self.status?.items[indexPath.row]
         parentVC?.navigationController?.pushViewController(vc, animated: true)
 
         

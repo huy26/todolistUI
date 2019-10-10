@@ -2,7 +2,7 @@
 import UIKit
 
 class DescriptionVC: UIViewController {
-    var textField = UITextField()
+    var textField = UITextView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -12,9 +12,20 @@ class DescriptionVC: UIViewController {
             make.left.right.bottom.equalToSuperview()
             make.top.equalToSuperview().offset(80)
         }
+        
+        let CancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancel))
+        let DoneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(done))
+        navigationItem.leftBarButtonItem = CancelButton
+        navigationItem.rightBarButtonItem = DoneButton
 
             }
     
+    @objc func cancel() {
+        self.navigationController?.popViewController(animated: true)
+    }
+    @objc func done () {
+        
+    }
 
     
 

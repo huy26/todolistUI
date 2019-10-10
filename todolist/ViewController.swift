@@ -174,7 +174,7 @@ class ViewController: UIViewController {
             make.height.equalTo(50)
         }
         signUpBtn.setTitle("Don't have an account? Sign up", for: .normal)
-        signUpBtn.setTitleColor(.systemBlue, for: .normal)
+        signUpBtn.setTitleColor(.blue, for: .normal)
         signUpBtn.layer.cornerRadius = 10
         signUpBtn.backgroundColor = UIColor(red: 0xe6, green: 0xe6, blue: 0xe6,alpha: 0.75)
         signUpBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .light)
