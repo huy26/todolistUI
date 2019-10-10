@@ -11,16 +11,19 @@ import ObjectMapper
 
 class Board: NSObject, Encodable, Mappable, NSCoding {
     required init?(coder: NSCoder) {
-        self.boardName = coder.decodeObject(forKey: "boardName") as! String
-        self.boardID = coder.decodeObject(forKey: "boardID") as! String
-        if let decoded  = UserDefaults.standard.data(forKey: "boardDetail")
-        {let decodedTeams = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! [Detail]
+        self.boardName = coder.decodeObject(forKey: "boardName") as? String
+        self.boardID = coder.decodeObject(forKey: "boardID") as? String
+        if let decoded  = UserDefaults.standard.data(forKey: "boardDetail"){
+            let decodedTeams = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! [Detail]
             self.detail = decodedTeams
         }
         
-        self.items = coder.decodeObject(forKey: "boardItems") as! [String]
-      //  self.status = coder.decodeObject(forKey: "boardStatus") as! String
+
+        if let items = coder.decodeObject(forKey: "boardItems") {
+            self.items = items as! [String]
+        }
         self.totalTasks = coder.decodeInteger(forKey: "boardTotalTasks")
+        //        self.status = coder.decodeObject(forKey: "boardStatus") as! String
         //self.userID = coder.decodeObject(forKey: "boardUserID") as! String
         //Board.count = coder.decodeObject(forKey: "boardCount") as! Int
         if let count = coder.decodeObject(forKey: "boardCount") {

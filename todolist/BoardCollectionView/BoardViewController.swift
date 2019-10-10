@@ -1,3 +1,4 @@
+
 //
 //  BoardViewController.swift
 //  todolist
@@ -5,7 +6,6 @@
 //  Created by Mac on 19/09/2019.
 //  Copyright © 2019 Mac. All rights reserved.
 //
-
 import UIKit
 import Firebase
 import FirebaseAuth
@@ -15,7 +15,7 @@ class BoardViewController: UIViewController {
     var tasks = [Task]()
     var boardID = ""
     static var taskID = ""
-    var status = [Status(name: "Test", items:[])]
+    var status = [Status(name: "Todo", items: [])]
     var deleteTask = ""
     //var tableView = UITableView()
     var horizonalBarLeftAnchorConstraint: NSLayoutConstraint?
@@ -300,9 +300,9 @@ extension BoardViewController: UICollectionViewDataSource, UICollectionViewDeleg
         /*print(indexPath.item)
          let x = CGFloat(indexPath.item) * collectionView.frame.width / 4
          horizonalBarLeftAnchorConstraint?.constant = x
-
          UIView.animate(withDuration: 0.75, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {self.checkcollectionview.layoutIfNeeded()}, completion: nil)*/
-       scrolltoMenuIndex(menuIndex: indexPath.item)
+                scrolltoMenuIndex(menuIndex: indexPath.item)
+      
     }
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         // print(scrollView.contentOffset.x)
@@ -319,7 +319,7 @@ extension BoardViewController: UICollectionViewDataSource, UICollectionViewDeleg
             return CGSize(width: 93, height: 46)
         }
         else {
-            return CGSize(width: 374, height: 500)
+            return CGSize(width: 374, height: 600)
         }
     }
     
