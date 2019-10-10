@@ -8,9 +8,9 @@
 
 import UIKit
 
-class GuestTableViewCell: UITableViewCell {
+class GuestCollectionViewCell: UICollectionViewCell {
 
-    private var guestImageView = UIImageView()
+    var guestImageView = UIImageView()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -22,14 +22,15 @@ class GuestTableViewCell: UITableViewCell {
         self.contentView.addSubview(guestImageView)
         guestImageView.snp.makeConstraints{ make in
             make.edges.equalToSuperview()
-            make.size.equalToSuperview()
+            make.size.equalTo(200)
         }
-
+        guestImageView.layer.cornerRadius = guestImageView.frame.width/2
+        guestImageView.layer.masksToBounds = false
+        guestImageView.clipsToBounds = true
+        guestImageView.contentMode = .scaleAspectFill
+        guestImageView.backgroundColor = .purple
     }
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
+ 
 }
+
+

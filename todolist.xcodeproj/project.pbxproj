@@ -22,7 +22,7 @@
 		042E52032334C76E00030E5E /* BoardCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042E51FE2334C76E00030E5E /* BoardCollectionViewController.swift */; };
 		0438E26E2333780E00BCBEC8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0438E26D2333780D00BCBEC8 /* GoogleService-Info.plist */; };
 		043B6BC52331EF0700F264E8 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043B6BC42331EF0700F264E8 /* Task.swift */; };
-		043C9509234E17C200949D22 /* GuestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043C9508234E17C200949D22 /* GuestTableViewCell.swift */; };
+		044F1C65234EE1DE009F58BA /* GuestCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044F1C64234EE1DE009F58BA /* GuestCollectionViewCell.swift */; };
 		0491CBD32330D9AC00040E51 /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0491CBD22330D9AC00040E51 /* ForgotPasswordViewController.swift */; };
 		0498C3F8234D8BC000F99C10 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0498C3F7234D8BC000F99C10 /* TableViewCell.swift */; };
 		0498C401234D8DD700F99C10 /* DescriptionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0498C400234D8DD700F99C10 /* DescriptionVC.swift */; };
@@ -94,7 +94,7 @@
 		042E51FE2334C76E00030E5E /* BoardCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardCollectionViewController.swift; sourceTree = "<group>"; };
 		0438E26D2333780D00BCBEC8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		043B6BC42331EF0700F264E8 /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
-		043C9508234E17C200949D22 /* GuestTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestTableViewCell.swift; sourceTree = "<group>"; };
+		044F1C64234EE1DE009F58BA /* GuestCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuestCollectionViewCell.swift; sourceTree = "<group>"; };
 		0491CBD22330D9AC00040E51 /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
 		0498C3F7234D8BC000F99C10 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		0498C400234D8DD700F99C10 /* DescriptionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionVC.swift; sourceTree = "<group>"; };
@@ -243,11 +243,11 @@
 		04F989602338C7E100A062C4 /* Dashboard */ = {
 			isa = PBXGroup;
 			children = (
-				04FC1592233B5ECE0091FC4E /* checkCollectionViewCell.swift */,
-				04FC1593233B5ECE0091FC4E /* DashboardCollectionViewCell.swift */,
 				04FC1594233B5ECE0091FC4E /* DashboardViewController.swift */,
 				04FD9B602345F1B900B3B937 /* AddBoardViewController.swift */,
-				043C9508234E17C200949D22 /* GuestTableViewCell.swift */,
+				04FC1593233B5ECE0091FC4E /* DashboardCollectionViewCell.swift */,
+				044F1C64234EE1DE009F58BA /* GuestCollectionViewCell.swift */,
+				04FC1592233B5ECE0091FC4E /* checkCollectionViewCell.swift */,
 			);
 			path = Dashboard;
 			sourceTree = "<group>";
@@ -484,7 +484,7 @@
 				04FA8FD1232F7E1E00EFEA29 /* ApiRequest.swift in Sources */,
 				040891DA232254E50025EE37 /* AppDelegate.swift in Sources */,
 				04FC1595233B5ECE0091FC4E /* checkCollectionViewCell.swift in Sources */,
-				043C9509234E17C200949D22 /* GuestTableViewCell.swift in Sources */,
+				044F1C65234EE1DE009F58BA /* GuestCollectionViewCell.swift in Sources */,
 				040891EC23225F1D0025EE37 /* SignupViewViewController.swift in Sources */,
 				04FD9B612345F1B900B3B937 /* AddBoardViewController.swift in Sources */,
 				0491CBD32330D9AC00040E51 /* ForgotPasswordViewController.swift in Sources */,

@@ -16,8 +16,8 @@ final class DashboardCollectionViewCell: UICollectionViewCell {
     
     private let barView = UIView()
     private let addUserBtn = UIButton()
-    private var guestTableView = UITableView()
-    private let color = [UIColor.orange, UIColor.red, UIColor.purple,UIColor.blue]
+    private var guestCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
+    private let color = [UIColor.orange, UIColor.white, UIColor.purple,UIColor.blue]
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -93,36 +93,45 @@ final class DashboardCollectionViewCell: UICollectionViewCell {
     }
     
     final private func setupGuestTableView() {
-        self.contentView.addSubview(guestTableView)
-        guestTableView.snp.makeConstraints{ make in
-            make.top.equalTo(barView)
-            make.left.equalToSuperview()
-            make.right.equalTo(addUserBtn)
-            make.height.equalTo(30)
+        self.contentView.addSubview(guestCollectionView)
+        guestCollectionView.snp.makeConstraints{ make in
+            make.top.equalTo(barView).offset(5)
+            make.left.equalToSuperview().offset(5)
+            make.right.equalTo(addUserBtn).offset(-25)
+            make.height.equalTo(40)
         }
-        guestTableView.backgroundColor = .blue
-        guestTableView.dataSource = self
-        guestTableView.delegate = self
-        guestTableView.register(GuestTableViewCell.self,forCellReuseIdentifier: "Cell")
+        guestCollectionView.layer.cornerRadius = 10
+        guestCollectionView.backgroundColor = UIColor(red:1.00, green:0.19, blue:0.31, alpha:1.0)
+        guestCollectionView.dataSource = self
+        guestCollectionView.delegate = self
+        guestCollectionView.register(GuestCollectionViewCell.self,forCellWithReuseIdentifier: "Cell")
     }
 }
 
-extension DashboardCollectionViewCell: UITableViewDataSource{
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+extension DashboardCollectionViewCell: UICollectionViewDataSource{
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return color.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! GuestTableViewCell
-        let randomInt = Int.random(in: 0..<3)
-        cell.imageView?.backgroundColor = color[randomInt]
-
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
+        let random = Int.random(in: 0..<4)
+        cell.backgroundColor = color[random]
+        cell.layer.cornerRadius = 20
         return cell
     }
-    
-    
+
 }
 
-extension DashboardCollectionViewCell: UITableViewDelegate{
+extension DashboardCollectionViewCell: UICollectionViewDelegate{
+}
+
+extension DashboardCollectionViewCell: UICollectionViewDelegateFlowLayout{
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 40, height: 40)
+    }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 5
+    }
 }
