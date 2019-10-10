@@ -20,20 +20,16 @@ final class DashboardViewController: UIViewController {
     private let barView = UIView()
     private let addboardVC = AddBoardViewController()
     private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
-    
-    let profileVC = UIViewController()
-    //var horizonalBarLeftAnchorConstraint: NSLayoutConstraint?
-    
-    //var homeController: HomeController?
-    
-    var checkTextField: String?
+    private let profileVC = UIViewController()
     private let cellReuseIndentifier = "cellID"
+    
+    //var horizonalBarLeftAnchorConstraint: NSLayoutConstraint?
+    //var homeController: HomeController?
+    var checkTextField: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        //setupHorizonalBar()
         collectionView.register(DashboardCollectionViewCell.self, forCellWithReuseIdentifier: cellReuseIndentifier)
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
@@ -56,8 +52,6 @@ final class DashboardViewController: UIViewController {
     
     final private func setupBoardUI(){
         self.view.backgroundColor = .white
-        //self.definesPresentationContext = true
-        //self.modalPresentationStyle = .overFullScreen
         setupTitle()
         setupCollectionView()
     }
@@ -78,7 +72,7 @@ final class DashboardViewController: UIViewController {
             make.top.equalTo(calendarLabel).offset(27)
             make.left.equalToSuperview().offset(30)
         }
-        helloUserName.text = "Hello"
+        helloUserName.text = "Hello, "
         helloUserName.font = UIFont.systemFont(ofSize: 32)
         helloUserName.textColor = .black
         
@@ -90,7 +84,6 @@ final class DashboardViewController: UIViewController {
         }
         let addIcon = UIImage(named: "plus icon")
         addBoardBtn.setBackgroundImage(addIcon, for: .normal)
-        //addBoardBtn.addTarget(self, action: #selector(addBoard(_:)), for: .touchUpInside)
         addBoardBtn.addTarget(self, action: #selector(showAddBoardVC(_:)), for: .touchUpInside)
         
         self.view.addSubview(barView)
@@ -140,13 +133,17 @@ final class DashboardViewController: UIViewController {
                 return
             }
         }
-        if User.userNamePrint == "" {
-            User.userNamePrint = "Hello, "
-        } else {
-            self.helloUserName.text = User.userNamePrint
-            print("User email: \(User.userNamePrint)")
+       
+        getUserAPI { (error, user) in
+            if let error = error {
+                print(error.localizedDescription)
+                return
+            }
+            if let userToPrint = user {
+                self.helloUserName.text = "Hello, \(userToPrint.firstName)"
+                return
+            }
         }
-        print(DashboardViewController.boards.count)
     }
     
     final private func onReceivedBoards(boards: [Board]) {
@@ -221,8 +218,8 @@ final class DashboardViewController: UIViewController {
         //addboardVC.modalPresentationStyle = .none
         //self.show(addboardVC, sender: self)
         //addboardVC.definesPresentationContext = true
-//        self.present(self.addboardVC, animated: true, completion: nil)
-        self.navigationController?.pushViewController(addboardVC, animated: true)
+        self.present(self.addboardVC, animated: true, completion: nil)
+        //self.navigationController?.pushViewController(addboardVC, animated: true)
         //self.tabBarController?.present(addboardVC, animated: true, completion: nil)
     }
     
@@ -250,10 +247,14 @@ extension DashboardViewController: UICollectionViewDataSource,UICollectionViewDe
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
+        //let vc = BoardViewController()
         let vc = BoardViewController()
         vc.boardID = DashboardViewController.boards[indexPath.item].boardID!
-        self.navigationController?.pushViewController(vc, animated: true)
-
+        vc.hidesBottomBarWhenPushed = true
+        //boardVC.modalPresentationStyle = .overFullScreen
+        
+        self.tabBarController?.navigationController?.pushViewController(vc, animated: true)
+        //self.show(vc, sender: self)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

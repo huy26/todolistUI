@@ -76,8 +76,8 @@ class BoardCollectionViewCell: UICollectionViewCell {
                     self.parentVC?.onreciveTask(tasks: tasks)
 
                     self.parentVC?.status.last?.items.last?.taskID = tasks.last?.taskID
-                    self.parentVC?.checkCollectionview.reloadData()
-                    self.parentVC?.collectionView.reloadData()
+//                    self.parentVC?.checkCollectionview.reloadData()
+//                    self.parentVC?.collectionView.reloadData()
                     return
                 }
             })

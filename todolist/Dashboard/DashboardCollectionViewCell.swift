@@ -16,11 +16,14 @@ final class DashboardCollectionViewCell: UICollectionViewCell {
     
     private let barView = UIView()
     private let addUserBtn = UIButton()
+    private var guestTableView = UITableView()
+    private let color = [UIColor.orange, UIColor.red, UIColor.purple,UIColor.blue]
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         setupCell()
+        setupGuestTableView()
         
     }
     
@@ -28,7 +31,7 @@ final class DashboardCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupCell(){
+    final private func setupCell(){
         
         self.contentView.backgroundColor = UIColor(red:1.00, green:0.19, blue:0.31, alpha:1.0)
         self.contentView.snp.makeConstraints{ make in
@@ -88,4 +91,38 @@ final class DashboardCollectionViewCell: UICollectionViewCell {
         let addImage = UIImage(named: "plus icon")
         addUserBtn.setBackgroundImage(addImage, for: .normal)
     }
+    
+    final private func setupGuestTableView() {
+        self.contentView.addSubview(guestTableView)
+        guestTableView.snp.makeConstraints{ make in
+            make.top.equalTo(barView)
+            make.left.equalToSuperview()
+            make.right.equalTo(addUserBtn)
+            make.height.equalTo(30)
+        }
+        guestTableView.backgroundColor = .blue
+        guestTableView.dataSource = self
+        guestTableView.delegate = self
+        guestTableView.register(GuestTableViewCell.self,forCellReuseIdentifier: "Cell")
+    }
+}
+
+extension DashboardCollectionViewCell: UITableViewDataSource{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return color.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! GuestTableViewCell
+        let randomInt = Int.random(in: 0..<3)
+        cell.imageView?.backgroundColor = color[randomInt]
+
+        return cell
+    }
+    
+    
+}
+
+extension DashboardCollectionViewCell: UITableViewDelegate{
+    
 }

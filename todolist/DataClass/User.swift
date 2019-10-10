@@ -9,16 +9,18 @@
 import Foundation
 import Alamofire
 import Firebase
+import ObjectMapper
 
-
-struct User: Encodable {
+class User: Encodable, Mappable, Decodable {
+   
+    
     ///var userID: String
-    var firstName: String
-    var lastName: String
-    var userPhone: String
-    var birthDay: String
-    var avatarURL: String
-    var email: String
+    var firstName = ""
+    var lastName = ""
+    var userPhone = ""
+    var birthDay = ""
+    var avatarURL = ""
+    var email = ""
     static var userNamePrint = "Name"
     static var emailPrint = "Email"
     
@@ -34,6 +36,17 @@ struct User: Encodable {
         User.emailPrint = email
     }
     
+    required init?(map: Map) {
+    }
+    
+    func mapping(map: Map) {
+        self.firstName <- map["firstName"]
+        self.lastName <- map["lastName"]
+        self.userPhone <- map["userPhone"]
+        self.email <- map["email"]
+        self.avatarURL <- map["avatarURL"]
+    }
+    
     func toJson() -> [String: Any] {
         var dict = [String: Any]()
         dict["firstName"] = firstName
@@ -42,6 +55,8 @@ struct User: Encodable {
         dict["birthDay"] =  birthDay
         dict["avatarURL"] = avatarURL
         dict["email"] =  email
+        User.emailPrint = email
+        User.userNamePrint = firstName
         return dict
     }
     

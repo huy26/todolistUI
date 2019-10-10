@@ -82,10 +82,7 @@ final class AddBoardViewController: UIViewController {
     
     // MARK:- board function
     @objc final private func backtoBoard(_ sender: Any){
-//        self.dismiss(animated: true, completion: nil)
-        self.navigationController?.popViewController(animated: true)
-//        self.presentingViewController?.dismiss(animated: true, completion: nil)
-        //self.show(TabBarController(), sender: self)
+        self.dismiss(animated: true, completion: nil)
     }
     
     @objc final private func addBoard (_ sender: Any){

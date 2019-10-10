@@ -36,15 +36,13 @@ final class ProfileViewController: UIViewController {
     
     final private func setupProfileUI(){
         self.view.backgroundColor = .white
-        self.tabBarController?.view.snp.makeConstraints{ make in
-            make.bottom.equalToSuperview()
-        }
+//        self.tabBarController?.view.snp.makeConstraints{ make in
+//            make.bottom.equalToSuperview()
+//        }
         
         self.view.addSubview(backgroundView)
         backgroundView.snp.makeConstraints{ make in
-            make.centerX.equalToSuperview()
-            make.width.equalToSuperview()
-            make.height.equalTo(200)
+            make.edges.equalToSuperview()
         }
         backgroundView.backgroundColor = UIColor(red:1.00, green:0.19, blue:0.31, alpha:1.0)
         
@@ -82,7 +80,7 @@ final class ProfileViewController: UIViewController {
         self.view.addSubview(logOutBtn)
         logOutBtn.snp.makeConstraints{ make in
             make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-85)
+            make.bottom.equalTo(view.safeArea.bottom).offset(-20)
             make.width.equalTo(70)
             make.height.equalTo(30)
         }
@@ -96,7 +94,9 @@ final class ProfileViewController: UIViewController {
     
     final private func setProfilefromAPI(){
         self.emailLabel.text = User.getNamePrint()
+        print("username : \(User.getNamePrint())")
         self.userNameLabel.text = User.getNamePrint()
+        print("email: \(User.getNamePrint())")
     }
     
     @objc final private func logOutTapped(){
