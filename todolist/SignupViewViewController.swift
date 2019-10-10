@@ -289,7 +289,7 @@ class SignupViewViewController: UIViewController {
         
     }
     func transitiontoHome() {
-        let homeViewcontroller = storyboard?.instantiateViewController(withIdentifier: "HomeVC") as! UINavigationController
+        let homeViewcontroller = DashboardViewController()
         self.present(homeViewcontroller, animated: true, completion: nil)
     }
 

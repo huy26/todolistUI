@@ -27,6 +27,7 @@ class Task: NSObject, Encodable, Mappable, NSCoding
     var taskName: String? = ""
     var status: String? = ""
     var userID: String = ""
+    var des: String? = ""
     
     required init?(map: Map) {
     }
@@ -36,11 +37,17 @@ class Task: NSObject, Encodable, Mappable, NSCoding
         self.taskName = taskName
         self.taskID = ""
         self.status = status
+        self.des = ""
     }
     func mapping(map: Map) {
+        self.des <- map["description"]
         self.taskID <- map["taskID"]
         self.taskName <- map["taskName"]
         self.status <- map["status"]
+    }
+    
+    func changeDescription(des: String){
+        self.des = des
     }
     
     

@@ -38,9 +38,9 @@ class BoardViewController: UIViewController {
         checkCollectionview.selectItem(at: selectedIndexPath as IndexPath, animated: false, scrollPosition: [])
 //        setupHorizonalBar()
         getCurrentDateTime()
-        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        self.navigationController!.navigationBar.shadowImage = UIImage()
-        self.navigationController!.navigationBar.isTranslucent = true
+//        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), for: .default)
+//        self.navigationController!.navigationBar.shadowImage = UIImage()
+//        self.navigationController!.navigationBar.isTranslucent = true
 //        if let decoded  = UserDefaults.standard.data(forKey: "Tasks")
 //        {
 //            let decodedTasks = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! [Task]
@@ -48,6 +48,22 @@ class BoardViewController: UIViewController {
 //        }
        // updateCollectionViewItem(with: view.bounds.size)
         checkCollectionview.register(UICollectionViewCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: footerID)
+        
+        readTaskApi(boardID: boardID) { (error, tasks) in
+            if let error = error {
+                self.getonTaskerror(error: error)
+                print(error.localizedDescription)
+                return
+            }
+            if let tasks = tasks {
+                //UserDefaults.standard.removeObject(forKey: "Tasks")
+                self.onreciveTask(tasks: tasks)
+                self.createStatus()
+                self.collectionView.reloadData()
+                self.checkCollectionview.reloadData()
+                return
+            }
+        }
    }
     
     private func setupUI() {
@@ -87,21 +103,7 @@ class BoardViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        readTaskApi(boardID: boardID) { (error, tasks) in
-            if let error = error {
-                self.getonTaskerror(error: error)
-                print(error.localizedDescription)
-                return
-            }
-            if let tasks = tasks {
-                //UserDefaults.standard.removeObject(forKey: "Tasks")
-                self.onreciveTask(tasks: tasks)
-                self.createStatus()
-                self.collectionView.reloadData()
-                self.checkCollectionview.reloadData()
-                return
-            }
-        }
+        
         
         
     }

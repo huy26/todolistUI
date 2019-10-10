@@ -9,13 +9,15 @@
 import UIKit
 
 final class DashboardCollectionViewCell: UICollectionViewCell {
+    var board: Board?
+    weak var parentVC: DashboardViewController?
     
     var boardTitleLabel = UILabel()
     var textLabel = UILabel()
     let deleteBoardBtn = UIButton()
     
     private let barView = UIView()
-    private let addUserBtn = UIButton()
+     let addUserBtn = UIButton()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -88,4 +90,5 @@ final class DashboardCollectionViewCell: UICollectionViewCell {
         let addImage = UIImage(named: "plus icon")
         addUserBtn.setBackgroundImage(addImage, for: .normal)
     }
+    
 }

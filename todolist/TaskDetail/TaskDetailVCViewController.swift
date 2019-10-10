@@ -10,6 +10,7 @@ import UIKit
 class TaskDetailVCViewController: UIViewController {
     
     var task: Task?
+    var boardID = ""
     var Taskname = UITextField()
     var status = UILabel()
     var taptoadddes = UIButton()
@@ -73,6 +74,8 @@ class TaskDetailVCViewController: UIViewController {
     
     @objc func editDescription(){
         let vc = DescriptionVC()
+        vc.task = self.task
+        vc.boardID = self.boardID
         self.navigationController?.pushViewController(vc, animated: true)
     }
 

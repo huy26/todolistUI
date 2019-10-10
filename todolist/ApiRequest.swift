@@ -16,7 +16,7 @@ import OneSignal
 
 
 //let url = "http://192.168.2.48:4000/api/user"
-let url = "http://103.221.223.126:4000/api/user"
+let url = "http://192.168.0.150:4000/api/user"
 
 func getUserAPI() -> User{
     var data = User(firstName: "", lastName: "", userPhone: "", birthDay: "", avatarURL: "", email: "")
@@ -130,7 +130,7 @@ func readBoardAPI(onCompleted: @escaping ((Error?, [Board]?)-> Void)) {
         ]
         //print(board.boardName)
         
-        guard let newurl = URL(string: "http://103.221.223.126:4000/api/user/boards") else { return }
+        guard let newurl = URL(string: "http://192.168.0.150:4000/api/user/boards") else { return }
         
         AF.request(
             newurl,
@@ -197,7 +197,7 @@ func uploadBoardAPI(board: Board){
         ]
         print(board.boardName!)
         
-        guard let newurl = URL(string: "http://103.221.223.126:4000/api/user/board") else { return }
+        guard let newurl = URL(string: "http://192.168.0.150:4000/api/user/board") else { return }
         AF.request(
             newurl,
             method: .post,
@@ -238,7 +238,7 @@ func deleteBoardAPI(board: Board) {
         ]
         print(board.boardID!)
         
-        guard let newurl = URL(string: "http://103.221.223.126:4000/api/user/board/\(board.boardID!)") else { return }
+        guard let newurl = URL(string: "http://192.168.0.150:4000/api/user/board/\(board.boardID!)") else { return }
         
         AF.request(
             newurl,
@@ -280,7 +280,7 @@ func updateBoardAPI(board: Board, newName: String) {
         ]
         print(board.boardID!)
         
-        guard let newurl = URL(string: "http://103.221.223.126:4000/api/user/board/\(board.boardID!)") else { return }
+        guard let newurl = URL(string: "http://192.168.0.150:4000/api/user/board/\(board.boardID!)") else { return }
         board.changeBoardName(value: newName)
         AF.request(
             newurl,
@@ -409,4 +409,83 @@ func deleteTaskAPI(task: Task, boardID: String) {
         print(idToken)
         print("http resquest succeed")
     }
+}
+
+
+
+func updateTaskAPI(task: Task, boardID: String) {
+    let currentUser = Auth.auth().currentUser
+    currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
+        if error != nil {
+            print("get token failed")
+            return;
+        }
+        
+        guard let idToken = idToken else { return }
+        // Send token to your backend via HTTPS
+        // ...
+        //let idToken = returnFirebaseToken()
+        let header: HTTPHeaders = [
+            "tokenID": idToken,
+        ]
+        print("Task update: \(task.taskID!)")
+        
+        guard let newurl = URL(string: "http://192.168.0.150:4000/api/user/board/\(boardID)/task") else { return }
+        AF.request(
+            newurl,
+            method: .put,
+            parameters: task,
+            encoder: URLEncodedFormParameterEncoder(destination: .httpBody),
+            headers: header
+            )
+            .responseString(completionHandler: { data in
+                if let responseData = data.data {
+                    let responseString = String(data: responseData, encoding: .utf8)
+                    print("Response String \(responseString)")
+                }
+                
+                print(data.response?.statusCode)
+                print("==> Raw Data \(data)")
+            }).responseJSON(completionHandler: { (response) in
+                debugPrint(response)
+            })
+        print(idToken)
+        print("http resquest succeed")
+    }
+}
+
+func inviteBoardAPI (board: Board, email: String){
+    let currentUser = Auth.auth().currentUser
+    currentUser?.getIDTokenForcingRefresh(true, completion: { (idToken, error) in
+        if error != nil {
+            print("get token failed")
+            return
+        }
+        guard let idToken = idToken else {
+            return
+        }
+        let header: HTTPHeaders = [
+            "tokeniD": idToken,
+            "Content-Type": "application/json"
+        ]
+        print(email)
+        let parametersDic:[String:String] = [
+            "email": email]
+        print(parametersDic["email"])
+        let newurl = url + "/board/\(board.boardID as! String)/invite"
+        print(newurl)
+        AF.request(newurl, method: .put, parameters: parametersDic, encoder: JSONParameterEncoder.default, headers: header).responseString(completionHandler: { (data) in
+            if let responseData = data.data {
+                let responseString = String(data: responseData, encoding: .utf8)
+                print("Response String \(responseString)")
+            }
+            print(data.response?.statusCode)
+            print("==> Raw Data \(data)")
+        }).responseJSON(completionHandler: { (response) in
+            debugPrint(response)
+        })
+        print(idToken)
+        print("http resquest succeed")
+        
+    })
 }
