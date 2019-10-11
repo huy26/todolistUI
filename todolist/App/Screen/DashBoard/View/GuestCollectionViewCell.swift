@@ -9,7 +9,7 @@
 import UIKit
 
 class GuestCollectionViewCell: UICollectionViewCell {
-
+    //MARK:- UI Properties
     var guestImageView = UIImageView()
     
     override func awakeFromNib() {
@@ -17,7 +17,10 @@ class GuestCollectionViewCell: UICollectionViewCell {
         // Initialization code
         setupUI()
     }
+}
 
+//MARK:- SetupUI
+extension GuestCollectionViewCell{
     final private func setupUI(){
         self.contentView.addSubview(guestImageView)
         guestImageView.snp.makeConstraints{ make in
@@ -30,7 +33,6 @@ class GuestCollectionViewCell: UICollectionViewCell {
         guestImageView.contentMode = .scaleAspectFill
         guestImageView.backgroundColor = .purple
     }
- 
 }
 
 

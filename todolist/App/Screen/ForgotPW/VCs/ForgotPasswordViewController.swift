@@ -12,17 +12,19 @@ import FirebaseAuth
 import SnapKit
 
 class ForgotPasswordViewController: UIViewController {
-
+    //MARK:- UI Properties
     private var emailTextField = UITextField()
     private var getPassWordBtn = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
         setupForgotPassUI()
     }
-    
+}
+
+//MARK: setupUI
+extension ForgotPasswordViewController {
     final private func setupForgotPassUI() {
         self.view.backgroundColor = .white
         
@@ -47,16 +49,16 @@ class ForgotPasswordViewController: UIViewController {
         getPassWordBtn.titleLabel?.font = UIFont.systemFont(ofSize: 19, weight: .bold)
         getPassWordBtn.addTarget(self, action: #selector(Finish(_:)), for: .touchUpInside)
     }
+}
 
+//MARK:- Action functions
+extension ForgotPasswordViewController {
     @objc final private func Finish(_ sender: Any) {
         Auth.auth().sendPasswordReset(withEmail: (emailTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines))!) { (error) in
-            if error != nil
-            {
+            if error != nil{
                 print(error!.localizedDescription)
             }
             else{
-//                let homeViewcontroller = self.storyboard?.instantiateViewController(withIdentifier: "Home") as! UINavigationController
-//                self.present(homeViewcontroller, animated: true, completion: nil)
                 self.dismiss(animated: true, completion: nil)
             }
         }

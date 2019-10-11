@@ -7,6 +7,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "110A3852-36B5-4D08-8757-55685F6E0979"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -23,6 +24,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "D72DC84A-4EEC-4CEF-9F11-6953B9E32930"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -31,9 +33,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "476"
-            endingLineNumber = "476"
-            landmarkName = "inviteBoardAPI(board:email:)"
-            landmarkType = "9">
+            endingLineNumber = "476">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

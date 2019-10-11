@@ -11,6 +11,7 @@ import FirebaseAuth
 
 final class ProfileViewController: UIViewController {
     
+    //MARK:- UI Properties
     private let datePicker = UIDatePicker()
     private let backgroundView = UIView()
     private let userNameLabel = UILabel()
@@ -56,7 +57,7 @@ final class ProfileViewController: UIViewController {
         backgroundView.snp.makeConstraints{ make in
             make.width.equalToSuperview()
             make.top.equalToSuperview()
-            make.height.equalTo(300)
+            make.height.equalTo(200)
         }
         backgroundView.backgroundColor = UIColor(red:1.00, green:0.19, blue:0.31, alpha:1.0)
         
@@ -110,7 +111,7 @@ final class ProfileViewController: UIViewController {
         
         self.view.addSubview(aboutLabel)
         aboutLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(backgroundView.snp.bottom).offset(45)
+            make.top.equalTo(backgroundView.snp.bottom).offset(35)
             make.left.equalToSuperview().offset(46)
             //make.width.equalTo(83)
             make.height.equalTo(21)
@@ -122,7 +123,7 @@ final class ProfileViewController: UIViewController {
         
         self.view.addSubview(firtnameLb)
         firtnameLb.snp.makeConstraints { (make) in
-            make.top.equalTo(aboutLabel.snp.bottom).offset(45)
+            make.top.equalTo(aboutLabel.snp.bottom).offset(30)
             make.left.equalToSuperview().offset(46)
             //make.width.equalTo(83)
             make.height.equalTo(21)
@@ -173,6 +174,8 @@ final class ProfileViewController: UIViewController {
         }
         birthdayTextField.borderStyle = .roundedRect
         
+        //MARK:- save button
+        
         self.view.addSubview(saveBtn)
         saveBtn.snp.makeConstraints{ make in
             make.top.equalTo(birthdayTextField.snp.bottom).offset(15)
@@ -199,8 +202,20 @@ final class ProfileViewController: UIViewController {
         birthdayTextField.inputAccessoryView = toolbar
         birthdayTextField.inputView = datePicker
     }
-    @objc final private func donedatePicker() {
+    
+    final private func setProfilefromAPI(){
+        self.userNameLabel.text = User.getNamePrint()
+        print("username : \(User.getNamePrint())")
         
+        self.emailLabel.text = User.getemailPrint()
+        print("email: \(User.getemailPrint())")
+    }
+}
+
+//MARK:- Action functions
+extension ProfileViewController {
+    
+    @objc final private func donedatePicker() {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd/MM/yyyy"
         birthdayTextField.text = formatter.string(from: datePicker.date)
@@ -209,14 +224,6 @@ final class ProfileViewController: UIViewController {
     
     @objc final private func canceldatePicker() {
         self.view.endEditing(true)
-    }
-    
-    
-    final private func setProfilefromAPI(){
-        self.emailLabel.text = User.getNamePrint()
-        print("username : \(User.getNamePrint())")
-        self.userNameLabel.text = User.getNamePrint()
-        print("email: \(User.getNamePrint())")
     }
     
     @objc final private func logOutTapped(){
@@ -230,7 +237,7 @@ final class ProfileViewController: UIViewController {
         }
     }
     
-    @objc final private func saveProfile(_sender: Any){
+    @objc final private func saveProfile(_sender: UIButton){
         let firstname = firstnameTextField.text
         let lastname = lastnameTextField.text
         let birthday = birthdayTextField.text
@@ -239,7 +246,29 @@ final class ProfileViewController: UIViewController {
         if currentuser != nil{
             
             updateUserAPI(firstName: firstname!, lastName: lastname!, userPhone: "", birthDay: birthday! , avatarURL: "", email: "")
-            
+            _sender.flash()
+            getUserAPI { (error, user) in
+                if let error = error {
+                    print(error.localizedDescription)
+                    return
+                }
+                if let userToPrint = user {
+                    self.userNameLabel.text = User.getNamePrint()
+                    self.emailLabel.text = User.getemailPrint()
+                    return
+                }
+            }
+            self.view.setNeedsDisplay()
         }
+    }
+}
+
+//MARK:- private function
+extension ProfileViewController{
+    final private func checkTextField() -> Bool {
+        if self.firstnameTextField.text == "" || self.lastnameTextField.text == "" || self.birthday.text == "" {
+            return false
+        }
+        return true
     }
 }

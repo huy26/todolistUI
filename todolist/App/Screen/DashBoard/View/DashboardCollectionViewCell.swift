@@ -9,18 +9,21 @@
 import UIKit
 
 final class DashboardCollectionViewCell: UICollectionViewCell {
-    var board: Board?
-    weak var parentVC: DashboardViewController?
     
+    //MARK:- UI Properties
+    weak var parentVC: DashboardViewController?
     var boardTitleLabel = UILabel()
     var textLabel = UILabel()
     let deleteBoardBtn = UIButton()
     let addUserBtn = UIButton()
-    private let barView = UIView()
     
+    private let barView = UIView()
     private var guestCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
+    
+    
+    //MARK:- Local Properties
     private let color = [UIColor.orange, UIColor.white, UIColor.purple,UIColor.blue]
-
+    var board: Board?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -33,7 +36,10 @@ final class DashboardCollectionViewCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+}
+
+//MARK:- SetupUI
+extension DashboardCollectionViewCell{
     final private func setupCell(){
         
         self.contentView.backgroundColor = UIColor(red:1.00, green:0.19, blue:0.31, alpha:1.0)
@@ -112,6 +118,7 @@ final class DashboardCollectionViewCell: UICollectionViewCell {
     }
 }
 
+//MARK:- Datasource
 extension DashboardCollectionViewCell: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return color.count
@@ -126,10 +133,11 @@ extension DashboardCollectionViewCell: UICollectionViewDataSource{
     }
 
 }
-
+//MARK:- Delegate
 extension DashboardCollectionViewCell: UICollectionViewDelegate{
 }
 
+//MARK:- DelegateFlowLayout
 extension DashboardCollectionViewCell: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 40, height: 40)

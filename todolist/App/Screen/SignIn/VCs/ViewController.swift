@@ -206,8 +206,8 @@ class ViewController: UIViewController {
                 //getUserAPI()
                 //self.present(self.tabbarController, animated: true, completion: nil)
                 //self.show(self.tabbarController, sender: self)
-                
-                self.present(DashboardViewController(), animated: true, completion: nil)
+                //self.present(DashboardViewController(), animated: true, completion: nil)
+                self.navigationController?.pushViewController(self.tabbarController, animated: true)
                 self.emailTextField.text = ""
                 self.passwordTextField.text = ""
             }
@@ -215,7 +215,8 @@ class ViewController: UIViewController {
     }
     
     @objc final private func swithedToForgotView(_ sender: Any) {
-        self.show(ForgotPasswordViewController() ,sender: self)
+        //self.show(ForgotPasswordViewController() ,sender: self)
+        self.navigationController?.pushViewController(ForgotPasswordViewController(), animated: true)
     }
 }
 

@@ -375,8 +375,7 @@ extension BoardViewController: UIDropInteractionDelegate {
                 if let (dataSource, sourceIndexPath, tableView) = session.localDragSession?.localContext as? (Status, IndexPath, UITableView) {
                     
                     tableView.beginUpdates()
-                    for i in self.tasks
-                    {
+                    for i in self.tasks{
                         print("Task:\(i.taskName) \(i.taskID) \(i.status)")
                     }
                     let item = dataSource.items[sourceIndexPath.row]

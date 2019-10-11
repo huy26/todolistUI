@@ -167,6 +167,7 @@ class SignupViewViewController: UIViewController {
             make.height.equalTo(30)
         }
         emailTextField.borderStyle = .roundedRect
+        emailTextField.autocapitalizationType = .none
 
         container.addSubview(passwordLb)
         passwordLb.snp.makeConstraints { (make) in
@@ -289,8 +290,8 @@ class SignupViewViewController: UIViewController {
         
     }
     func transitiontoHome() {
-        let homeViewcontroller = DashboardViewController()
-        self.present(homeViewcontroller, animated: true, completion: nil)
+        let tabbarController = TabBarController()
+        self.navigationController?.pushViewController(tabbarController, animated: true)
     }
 
 }

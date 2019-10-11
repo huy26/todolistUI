@@ -9,14 +9,16 @@
 import UIKit
 
 final class AddBoardViewController: UIViewController {
-
+    //MARK:- UI Properties
     private var boardNameTextField = UITextField()
     private let colorImageView1 = UIView()
     private let colorImageView2 = UIView()
+    
     var onDismiss: (()->Void)?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         
         self.navigationController?.setNavigationBarHidden(true, animated: false)
         
@@ -27,14 +29,19 @@ final class AddBoardViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        self.boardNameTextField.text = ""
         self.onDismiss?()
     }
     
-    // MARK:- setup View
+    // MARK:- setupUI
     final private func setupNavBar(){
         let navBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 44))
         view.addSubview(navBar)
-
+        navBar.topAnchor.constraint(
+            equalTo: self.view.safeAreaLayoutGuide.topAnchor
+        ).isActive = true
+        
+        
         let navItem = UINavigationItem(title: "Add Board")
         let doneItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.cancel, target: nil, action: #selector(backtoBoard(_:)))
         navItem.leftBarButtonItem = doneItem
@@ -53,6 +60,7 @@ final class AddBoardViewController: UIViewController {
             make.width.equalToSuperview()
             make.height.equalTo(50)
         }
+        
         boardNameTextField.backgroundColor = .white
         boardNameTextField.placeholder = "New Board"
         boardNameTextField.textColor = .lightGray
@@ -78,8 +86,11 @@ final class AddBoardViewController: UIViewController {
         let backButton = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(backtoBoard(_:)))
         navigationItem.leftBarButtonItem = backButton
     }
+}
+
+//MARK:- Action functions
+extension AddBoardViewController {
     
-    // MARK:- board function
     @objc final private func backtoBoard(_ sender: Any){
         self.dismiss(animated: true, completion: nil)
     }

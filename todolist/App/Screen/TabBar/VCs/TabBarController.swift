@@ -10,6 +10,7 @@ import UIKit
 
 class TabBarController: UITabBarController {
 
+    //MARK:- UI Properties
     private var dashboardVC = DashboardViewController()
     private var profileVC = ProfileViewController()
     

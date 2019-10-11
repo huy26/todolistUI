@@ -11,7 +11,7 @@ import Alamofire
 import Firebase
 import ObjectMapper
 
-class User: Encodable, Mappable, Decodable {
+final class User: Encodable, Mappable, Decodable {
    
     
     ///var userID: String
@@ -32,7 +32,7 @@ class User: Encodable, Mappable, Decodable {
         self.birthDay = birthDay
         self.avatarURL = avatarURL
         self.email = email
-        User.userNamePrint = firstName
+        User.userNamePrint = firstName + " \(lastName)"
         User.emailPrint = email
     }
     
@@ -61,7 +61,7 @@ class User: Encodable, Mappable, Decodable {
     }
     
     static func setNamePrint(value: String){
-        User.userNamePrint = value
+        User.userNamePrint = value  
     }
     
     static func getNamePrint() -> String {
