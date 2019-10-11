@@ -182,7 +182,12 @@ class ViewController: UIViewController {
     }
     
     @objc final private func onSignup(_ sender: Any) {
-        self.show(SignupViewViewController(), sender: self)
+
+        //self.show(SignupViewViewController(), sender: self)
+
+        let vc = SignupViewViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
+
     }
     
     @objc final private func signinTapped(_ sender: Any) {
@@ -202,7 +207,7 @@ class ViewController: UIViewController {
         
                 //self.present(self.tabbarController, animated: true, completion: nil)
                 //self.show(self.tabbarController, sender: self)
-                self.navigationController?.pushViewController(self.tabbarController, animated: true)
+                self.present(DashboardViewController(), animated: true, completion: nil)
                 self.emailTextField.text = ""
                 self.passwordTextField.text = ""
             }

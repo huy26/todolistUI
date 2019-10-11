@@ -3,8 +3,8 @@ import MobileCoreServices
 class BoardCollectionViewCell: UICollectionViewCell {
 
 
-    let footerID = "TableFooter"
-    var tableView = UITableView()
+    private let footerID = "TableFooter"
+    private var tableView = UITableView()
     //var task: Task?
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -108,7 +108,7 @@ extension BoardCollectionViewCell: UITableViewDataSource, UITableViewDelegate {
         cell.backgroundColor = UIColor.clear
         cell.StatusName.text = "\(status!.items[indexPath.row].taskName!)"
         cell.DeleteButton.addTarget(self, action: #selector(deleteTask), for: .touchUpInside)
-        return cell
+        return cell	
     }
     
     @objc func deleteTask (_ sender: UIButton){
@@ -136,6 +136,7 @@ extension BoardCollectionViewCell: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = TaskDetailVCViewController()
         vc.task = self.status?.items[indexPath.row]
+        vc.boardID = self.boardID!
         parentVC?.navigationController?.pushViewController(vc, animated: true)
 
         
@@ -208,7 +209,7 @@ extension BoardCollectionViewCell: UITableViewDropDelegate {
                     self.tableView.beginUpdates()
                     self.status?.items.remove(at: sourceIndexPath.row)
                     self.status?.items.insert(Task(taskName: string, status: (self.status?.name!)!), at: destinationIndexPath.row)
-
+                    
                     self.tableView.reloadRows(at: updatedIndexPaths, with: .automatic)
                     self.tableView.endUpdates()
                     break
@@ -250,7 +251,7 @@ extension BoardCollectionViewCell: UITableViewDropDelegate {
             dataSource.items.remove(at: sourceIndexPath.row)
             tableView.deleteRows(at: [sourceIndexPath], with: .automatic)
             tableView.endUpdates()
-            deleteTaskAPI(task: dataSource.items[sourceIndexPath.row], boardID: self.boardID!)
+            
         }
     }
 

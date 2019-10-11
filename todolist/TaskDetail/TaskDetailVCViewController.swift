@@ -9,12 +9,13 @@ import UIKit
 
 class TaskDetailVCViewController: UIViewController {
     
-    var task: Task?
-    var Taskname = UITextField()
-    var status = UILabel()
-    var taptoadddes = UIButton()
-    var subviewcolor = UIView()
-    var activity = UITableView()
+     var task: Task?
+     var boardID = ""
+    private var Taskname = UITextField()
+    private var status = UILabel()
+    private var taptoadddes = UIButton()
+    private var subviewcolor = UIView()
+    private var activity = UITableView()
     
 
     override func viewDidLoad() {
@@ -73,6 +74,8 @@ class TaskDetailVCViewController: UIViewController {
     
     @objc func editDescription(){
         let vc = DescriptionVC()
+        vc.task = self.task
+        vc.boardID = self.boardID
         self.navigationController?.pushViewController(vc, animated: true)
     }
 

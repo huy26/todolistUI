@@ -34,7 +34,7 @@ final class AddBoardViewController: UIViewController {
     final private func setupNavBar(){
         let navBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 44))
         view.addSubview(navBar)
-        
+
         let navItem = UINavigationItem(title: "Add Board")
         let doneItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.cancel, target: nil, action: #selector(backtoBoard(_:)))
         navItem.leftBarButtonItem = doneItem

@@ -16,7 +16,7 @@ final class DashboardViewController: UIViewController {
     static var boards = [Board(boardName: "test", items: [])]
     private var calendarLabel = UILabel()
     private var helloUserName = UILabel()
-    private let addBoardBtn = UIButton()
+    let addBoardBtn = UIButton()
     private let barView = UIView()
     private let addboardVC = AddBoardViewController()
     private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
@@ -269,7 +269,7 @@ extension DashboardViewController: UICollectionViewDataSource,UICollectionViewDe
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIndentifier, for: indexPath) as? DashboardCollectionViewCell
 
         cell?.deleteBoardBtn.tag = indexPath.item
-
+        cell?.addUserBtn.tag = indexPath.item
         cell?.boardTitleLabel.text = DashboardViewController.boards[indexPath.row].boardName
         cell?.boardTitleLabel.textColor = .white
         
@@ -283,9 +283,28 @@ extension DashboardViewController: UICollectionViewDataSource,UICollectionViewDe
         }
         
         cell?.deleteBoardBtn.addTarget(self, action: #selector(deleteBoard(sender:)), for: .touchUpInside)
+        cell?.board = DashboardViewController.boards[indexPath.row]
         cell?.textLabel.text = text
+        cell?.addUserBtn.addTarget(self, action: #selector(inviteUser(sender:)), for: .touchUpInside)
         
         return cell!
+    }
+    
+    @objc func inviteUser(sender: UIButton) {
+        let alertController = UIAlertController(title: "Invite User", message: "Enter user email", preferredStyle: .alert)
+        alertController.addTextField { (textfield) in
+            textfield.placeholder = "Email"
+        }
+        alertController.addAction(UIAlertAction(title: "Add", style: .default, handler: { (_) in
+            guard let text = alertController.textFields![0].text, !text.isEmpty else {
+                return
+            }
+            let indexPath = sender.tag
+            inviteBoardAPI(board: DashboardViewController.boards[indexPath], email: text)
+        }))
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        self.present(alertController, animated: true, completion: nil)
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

@@ -9,15 +9,18 @@
 import UIKit
 
 final class DashboardCollectionViewCell: UICollectionViewCell {
+    var board: Board?
+    weak var parentVC: DashboardViewController?
     
     var boardTitleLabel = UILabel()
     var textLabel = UILabel()
     let deleteBoardBtn = UIButton()
-    
+    let addUserBtn = UIButton()
     private let barView = UIView()
-    private let addUserBtn = UIButton()
+    
     private var guestCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
     private let color = [UIColor.orange, UIColor.white, UIColor.purple,UIColor.blue]
+
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -92,6 +95,7 @@ final class DashboardCollectionViewCell: UICollectionViewCell {
         addUserBtn.setBackgroundImage(addImage, for: .normal)
     }
     
+
     final private func setupGuestTableView() {
         self.contentView.addSubview(guestCollectionView)
         guestCollectionView.snp.makeConstraints{ make in
@@ -134,4 +138,5 @@ extension DashboardCollectionViewCell: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 5
     }
+
 }

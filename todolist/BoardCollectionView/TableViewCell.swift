@@ -9,11 +9,11 @@ import UIKit
 
 class TableViewCell: UITableViewCell {
     
-    var view = UIView()
+    private var view = UIView()
     var StatusName = UILabel()
     var DeleteButton = UIButton()
-    var line = UIView()
-    var inviteButton = UIButton()
+    private var line = UIView()
+    private var inviteButton = UIButton()
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         
         super.init(style: .default, reuseIdentifier: "Cell")
