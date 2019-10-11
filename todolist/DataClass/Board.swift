@@ -10,40 +10,6 @@ import Foundation
 import ObjectMapper
 
 class Board: NSObject, Encodable, Mappable, NSCoding {
-    required init?(coder: NSCoder) {
-        self.boardName = coder.decodeObject(forKey: "boardName") as? String
-        self.boardID = coder.decodeObject(forKey: "boardID") as? String
-        if let decoded  = UserDefaults.standard.data(forKey: "boardDetail"){
-            let decodedTeams = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! [Detail]
-            self.detail = decodedTeams
-        }
-        
-
-        if let items = coder.decodeObject(forKey: "boardItems") {
-            self.items = items as! [String]
-        }
-        self.totalTasks = coder.decodeInteger(forKey: "boardTotalTasks")
-        //        self.status = coder.decodeObject(forKey: "boardStatus") as! String
-        //self.userID = coder.decodeObject(forKey: "boardUserID") as! String
-        //Board.count = coder.decodeObject(forKey: "boardCount") as! Int
-        if let count = coder.decodeObject(forKey: "boardCount") {
-            Board.count = count as! Int
-        }
-    }
-    
-    func encode(with coder: NSCoder) {
-        coder.encode(boardName, forKey: "boardName")
-        coder.encode(boardID, forKey: "boardID")
-        //coder.encode(detail, forKey: "boardDetail")
-        let encodeData = NSKeyedArchiver.archivedData(withRootObject: self.detail)
-        UserDefaults.standard.set(encodeData, forKey: "boardDetail")
-        coder.encode(items, forKey: "boardItems")
-        //coder.encode(userID, forKey: "boardUserID")
-        coder.encode(status, forKey: "boardStatus")
-        coder.encode(Board.count, forKey: "boardCount")
-        print(Board.count)
-        coder.encode(totalTasks, forKey: "boardTotalTasks")
-    }
     
     var items = [String]()
     var boardID: String? = ""
@@ -75,6 +41,43 @@ class Board: NSObject, Encodable, Mappable, NSCoding {
         self.detail <- map["details"]
         self.totalTasks <- map["totalTasks"]
     }
+    
+    required init?(coder: NSCoder) {
+        self.boardName = coder.decodeObject(forKey: "boardName") as? String
+        self.boardID = coder.decodeObject(forKey: "boardID") as? String
+        if let decoded  = UserDefaults.standard.data(forKey: "boardDetail"){
+            let decodedTeams = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! [Detail]
+            self.detail = decodedTeams
+        }
+        
+        
+        if let items = coder.decodeObject(forKey: "boardItems") {
+            self.items = items as! [String]
+        }
+        self.totalTasks = coder.decodeInteger(forKey: "boardTotalTasks")
+        //        self.status = coder.decodeObject(forKey: "boardStatus") as! String
+        //self.userID = coder.decodeObject(forKey: "boardUserID") as! String
+        //Board.count = coder.decodeObject(forKey: "boardCount") as! Int
+        if let count = coder.decodeObject(forKey: "boardCount") {
+            Board.count = count as! Int
+        }
+    }
+    
+    func encode(with coder: NSCoder) {
+        coder.encode(boardName, forKey: "boardName")
+        coder.encode(boardID, forKey: "boardID")
+        //coder.encode(detail, forKey: "boardDetail")
+        let encodeData = NSKeyedArchiver.archivedData(withRootObject: self.detail)
+        UserDefaults.standard.set(encodeData, forKey: "boardDetail")
+        coder.encode(items, forKey: "boardItems")
+        //coder.encode(userID, forKey: "boardUserID")
+        coder.encode(status, forKey: "boardStatus")
+        coder.encode(Board.count, forKey: "boardCount")
+        print(Board.count)
+        coder.encode(totalTasks, forKey: "boardTotalTasks")
+    }
+    
+    
     
     static func getBoardCount () -> Int {
         return Board.count

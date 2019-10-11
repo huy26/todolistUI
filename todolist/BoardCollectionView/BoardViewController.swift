@@ -38,9 +38,9 @@ class BoardViewController: UIViewController {
         checkCollectionview.selectItem(at: selectedIndexPath as IndexPath, animated: false, scrollPosition: [])
 //        setupHorizonalBar()
         getCurrentDateTime()
-        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        self.navigationController!.navigationBar.shadowImage = UIImage()
-        self.navigationController!.navigationBar.isTranslucent = true
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.isTranslucent = true
 //        if let decoded  = UserDefaults.standard.data(forKey: "Tasks")
 //        {
 //            let decodedTasks = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! [Task]
@@ -99,8 +99,28 @@ class BoardViewController: UIViewController {
         collectionView.isPagingEnabled = true
         collectionView.backgroundColor = UIColor.white
 
-        
+        //setupNavBar()
     }
+    
+//    final private func setupNavBar(){
+//        let navBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 44))
+//        view.addSubview(navBar)
+//        //let backButton = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(backtoBoard(_:)))
+//
+//        let navItem = UINavigationItem(title: "Add Board")
+//        let doneItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.cancel, target: nil, action: #selector(backtoBoard(_:)))
+//        navItem.leftBarButtonItem = doneItem
+//
+//
+//    }
+    
+//     @objc final private func backtoBoard(_ sender: Any){
+//    //        self.dismiss(animated: true, completion: nil)
+//            self.navigationController?.popViewController(animated: true)
+//    //        self.presentingViewController?.dismiss(animated: true, completion: nil)
+//            //self.show(TabBarController(), sender: self)
+//        }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         

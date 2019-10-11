@@ -38,18 +38,18 @@ class ViewController: UIViewController {
 //        self.navigationController!.navigationBar.isTranslucent = true
         setupLoginUI()
         
-        tabbarController.modalPresentationStyle = .fullScreen
-        tabbarController.navigationController?.setNavigationBarHidden(true, animated: false)
-        tabbarController.navigationController?.isNavigationBarHidden = true
+//        tabbarController.modalPresentationStyle = .fullScreen
+//        tabbarController.navigationController?.setNavigationBarHidden(true, animated: false)
+//        tabbarController.navigationController?.isNavigationBarHidden = true
         
         // MARK:- auto login
         let currentuser = Auth.auth().currentUser
         if currentuser != nil{
-            let user = getUserAPI()
+            //getUserAPI()
             //self.show(tabbarController, sender: self)
             //self.present(tabbarController, animated: true, completion: nil)
-            self.navigationController?.isNavigationBarHidden = true
-            self.navigationController!.pushViewController(tabbarController, animated: true)
+//            self.navigationController?.isNavigationBarHidden = true
+            self.navigationController?.pushViewController(tabbarController, animated: true)
         }
     }
     
@@ -199,8 +199,7 @@ class ViewController: UIViewController {
             }
             else
             {
-                getUserAPI()
-//                let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "HomeVC") as! UINavigationController
+                //getUserAPI()
         
                 //self.present(self.tabbarController, animated: true, completion: nil)
                 //self.show(self.tabbarController, sender: self)
@@ -212,8 +211,6 @@ class ViewController: UIViewController {
     }
     
     @objc final private func swithedToForgotView(_ sender: Any) {
-//        let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "forgotView") as! UIViewController
-//        self.present(homeViewController, animated: true, completion: nil)
         self.show(ForgotPasswordViewController() ,sender: self)
     }
 }

@@ -18,9 +18,9 @@ import OneSignal
 //let url = "http://192.168.2.48:4000/api/user"
 private let url = "http://192.168.0.150:4000/api/user"
 
-func getUserAPI() -> User{
-    var data = User(firstName: "", lastName: "", userPhone: "", birthDay: "", avatarURL: "", email: "")
-    //var data: User?
+func getUserAPI (onCompleted: @escaping ((Error?, User?)-> Void)) {
+    //var data = User(firstName: "", lastName: "", userPhone: "", birthDay: "", avatarURL: "", email: "")
+    var data: User?
     let currentUser = Auth.auth().currentUser
     currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
         if error != nil {
@@ -35,29 +35,25 @@ func getUserAPI() -> User{
         let header: HTTPHeaders = [
             "tokenID": "\(idToken!)",
         ]
-        AF.request(url, method: .get,parameters: data,encoder: URLEncodedFormParameterEncoder(destination: .httpBody), headers: header).responseData(completionHandler: { response in
-            switch response.result {
-            case .success(let string):
-                debugPrint("Request success \(string)")
-            //                    return string.replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "")
-            case .failure(let error):
-                debugPrint(error)
-                break
-            }}).responseJSON(completionHandler: { dataJson in
-                switch dataJson.result {
-                case .success(let string):
-                    debugPrint("Request success \(string)")
-                    data = string as! User
-                //                    return string.replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "")
-                case .failure(let error):
+        AF.request(url, method: .get,parameters: data,encoder: URLEncodedFormParameterEncoder(destination: .httpBody), headers: header)
+            .responseDecodable{ (response: DataResponse<User>) in
+                switch response.result {
+                case let .success(value):
+                    debugPrint(value)
+                    data = value
+                    User.setNamePrint(value: data!.firstName)
+                    User.setemailPrint(value: data!.email)
+                    onCompleted(nil, value)
+                    break
+                case let .failure(error):
                     debugPrint(error)
+                    onCompleted(error, nil)
                     break
                 }
-                print(idToken!)
-                print("Get user completed")
-            })
+        }
+        
     }
-    return data
+    
 }
 
 func uploadUserAPI(firstName: String, lastName: String, userPhone: String, birthDay: String, avatarURL: String, email: String){
@@ -128,7 +124,6 @@ func readBoardAPI(onCompleted: @escaping ((Error?, [Board]?)-> Void)) {
         let header: HTTPHeaders = [
             "tokenID": "\(idToken as! String)",
         ]
-        //print(board.boardName)
         
         guard let newurl = URL(string: "http://192.168.0.150:4000/api/user/boards") else { return }
         
@@ -138,40 +133,37 @@ func readBoardAPI(onCompleted: @escaping ((Error?, [Board]?)-> Void)) {
             parameters: arrayboard,
             encoder: URLEncodedFormParameterEncoder.default,
             headers: header
-            )
+        )
             .responseString{ response in
                 switch response.result {
                 case .success(let string):
                     debugPrint("Request success \(string)")
-                //                    return string.replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "")
                 case .failure(let error):
                     debugPrint(error)
                     break
                 }
-                //                debugPrint(response)
-            }
-            .responseArray { (response: DataResponse<[Board]>) in
-                
-                print("try to map")
-                //let board = response.result
-                if  (response.response?.statusCode) != nil {
-                    switch(response.result){
-                    case let .success(value):
-                        Board.resetBoardCount(value: value.count)
-                        print("number of board ger from api: \(Board.getBoardCount())")
-                        for item in value {
-                            debugPrint("BOARD ID: \(item.boardID)")
-                            debugPrint("Board detail: \(item.detail)")
-                        }
-                        onCompleted(nil, value)
-                        break
-                    case let .failure(error):
-                        print("case error")
-                        onCompleted(error, nil)
-                        print(error.localizedDescription)
-                        break
+        }
+        .responseArray { (response: DataResponse<[Board]>) in
+            print("try to map")
+            //let board = response.result
+            if  (response.response?.statusCode) != nil {
+                switch(response.result){
+                case let .success(value):
+                    Board.resetBoardCount(value: value.count)
+                    print("number of board ger from api: \(Board.getBoardCount())")
+                    for item in value {
+                        debugPrint("BOARD ID: \(item.boardID)")
+                        debugPrint("Board detail: \(item.detail)")
                     }
+                    onCompleted(nil, value)
+                    break
+                case let .failure(error):
+                    print("case error")
+                    onCompleted(error, nil)
+                    print(error.localizedDescription)
+                    break
                 }
+            }
         }
         
         print(idToken)
@@ -204,7 +196,7 @@ func uploadBoardAPI(board: Board){
             parameters: board,
             encoder: URLEncodedFormParameterEncoder(destination: .httpBody),
             headers: header
-            )
+        )
             .responseString(completionHandler: { data in
                 if let responseData = data.data {
                     let responseString = String(data: responseData, encoding: .utf8)
@@ -246,7 +238,7 @@ func deleteBoardAPI(board: Board) {
             parameters: board,
             encoder: URLEncodedFormParameterEncoder(destination: .httpBody),
             headers: header
-            )
+        )
             .responseString(completionHandler: { data in
                 if let responseData = data.data {
                     let responseString = String(data: responseData, encoding: .utf8)
@@ -288,7 +280,7 @@ func updateBoardAPI(board: Board, newName: String) {
             parameters: board,
             encoder: URLEncodedFormParameterEncoder(destination: .httpBody),
             headers: header
-            )
+        )
             .responseString(completionHandler: { data in
                 if let responseData = data.data {
                     let responseString = String(data: responseData, encoding: .utf8)
@@ -349,21 +341,21 @@ func readTaskApi(boardID: String,onCompleted: @escaping ((Error?, [Task]?)-> Voi
                 debugPrint(error)
                 break
             }
-            }.responseArray{ (response: DataResponse<[Task]>) in
-                switch response.result {
-                case let .success(value):
-                    print(value.count)
-                    for item in value
-                    {
-                        debugPrint("TASK ID \(item.taskID)")
-                    }
-                    onCompleted(nil, value)
-                    break
-                case let .failure(error):
-                    debugPrint(error)
-                    onCompleted(error, nil)
-                    break
+        }.responseArray{ (response: DataResponse<[Task]>) in
+            switch response.result {
+            case let .success(value):
+                print(value.count)
+                for item in value
+                {
+                    debugPrint("TASK ID \(item.taskID)")
                 }
+                onCompleted(nil, value)
+                break
+            case let .failure(error):
+                debugPrint(error)
+                onCompleted(error, nil)
+                break
+            }
         }
     }
     
@@ -394,7 +386,7 @@ func deleteTaskAPI(task: Task, boardID: String) {
             parameters: task,
             encoder: URLEncodedFormParameterEncoder(destination: .httpBody),
             headers: header
-            )
+        )
             .responseString(completionHandler: { data in
                 if let responseData = data.data {
                     let responseString = String(data: responseData, encoding: .utf8)

@@ -34,8 +34,14 @@ final class AddBoardViewController: UIViewController {
     final private func setupNavBar(){
         let navBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 44))
         view.addSubview(navBar)
+<<<<<<< HEAD
         
         //let backButton = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(backtoBoard(_:)))
+=======
+//        navBar.snp.makeConstraints{ make in
+//            make.top.equalTo(view.safeArea.top)
+//        }
+>>>>>>> b8cfc03ff17a39caea2346509bfafc1d201e9c23
         
         let navItem = UINavigationItem(title: "Add Board")
         let doneItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.cancel, target: nil, action: #selector(backtoBoard(_:)))
@@ -83,10 +89,7 @@ final class AddBoardViewController: UIViewController {
     
     // MARK:- board function
     @objc final private func backtoBoard(_ sender: Any){
-//        self.dismiss(animated: true, completion: nil)
-        self.navigationController?.popViewController(animated: true)
-//        self.presentingViewController?.dismiss(animated: true, completion: nil)
-        //self.show(TabBarController(), sender: self)
+        self.dismiss(animated: true, completion: nil)
     }
     
     @objc final private func addBoard (_ sender: Any){
@@ -98,5 +101,12 @@ final class AddBoardViewController: UIViewController {
         print("number of board after added: \(Board.count)")
         uploadBoardAPI(board: newboard)
         self.dismiss(animated: true, completion: nil)
+    }
+    
+}
+
+extension AddBoardViewController: UIBarPositioningDelegate {
+    func position(for bar: UIBarPositioning) -> UIBarPosition {
+        return .topAttached
     }
 }
