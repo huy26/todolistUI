@@ -34,9 +34,6 @@ final class AddBoardViewController: UIViewController {
     final private func setupNavBar(){
         let navBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 44))
         view.addSubview(navBar)
-//        navBar.snp.makeConstraints{ make in
-//            make.top.equalTo(view.safeArea.top)
-//        }
         
         let navItem = UINavigationItem(title: "Add Board")
         let doneItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.cancel, target: nil, action: #selector(backtoBoard(_:)))
@@ -61,7 +58,7 @@ final class AddBoardViewController: UIViewController {
         boardNameTextField.textColor = .lightGray
         
         self.view.addSubview(colorImageView1)
-        colorImageView1.snp.makeConstraints{ make in
+        colorImageView1.snp.makeConstraints{ make in 
             make.top.equalTo(boardNameTextField).offset(100)
             make.left.equalToSuperview().offset(50)
             make.size.equalTo(100)

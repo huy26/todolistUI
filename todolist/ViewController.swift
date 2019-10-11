@@ -182,6 +182,7 @@ class ViewController: UIViewController {
     }
     
     @objc final private func onSignup(_ sender: Any) {
+        self.show(SignupViewViewController(), sender: self)
     }
     
     @objc final private func signinTapped(_ sender: Any) {

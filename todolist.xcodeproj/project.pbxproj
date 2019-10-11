@@ -255,11 +255,11 @@
 		04FA8FCD232F527900EFEA29 /* BoardCollectionView */ = {
 			isa = PBXGroup;
 			children = (
-				042E51FC2334C76A00030E5E /* BoardCollectionViewCell.swift */,
-				042E51FE2334C76E00030E5E /* BoardCollectionViewController.swift */,
-				042E51FB2334C76800030E5E /* StatusCollectionViewCell.swift */,
 				0424541523361B7E00A0230F /* BoardViewController.swift */,
+				042E51FC2334C76A00030E5E /* BoardCollectionViewCell.swift */,
+				042E51FB2334C76800030E5E /* StatusCollectionViewCell.swift */,
 				0498C3F7234D8BC000F99C10 /* TableViewCell.swift */,
+				042E51FE2334C76E00030E5E /* BoardCollectionViewController.swift */,
 			);
 			path = BoardCollectionView;
 			sourceTree = "<group>";

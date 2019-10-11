@@ -12,8 +12,8 @@ import FirebaseAuth
 import Foundation
 
 final class DashboardViewController: UIViewController {
-    static var boards = [Board]() // Todo: create getInstance() + change to private
-    
+    //static var boards = [Board]() // Todo: create getInstance() + change to private
+    static var boards = [Board(boardName: "test", items: [])]
     private var calendarLabel = UILabel()
     private var helloUserName = UILabel()
     private let addBoardBtn = UIButton()
@@ -250,11 +250,13 @@ extension DashboardViewController: UICollectionViewDataSource,UICollectionViewDe
         //let vc = BoardViewController()
         let vc = BoardViewController()
         vc.boardID = DashboardViewController.boards[indexPath.item].boardID!
+        vc.boardName = DashboardViewController.boards[indexPath.item].boardName!
+        vc.boardIndex = indexPath.item
         vc.hidesBottomBarWhenPushed = true
         //boardVC.modalPresentationStyle = .overFullScreen
         
-        self.tabBarController?.navigationController?.pushViewController(vc, animated: true)
-        //self.show(vc, sender: self)
+        //self.tabBarController?.navigationController?.pushViewController(vc, animated: true)
+        self.show(vc, sender: self)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -323,5 +325,7 @@ extension DashboardViewController: UITextFieldDelegate {
         textField.resignFirstResponder()
         return true
     }
-  
 }
+
+
+

@@ -14,41 +14,43 @@ import MobileCoreServices
 class BoardViewController: UIViewController {
     var tasks = [Task]()
     var boardID = ""
+    var boardName = ""  // for board title
+    var boardIndex: Int?    //for updateboardAPI
     static var taskID = ""
     var status = [Status(name: "Todo", items: [])]
     var deleteTask = ""
     //var tableView = UITableView()
     var horizonalBarLeftAnchorConstraint: NSLayoutConstraint?
-
+    
     var checkCollectionview = UICollectionView(frame: .infinite, collectionViewLayout: UICollectionViewFlowLayout.init())
     let layout = UICollectionViewFlowLayout()
     let layout2 = UICollectionViewFlowLayout()
     var collectionView = UICollectionView(frame: .infinite, collectionViewLayout: UICollectionViewFlowLayout.init())
     let footerID = "footerID"
     
+    private var checkTextField: String? //check board Title if are the same
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         self.navigationController?.isNavigationBarHidden = false
         let selectedIndexPath = NSIndexPath(item: 0, section: 0)
-        // Do any additional setup after loading the view.
-//        setupBackbuttonItem()
-//       setupAddButtonItem()
-//        setupRemoveButtonItem()
+    
         checkCollectionview.selectItem(at: selectedIndexPath as IndexPath, animated: false, scrollPosition: [])
-//        setupHorizonalBar()
         getCurrentDateTime()
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.isTranslucent = true
-//        if let decoded  = UserDefaults.standard.data(forKey: "Tasks")
-//        {
-//            let decodedTasks = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! [Task]
-//            self.tasks = decodedTasks
-//        }
-       // updateCollectionViewItem(with: view.bounds.size)
+        
+//        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+//        self.navigationController?.navigationBar.shadowImage = UIImage()
+//        self.navigationController?.navigationBar.isTranslucent = true
+//        //        if let decoded  = UserDefaults.standard.data(forKey: "Tasks")
+        //        {
+        //            let decodedTasks = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! [Task]
+        //            self.tasks = decodedTasks
+        //        }
+        // updateCollectionViewItem(with: view.bounds.size)
         checkCollectionview.register(UICollectionViewCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: footerID)
-   }
+        //self.navigationController?.isNavigationBarHidden = true
+    }
     
     private func setupUI() {
         view.backgroundColor = UIColor.white
@@ -68,7 +70,7 @@ class BoardViewController: UIViewController {
         checkCollectionview.backgroundColor = UIColor.groupTableViewBackground
         checkCollectionview.collectionViewLayout = layout2
         
-
+        
         self.view.addSubview(collectionView)
         collectionView.snp.makeConstraints { (make) in
             make.top.equalTo(checkCollectionview.snp.bottom).offset(5)
@@ -82,28 +84,18 @@ class BoardViewController: UIViewController {
         collectionView.collectionViewLayout = layout
         collectionView.isPagingEnabled = true
         collectionView.backgroundColor = UIColor.white
-
-        //setupNavBar()
+        
+        setupBarTitle()
     }
     
-//    final private func setupNavBar(){
-//        let navBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 44))
-//        view.addSubview(navBar)
-//        //let backButton = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(backtoBoard(_:)))
-//
-//        let navItem = UINavigationItem(title: "Add Board")
-//        let doneItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.cancel, target: nil, action: #selector(backtoBoard(_:)))
-//        navItem.leftBarButtonItem = doneItem
-//
-//
-//    }
-    
-//     @objc final private func backtoBoard(_ sender: Any){
-//    //        self.dismiss(animated: true, completion: nil)
-//            self.navigationController?.popViewController(animated: true)
-//    //        self.presentingViewController?.dismiss(animated: true, completion: nil)
-//            //self.show(TabBarController(), sender: self)
-//        }
+    final private func setupBarTitle(){
+        let boardTextField = UITextField()
+        boardTextField.snp.makeConstraints{ make in
+            make.width.equalTo(100)
+        }
+        boardTextField.text = boardName
+        self.navigationItem.titleView = boardTextField
+       }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -139,7 +131,7 @@ class BoardViewController: UIViewController {
         {
             var check = true
             for i in status          {
-                 if j.status == i.name
+                if j.status == i.name
                 {
                     check = false
                     i.items.append(j)
@@ -174,9 +166,9 @@ class BoardViewController: UIViewController {
     func onreciveTask (tasks: [Task])
     {
         self.tasks = tasks
-//        let encodedData: Data = NSKeyedArchiver.archivedData(withRootObject: self.tasks)
-//        UserDefaults.standard.set(encodedData, forKey: "Tasks")
-//        UserDefaults.standard.synchronize()
+        //        let encodedData: Data = NSKeyedArchiver.archivedData(withRootObject: self.tasks)
+        //        UserDefaults.standard.set(encodedData, forKey: "Tasks")
+        //        UserDefaults.standard.synchronize()
     }
     func receiveStatus (status: [Status])
     {
@@ -193,98 +185,98 @@ class BoardViewController: UIViewController {
         layout.itemSize = CGSize(width: 225, height: size.height * 0.8)
     }
     
-//    func setupAddTaskBtn() {
-//        let button = UIButton(type: . system)
-//        button.setTitle("Add Task", for: .normal)
-//        button.setTitleColor(.red, for: .normal)
-//        button.frame.size = CGSize(width: 30,height: 30)
-//        button.addTarget(BoardCollectionViewCell.sharedInstance, action: #selector(BoardCollectionViewCell.addTapped(_:)), for: .touchUpInside)
-//        let removeBarButton = UIBarButtonItem(customView: button)
-//        toolbarItems?.append(removeBarButton)
-//    }
-        func setupRemoveButtonItem(){
-            let button = UIButton(type: . system)
-            button.setTitle("Delete", for: .normal)
-            button.setTitleColor(.red, for: .normal)
-            button.frame.size = CGSize(width: 30,height: 30)
-            button.addInteraction(UIDropInteraction(delegate: self))
-            let removeBarButton = UIBarButtonItem(customView: button)
-            toolbarItems?.append(removeBarButton)
-
-        }
-        func setupBackbuttonItem() {
-            let backButton = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(backtoBoard(_:)))
-            navigationItem.leftBarButtonItem = backButton
-        }
-        @objc func backtoBoard(_ sender: Any){
-//            let vc = self.storyboard?.instantiateViewController(withIdentifier: "HomeVC") as! UINavigationController
-//            self.present(vc, animated: true, completion: nil)
-            self.dismiss(animated: true, completion: nil)
-        }
-        func setupAddButtonItem() {
-            let addButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addListTapped(_:)))
-            addButtonItem.tintColor = .white
-            navigationItem.rightBarButtonItem = addButtonItem
-        }
+    //    func setupAddTaskBtn() {
+    //        let button = UIButton(type: . system)
+    //        button.setTitle("Add Task", for: .normal)
+    //        button.setTitleColor(.red, for: .normal)
+    //        button.frame.size = CGSize(width: 30,height: 30)
+    //        button.addTarget(BoardCollectionViewCell.sharedInstance, action: #selector(BoardCollectionViewCell.addTapped(_:)), for: .touchUpInside)
+    //        let removeBarButton = UIBarButtonItem(customView: button)
+    //        toolbarItems?.append(removeBarButton)
+    //    }
+    func setupRemoveButtonItem(){
+        let button = UIButton(type: . system)
+        button.setTitle("Delete", for: .normal)
+        button.setTitleColor(.red, for: .normal)
+        button.frame.size = CGSize(width: 30,height: 30)
+        button.addInteraction(UIDropInteraction(delegate: self))
+        let removeBarButton = UIBarButtonItem(customView: button)
+        toolbarItems?.append(removeBarButton)
+        
+    }
+    func setupBackbuttonItem() {
+        let backButton = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(backtoBoard(_:)))
+        navigationItem.leftBarButtonItem = backButton
+    }
+    @objc func backtoBoard(_ sender: Any){
+        //            let vc = self.storyboard?.instantiateViewController(withIdentifier: "HomeVC") as! UINavigationController
+        //            self.present(vc, animated: true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
+    }
+    func setupAddButtonItem() {
+        let addButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addListTapped(_:)))
+        addButtonItem.tintColor = .white
+        navigationItem.rightBarButtonItem = addButtonItem
+    }
     
-        @IBAction func onLogout(_ sender: Any) {
-
-            let firebaseAuth = Auth.auth()
-            do {
-                try firebaseAuth.signOut()
-                let homeViewcontroller = storyboard?.instantiateViewController(withIdentifier: "Home") as! UINavigationController
-                self.present(homeViewcontroller, animated: true, completion: nil)
-            } catch let signOutError as NSError {
-                print ("Error signing out: %@", signOutError)
+    @IBAction func onLogout(_ sender: Any) {
+        
+        let firebaseAuth = Auth.auth()
+        do {
+            try firebaseAuth.signOut()
+            let homeViewcontroller = storyboard?.instantiateViewController(withIdentifier: "Home") as! UINavigationController
+            self.present(homeViewcontroller, animated: true, completion: nil)
+        } catch let signOutError as NSError {
+            print ("Error signing out: %@", signOutError)
+        }
+        
+    }
+    @objc func addListTapped(_ sender: Any) {
+        let alertController = UIAlertController(title: "Add Status", message: nil, preferredStyle: .alert)
+        alertController.addTextField{(textField) in
+            textField.placeholder = "Status"
+        }
+        alertController.addAction(UIAlertAction(title: "Add", style: .default, handler: { (_) in
+            guard let text = alertController.textFields![0].text, !text.isEmpty else {
+                return
             }
-
-        }
-        @objc func addListTapped(_ sender: Any) {
-            let alertController = UIAlertController(title: "Add Status", message: nil, preferredStyle: .alert)
-            alertController.addTextField{(textField) in
-                textField.placeholder = "Status"
-            }
-            alertController.addAction(UIAlertAction(title: "Add", style: .default, handler: { (_) in
-                guard let text = alertController.textFields![0].text, !text.isEmpty else {
-                    return
-                }
-                
-                self.status.append(Status(name: text, items: []))
-                let addedIndexPath = IndexPath(item: self.status.count - 1, section: 0)
-
-                self.checkCollectionview.insertItems(at: [addedIndexPath])
-                self.checkCollectionview.scrollToItem(at: addedIndexPath, at: UICollectionView.ScrollPosition.centeredHorizontally, animated: true)
-                self.checkCollectionview.selectItem(at: addedIndexPath, animated: true, scrollPosition: UICollectionView.ScrollPosition.centeredHorizontally)
-                self.collectionView.insertItems(at: [addedIndexPath])
-                self.collectionView.scrollToItem(at: addedIndexPath, at: UICollectionView.ScrollPosition.centeredHorizontally, animated: true)
-            }))
-
-            alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-            present(alertController, animated: true)
-
-        }
+            
+            self.status.append(Status(name: text, items: []))
+            let addedIndexPath = IndexPath(item: self.status.count - 1, section: 0)
+            
+            self.checkCollectionview.insertItems(at: [addedIndexPath])
+            self.checkCollectionview.scrollToItem(at: addedIndexPath, at: UICollectionView.ScrollPosition.centeredHorizontally, animated: true)
+            self.checkCollectionview.selectItem(at: addedIndexPath, animated: true, scrollPosition: UICollectionView.ScrollPosition.centeredHorizontally)
+            self.collectionView.insertItems(at: [addedIndexPath])
+            self.collectionView.scrollToItem(at: addedIndexPath, at: UICollectionView.ScrollPosition.centeredHorizontally, animated: true)
+        }))
+        
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        present(alertController, animated: true)
+        
+    }
     
     
-
+    
     func setupHorizonalBar () {
         let horizontalBarView = UIView()
         horizontalBarView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(horizontalBarView)
-
+        
         horizonalBarLeftAnchorConstraint = horizontalBarView.leftAnchor.constraint(equalTo: checkCollectionview.leftAnchor)
         horizonalBarLeftAnchorConstraint?.isActive = true
-
+        
         horizontalBarView.bottomAnchor.constraint(equalTo: checkCollectionview.bottomAnchor).isActive = true
         horizontalBarView.widthAnchor.constraint(equalTo: checkCollectionview.widthAnchor, multiplier:  1/4).isActive = true
         horizontalBarView.heightAnchor.constraint(equalToConstant: 4).isActive = true
     }
-
+    
 }
 extension BoardViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return status.count
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == checkCollectionview{
             let cell = checkCollectionview.dequeueReusableCell(withReuseIdentifier: "Status", for: indexPath) as! StatusCollectionViewCell
@@ -294,17 +286,17 @@ extension BoardViewController: UICollectionViewDataSource, UICollectionViewDeleg
             cell.layer.borderColor = UIColor.orange.cgColor
             cell.backgroundColor = UIColor.white
             return cell
-
+            
         }
-            else
+        else
         {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! BoardCollectionViewCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! BoardCollectionViewCell
             cell.layer.cornerRadius = 0
             cell.layer.borderWidth = 0
             cell.setup(with: status[indexPath.item], boardID: self.boardID)
             cell.parentVC = self
             return cell
-    }
+        }
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 1
@@ -321,8 +313,8 @@ extension BoardViewController: UICollectionViewDataSource, UICollectionViewDeleg
          let x = CGFloat(indexPath.item) * collectionView.frame.width / 4
          horizonalBarLeftAnchorConstraint?.constant = x
          UIView.animate(withDuration: 0.75, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {self.checkcollectionview.layoutIfNeeded()}, completion: nil)*/
-                scrolltoMenuIndex(menuIndex: indexPath.item)
-      
+        scrolltoMenuIndex(menuIndex: indexPath.item)
+        
     }
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         // print(scrollView.contentOffset.x)
@@ -332,7 +324,7 @@ extension BoardViewController: UICollectionViewDataSource, UICollectionViewDeleg
         let index = targetContentOffset.pointee.x / scrollView.frame.width
         let indexPath = IndexPath(item: Int(index + 0.1), section: 0)
         checkCollectionview.selectItem(at: indexPath, animated: true, scrollPosition: [])
-
+        
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == checkCollectionview {
@@ -363,25 +355,25 @@ extension BoardViewController: UICollectionViewDataSource, UICollectionViewDeleg
         footer.backgroundColor = .white
         return footer
     }
-
+    
 }
 
 extension BoardViewController: UIDropInteractionDelegate {
-
+    
     func dropInteraction(_ interaction: UIDropInteraction, sessionDidUpdate session: UIDropSession) -> UIDropProposal {
         return UIDropProposal(operation: .move)
     }
-
+    
     func dropInteraction(_ interaction: UIDropInteraction, performDrop session: UIDropSession) {
-
+        
         if session.hasItemsConforming(toTypeIdentifiers: [kUTTypePlainText as String]) {
             session.loadObjects(ofClass: NSString.self) { (items) in
                 guard let _ = items.first as? String else {
                     return
                 }
-
+                
                 if let (dataSource, sourceIndexPath, tableView) = session.localDragSession?.localContext as? (Status, IndexPath, UITableView) {
-
+                    
                     tableView.beginUpdates()
                     for i in self.tasks
                     {
@@ -389,7 +381,7 @@ extension BoardViewController: UIDropInteractionDelegate {
                     }
                     let item = dataSource.items[sourceIndexPath.row]
                     dataSource.items.remove(at: sourceIndexPath.row)
-
+                    
                     if let item = self.tasks.first (where: { (task) -> Bool in
                         return task.taskID == item.taskID
                     }){}
@@ -397,9 +389,35 @@ extension BoardViewController: UIDropInteractionDelegate {
                     tableView.deleteRows(at: [sourceIndexPath], with: .automatic)
                     tableView.endUpdates()
                     deleteTaskAPI(task: item, boardID: self.boardID)
-
+                    
                 }
             }
         }
     }
 }
+
+extension BoardViewController: UITextFieldDelegate {
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        print("editing title")
+        if textField.text != checkTextField{
+            let alertController = UIAlertController(title: "Change board name", message: nil, preferredStyle: .alert)
+            
+            alertController.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (_) in
+                updateBoardAPI(board: DashboardViewController.boards[self.boardIndex!], newName: textField.text!)
+                self.checkTextField = textField.text
+            }))
+            alertController.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+            present(alertController,animated: true)
+        }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        self.checkTextField = textField.text
+    }
+}
+

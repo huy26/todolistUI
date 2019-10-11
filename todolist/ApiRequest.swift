@@ -85,6 +85,35 @@ func uploadUserAPI(firstName: String, lastName: String, userPhone: String, birth
         print("http resquest succeed")
     }
 }
+
+func updateUserAPI(firstName: String, lastName: String, userPhone: String, birthDay: String, avatarURL: String, email: String) {
+    let data = User(firstName: firstName, lastName: lastName, userPhone: userPhone, birthDay: birthDay, avatarURL: avatarURL, email: email)
+    
+    let currentUser = Auth.auth().currentUser
+    currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
+        if error != nil {
+            print("get token failed")
+            return;
+        }
+        
+        // Send token to your backend via HTTPS
+        // ...
+        
+        //let idToken = returnFirebaseToken()
+        let header: HTTPHeaders = [
+            "tokeniD": "\(idToken!)",
+        ]
+        AF.request(url, method: .put, parameters: data,encoder: URLEncodedFormParameterEncoder(destination: .httpBody), headers: header).responseData(completionHandler: { data in
+            print("==> Raw Data \(data)")
+            print(data.response?.statusCode)
+        }).responseJSON(completionHandler: { dataJson in
+            print("==> JSON Data: \(dataJson)")
+        })
+        print(idToken!)
+        print(email)
+        print("http resquest succeed")
+    }
+}
 func APIboard(board: Board){
     let currentuser = Auth.auth().currentUser
     currentuser?.getIDTokenForcingRefresh(true, completion: { tokenID, error in
