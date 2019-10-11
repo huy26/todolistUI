@@ -14,17 +14,17 @@ import MobileCoreServices
 class BoardViewController: UIViewController {
     var tasks = [Task]()
     var boardID = ""
-    static var taskID = ""
+    private static var taskID = ""
     var status = [Status(name: "Todo", items: [])]
-    var deleteTask = ""
+    private var deleteTask = ""
     //var tableView = UITableView()
-    var horizonalBarLeftAnchorConstraint: NSLayoutConstraint?
+    private var horizonalBarLeftAnchorConstraint: NSLayoutConstraint?
 
     var checkCollectionview = UICollectionView(frame: .infinite, collectionViewLayout: UICollectionViewFlowLayout.init())
-    let layout = UICollectionViewFlowLayout()
-    let layout2 = UICollectionViewFlowLayout()
+    private let layout = UICollectionViewFlowLayout()
+    private let layout2 = UICollectionViewFlowLayout()
     var collectionView = UICollectionView(frame: .infinite, collectionViewLayout: UICollectionViewFlowLayout.init())
-    let footerID = "footerID"
+    private let footerID = "footerID"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,9 +38,9 @@ class BoardViewController: UIViewController {
         checkCollectionview.selectItem(at: selectedIndexPath as IndexPath, animated: false, scrollPosition: [])
 //        setupHorizonalBar()
         getCurrentDateTime()
-//        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), for: .default)
-//        self.navigationController!.navigationBar.shadowImage = UIImage()
-//        self.navigationController!.navigationBar.isTranslucent = true
+        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController!.navigationBar.shadowImage = UIImage()
+        self.navigationController!.navigationBar.isTranslucent = true
 //        if let decoded  = UserDefaults.standard.data(forKey: "Tasks")
 //        {
 //            let decodedTasks = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! [Task]
@@ -72,7 +72,7 @@ class BoardViewController: UIViewController {
         layout2.scrollDirection = .horizontal
         self.view.addSubview(checkCollectionview)
         checkCollectionview.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().offset(100)
+            make.top.equalToSuperview().offset(90)
             make.left.equalToSuperview()
             make.height.equalTo(80)
             make.width.equalToSuperview()

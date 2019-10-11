@@ -16,7 +16,7 @@ import OneSignal
 
 
 //let url = "http://192.168.2.48:4000/api/user"
-let url = "http://192.168.0.150:4000/api/user"
+private let url = "http://192.168.0.150:4000/api/user"
 
 func getUserAPI() -> User{
     var data = User(firstName: "", lastName: "", userPhone: "", birthDay: "", avatarURL: "", email: "")

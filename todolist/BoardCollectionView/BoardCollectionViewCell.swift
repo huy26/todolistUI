@@ -3,8 +3,8 @@ import MobileCoreServices
 class BoardCollectionViewCell: UICollectionViewCell {
 
 
-    let footerID = "TableFooter"
-    var tableView = UITableView()
+    private let footerID = "TableFooter"
+    private var tableView = UITableView()
     //var task: Task?
     override init(frame: CGRect) {
         super.init(frame: frame)

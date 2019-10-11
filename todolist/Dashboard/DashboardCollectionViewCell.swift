@@ -17,7 +17,7 @@ final class DashboardCollectionViewCell: UICollectionViewCell {
     let deleteBoardBtn = UIButton()
     
     private let barView = UIView()
-     let addUserBtn = UIButton()
+    let addUserBtn = UIButton()
     
     override init(frame: CGRect) {
         super.init(frame: frame)

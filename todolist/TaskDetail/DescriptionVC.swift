@@ -2,7 +2,7 @@
 import UIKit
 
 class DescriptionVC: UIViewController {
-    var textField = UITextView()
+    private var textField = UITextView()
     var task: Task?
     var boardID: String?
 

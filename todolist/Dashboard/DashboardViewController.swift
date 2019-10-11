@@ -16,7 +16,7 @@ final class DashboardViewController: UIViewController {
     
     private var calendarLabel = UILabel()
     private var helloUserName = UILabel()
-    private let addBoardBtn = UIButton()
+    let addBoardBtn = UIButton()
     private let barView = UIView()
     private let addboardVC = AddBoardViewController()
     private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
