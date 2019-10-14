@@ -22,6 +22,9 @@
 		042E52032334C76E00030E5E /* BoardCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042E51FE2334C76E00030E5E /* BoardCollectionViewController.swift */; };
 		0438E26E2333780E00BCBEC8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0438E26D2333780D00BCBEC8 /* GoogleService-Info.plist */; };
 		043B6BC52331EF0700F264E8 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043B6BC42331EF0700F264E8 /* Task.swift */; };
+		0446382C2350AD890044DFE9 /* InviteUserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0446382B2350AD890044DFE9 /* InviteUserVC.swift */; };
+		044638312350C20B0044DFE9 /* SearchUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044638302350C20B0044DFE9 /* SearchUser.swift */; };
+		044638342350CA010044DFE9 /* UserInfo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 044638322350CA010044DFE9 /* UserInfo.xcdatamodeld */; };
 		044F1C65234EE1DE009F58BA /* GuestCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044F1C64234EE1DE009F58BA /* GuestCollectionViewCell.swift */; };
 		045304EA23505FD900F133F3 /* UserAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045304E923505FD900F133F3 /* UserAPI.swift */; };
 		045304EC2350601700F133F3 /* BoardAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045304EB2350601700F133F3 /* BoardAPI.swift */; };
@@ -96,6 +99,9 @@
 		042E51FE2334C76E00030E5E /* BoardCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardCollectionViewController.swift; sourceTree = "<group>"; };
 		0438E26D2333780D00BCBEC8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		043B6BC42331EF0700F264E8 /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
+		0446382B2350AD890044DFE9 /* InviteUserVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteUserVC.swift; sourceTree = "<group>"; };
+		044638302350C20B0044DFE9 /* SearchUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUser.swift; sourceTree = "<group>"; };
+		044638332350CA010044DFE9 /* UserInfo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = UserInfo.xcdatamodel; sourceTree = "<group>"; };
 		044F1C64234EE1DE009F58BA /* GuestCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuestCollectionViewCell.swift; sourceTree = "<group>"; };
 		045304E923505FD900F133F3 /* UserAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAPI.swift; sourceTree = "<group>"; };
 		045304EB2350601700F133F3 /* BoardAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardAPI.swift; sourceTree = "<group>"; };
@@ -193,6 +199,7 @@
 		040891D8232254E50025EE37 /* todolist */ = {
 			isa = PBXGroup;
 			children = (
+				044638322350CA010044DFE9 /* UserInfo.xcdatamodeld */,
 				040891E5232254E60025EE37 /* Info.plist */,
 				04061FFD234498830068B0BB /* todolist.entitlements */,
 				040891D9232254E50025EE37 /* AppDelegate.swift */,
@@ -203,6 +210,22 @@
 				0438E26D2333780D00BCBEC8 /* GoogleService-Info.plist */,
 			);
 			path = todolist;
+			sourceTree = "<group>";
+		};
+		044638272350AD050044DFE9 /* InviteUser */ = {
+			isa = PBXGroup;
+			children = (
+				044638282350AD430044DFE9 /* VCs */,
+			);
+			path = InviteUser;
+			sourceTree = "<group>";
+		};
+		044638282350AD430044DFE9 /* VCs */ = {
+			isa = PBXGroup;
+			children = (
+				0446382B2350AD890044DFE9 /* InviteUserVC.swift */,
+			);
+			path = VCs;
 			sourceTree = "<group>";
 		};
 		045304D223505D2700F133F3 /* App */ = {
@@ -219,6 +242,7 @@
 		045304D323505D3A00F133F3 /* Screen */ = {
 			isa = PBXGroup;
 			children = (
+				044638272350AD050044DFE9 /* InviteUser */,
 				0498C3FF234D8DB600F99C10 /* TaskDetail */,
 				045304E123505F1B00F133F3 /* Task */,
 				045304DF23505ED900F133F3 /* TabBar */,
@@ -402,6 +426,7 @@
 				043B6BC42331EF0700F264E8 /* Task.swift */,
 				04F989672338D5ED00A062C4 /* Status.swift */,
 				04FC1598233B5FE00091FC4E /* boardDetail.swift */,
+				044638302350C20B0044DFE9 /* SearchUser.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -656,12 +681,15 @@
 				0491CBD32330D9AC00040E51 /* ForgotPasswordViewController.swift in Sources */,
 				04FC1599233B5FE00091FC4E /* boardDetail.swift in Sources */,
 				0498C3F8234D8BC000F99C10 /* TableViewCell.swift in Sources */,
+				044638342350CA010044DFE9 /* UserInfo.xcdatamodeld in Sources */,
+				0446382C2350AD890044DFE9 /* InviteUserVC.swift in Sources */,
 				04FBCBB3234740B3005C74F6 /* TabBarController.swift in Sources */,
 				0498DBED2328ED70005C5666 /* Board.swift in Sources */,
 				042E52032334C76E00030E5E /* BoardCollectionViewController.swift in Sources */,
 				0498C406234D9EC900F99C10 /* UIView+Extension.swift in Sources */,
 				045304EC2350601700F133F3 /* BoardAPI.swift in Sources */,
 				0424541623361B7E00A0230F /* BoardViewController.swift in Sources */,
+				044638312350C20B0044DFE9 /* SearchUser.swift in Sources */,
 				042E52002334C76E00030E5E /* StatusCollectionViewCell.swift in Sources */,
 				04FBCBB523474150005C74F6 /* ProfileViewController.swift in Sources */,
 				043B6BC52331EF0700F264E8 /* Task.swift in Sources */,
@@ -925,6 +953,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		044638322350CA010044DFE9 /* UserInfo.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				044638332350CA010044DFE9 /* UserInfo.xcdatamodel */,
+			);
+			currentVersion = 044638332350CA010044DFE9 /* UserInfo.xcdatamodel */;
+			path = UserInfo.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 040891CE232254E50025EE37 /* Project object */;
 }

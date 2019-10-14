@@ -34,7 +34,7 @@ func APIboard(board: Board){
         })
     })
 }
-
+  
 
 func readBoardAPI(onCompleted: @escaping ((Error?, [Board]?)-> Void)) {
     print("reading board")

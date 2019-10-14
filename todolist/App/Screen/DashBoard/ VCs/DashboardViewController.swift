@@ -23,8 +23,8 @@ final class DashboardViewController: UIViewController {
     private let addBoardBtn = UIButton()
     
     //MARK:- Local Properties
-    static var boards = [Board]() // Todo: create getInstance() + change to private
-    //static var boards = [Board(boardName: "test", items: [])]
+    //static var boards = [Board]() // Todo: create getInstance() + change to private
+    static var boards = [Board(boardName: "test", items: [])]
     var checkTextField: String?
     
     
@@ -41,7 +41,6 @@ final class DashboardViewController: UIViewController {
         //            //checkcollectionview.reloadData()
         //            collectionView.reloadData()
         //        }
-        //
         
         setupBoardUI()
     }
@@ -79,6 +78,7 @@ final class DashboardViewController: UIViewController {
     }
     
 }
+
 // MARK:- setupUI
 extension DashboardViewController {
     final private func setupBoardUI(){
@@ -223,20 +223,20 @@ extension DashboardViewController {
     }
     
     @objc final private func inviteUser(sender: UIButton) {
-        let alertController = UIAlertController(title: "Invite User", message: "Enter user email", preferredStyle: .alert)
-        alertController.addTextField { (textfield) in
-            textfield.placeholder = "Email"
-        }
-        alertController.addAction(UIAlertAction(title: "Add", style: .default, handler: { (_) in
-            guard let text = alertController.textFields![0].text, !text.isEmpty else {
-                return
-            }
-            let indexPath = sender.tag
-            inviteBoardAPI(board: DashboardViewController.boards[indexPath], email: text)
-        }))
-        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        self.present(alertController, animated: true, completion: nil)
-        
+//        let alertController = UIAlertController(title: "Invite User", message: "Enter user email", preferredStyle: .alert)
+//        alertController.addTextField { (textfield) in
+//            textfield.placeholder = "Email"
+//        }
+//        alertController.addAction(UIAlertAction(title: "Add", style: .default, handler: { (_) in
+//            guard let text = alertController.textFields![0].text, !text.isEmpty else {
+//                return
+//            }
+//            let indexPath = sender.tag
+//            inviteBoardAPI(board: DashboardViewController.boards[indexPath], email: text)
+//        }))
+//        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+//        self.present(alertController, animated: true, completion: nil)
+        self.present(InviteUserVC(), animated: true, completion: nil)
     }
     
 }
@@ -300,8 +300,6 @@ extension DashboardViewController: UICollectionViewDataSource,UICollectionViewDe
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 300, height: 250)
     }
-    
-    
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         // print(scrollView.contentOffset.x)

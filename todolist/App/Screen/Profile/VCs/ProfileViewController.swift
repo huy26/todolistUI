@@ -242,23 +242,24 @@ extension ProfileViewController {
         let lastname = lastnameTextField.text
         let birthday = birthdayTextField.text
         
-        let currentuser = Auth.auth().currentUser
-        if currentuser != nil{
-            
-            updateUserAPI(firstName: firstname!, lastName: lastname!, userPhone: "", birthDay: birthday! , avatarURL: "", email: "")
-            _sender.flash()
-            getUserAPI { (error, user) in
-                if let error = error {
-                    print(error.localizedDescription)
-                    return
-                }
-                if let userToPrint = user {
-                    self.userNameLabel.text = User.getNamePrint()
-                    self.emailLabel.text = User.getemailPrint()
-                    return
+        if checkTextField() {
+            let currentuser = Auth.auth().currentUser
+            if currentuser != nil{
+                
+                updateUserAPI(firstName: firstname!, lastName: lastname!, userPhone: "", birthDay: birthday! , avatarURL: "", email: "")
+                _sender.flash()
+                getUserAPI { (error, user) in
+                    if let error = error {
+                        print(error.localizedDescription)
+                        return
+                    }
+                    if let userToPrint = user {
+                        self.userNameLabel.text = User.getNamePrint()
+                        self.emailLabel.text = User.getemailPrint()
+                        return
+                    }
                 }
             }
-            self.view.setNeedsDisplay()
         }
     }
 }
