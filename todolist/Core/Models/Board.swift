@@ -18,6 +18,7 @@ class Board: NSObject, Encodable, Mappable, NSCoding {
     var userID: String? = ""
     var detail = [Detail]()
     var totalTasks: Int = 0
+    var invited = [String]()
     static var count: Int = 0
     
     init(boardName: String, items: [String] ) {
@@ -26,6 +27,7 @@ class Board: NSObject, Encodable, Mappable, NSCoding {
         self.boardID = ""
         self.status = ""
         self.detail = [Detail]()
+        self.invited = [""]
         self.totalTasks = 0
         //Board.count += 1
     }
@@ -40,6 +42,7 @@ class Board: NSObject, Encodable, Mappable, NSCoding {
         self.userID <- map["userID"]
         self.detail <- map["details"]
         self.totalTasks <- map["totalTasks"]
+        self.invited <- map["invited"]
     }
     
     required init?(coder: NSCoder) {

@@ -7,31 +7,31 @@
 //
 
 import Foundation
+import ObjectMapper
 
-class SearchUser{
-    //MARK:- Local Properties
-    var name: String
-    var email: String
+final class SearchUser: Mappable, Encodable, Decodable{
+   
     
-    var attributedCityName: NSMutableAttributedString?
-    var attributedCountryName: NSMutableAttributedString?
-    var allAttributedName : NSMutableAttributedString?
+    //MARK:- Local Properties
+    var name = ""
+    var email = ""
+    
     
     public init(name: String, email: String){
         self.name = name
         self.email = email
     }
     
-    public func getFormatedText() -> NSMutableAttributedString{
-        allAttributedName = NSMutableAttributedString()
-        allAttributedName!.append(attributedCityName!)
-        allAttributedName!.append(NSMutableAttributedString(string: ", "))
-        allAttributedName!.append(attributedCountryName!)
-        
-        return allAttributedName!
-    }
-    
     public func getStringText() -> String{
         return "\(name), \(email)"
+    }
+    
+    //MARK:- MAPPING
+    required init?(map: Map) {
+    }
+    
+    func mapping(map: Map) {
+        self.email <- map["email"]
+        self.name <- map["firstName"]
     }
 }

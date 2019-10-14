@@ -23,7 +23,7 @@ func getUserAPI (onCompleted: @escaping ((Error?, User?)-> Void)) {
     let currentUser = Auth.auth().currentUser
     currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
         if error != nil {
-            print("get token failed")
+            print("get token failed user")
             return;
         }
      
@@ -48,9 +48,42 @@ func getUserAPI (onCompleted: @escaping ((Error?, User?)-> Void)) {
                     break
                 }
         }
-        
     }
     
+}
+
+func getUserListAPI(onCompleted: @escaping ((Error?, [SearchUser]?)-> Void)){
+    
+    var data: [SearchUser]?
+    let currentUser = Auth.auth().currentUser
+    currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
+        if error != nil {
+            print("get token failed user")
+            return;
+        }
+        
+        
+        //let idToken = returnFirebaseToken()
+        let header: HTTPHeaders = []
+        
+        let listuser = url + "/lists"
+        print("list user: \(listuser)")
+        
+        AF.request(listuser, method: .get,parameters: data,encoder: URLEncodedFormParameterEncoder(destination: .httpBody), headers: header)
+            .responseArray{ (response: DataResponse<[SearchUser]>) in
+                switch response.result {
+                case let .success(value):
+                    debugPrint(value)
+                    data = value
+                    onCompleted(nil, value)
+                    break
+                case let .failure(error):
+                    debugPrint(error)
+                    onCompleted(error, nil)
+                    break
+                }
+        }
+    }
 }
 
 func uploadUserAPI(firstName: String, lastName: String, userPhone: String, birthDay: String, avatarURL: String, email: String){
@@ -60,7 +93,7 @@ func uploadUserAPI(firstName: String, lastName: String, userPhone: String, birth
     let currentUser = Auth.auth().currentUser
     currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
         if error != nil {
-            print("get token failed")
+            print("get token failed user")
             return;
         }
         
@@ -89,7 +122,7 @@ func updateUserAPI(firstName: String, lastName: String, userPhone: String, birth
     let currentUser = Auth.auth().currentUser
     currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
         if error != nil {
-            print("get token failed")
+            print("get token failed user")
             return;
         }
         

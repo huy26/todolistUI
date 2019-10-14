@@ -13,18 +13,19 @@ import Foundation
 
 final class DashboardViewController: UIViewController {
     //MARK:- UI Properties
+    private let viewModel = DashBoardVM()
     private var calendarLabel = UILabel()
     private var helloUserName = UILabel()
     private let barView = UIView()
     private let addboardVC = AddBoardViewController()
     private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
     private let profileVC = UIViewController()
-    private let cellReuseIndentifier = "cellID"
     private let addBoardBtn = UIButton()
     
     //MARK:- Local Properties
-    //static var boards = [Board]() // Todo: create getInstance() + change to private
-    static var boards = [Board(boardName: "test", items: [])]
+    static var boards = [Board]() // Todo: create getInstance() + change to private
+    //static var boards = [Board(boardName: "test", items: [])]
+    
     var checkTextField: String?
     
     
@@ -51,32 +52,43 @@ final class DashboardViewController: UIViewController {
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
         self.navigationController?.isNavigationBarHidden = true
         
-        readBoardAPI { (error, boards) in
-            if let error = error {
-                self.onGetBoardError(error: error)
-                print(error.localizedDescription)
-                return
-            }
-            if let boards = boards {
-                UserDefaults.standard.removeObject(forKey: "Board")
-                self.onReceivedBoards(boards: boards)
-                self.collectionView.reloadData()
-                return
-            }
-        }
+//        readBoardAPI { (error, boards) in
+//            if let error = error {
+//                self.onGetBoardError(error: error)
+//                print(error.localizedDescription)
+//                return
+//            }
+//            if let boards = boards {
+//                UserDefaults.standard.removeObject(forKey: "Board")
+//                self.onReceivedBoards(boards: boards)
+//                self.collectionView.reloadData()
+//                return
+//            }
+//        }
+//
+//        getUserAPI { (error, user) in
+//            if let error = error {
+//                print(error.localizedDescription)
+//                return
+//            }
+//            if let userToPrint = user {
+//                self.helloUserName.text = "Hello, \(userToPrint.firstName)"
+//                return
+//            }
+//        }
         
-        getUserAPI { (error, user) in
-            if let error = error {
-                print(error.localizedDescription)
-                return
-            }
-            if let userToPrint = user {
-                self.helloUserName.text = "Hello, \(userToPrint.firstName)"
-                return
-            }
-        }
+        initBoard()
     }
-    
+}
+
+//MARK:- Init from viewModel
+extension DashboardViewController{
+    final private func initBoard(){
+        calendarLabel.text = getCurrentDateTime()
+        DashboardViewController.boards = viewModel.getBoard
+        collectionView.reloadData()
+        helloUserName.text = viewModel.usernameText
+    }
 }
 
 // MARK:- setupUI
@@ -306,13 +318,13 @@ extension DashboardViewController: UICollectionViewDataSource,UICollectionViewDe
         //        horizonalBarLeftAnchorConstraint?.constant = scrollView.contentOffset.x / 4
     }
     
-    final private func getCurrentDateTime() {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .long
-        formatter.dateFormat = "EE, dd MMM"
-        let str = formatter.string(from: Date())
-        calendarLabel.text = str
-    }
+//    final private func getCurrentDateTime() {
+//        let formatter = DateFormatter()
+//        formatter.dateStyle = .long
+//        formatter.dateFormat = "EE, dd MMM"
+//        let str = formatter.string(from: Date())
+//        calendarLabel.text = str
+//    }
 }
 
 //MARK:- TextFieldDelegate

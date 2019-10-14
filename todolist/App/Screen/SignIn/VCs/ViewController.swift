@@ -201,8 +201,7 @@ class ViewController: UIViewController {
                 alertController.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
                 self.present(alertController,animated: true)
             }
-            else
-            {
+            else{
                 //getUserAPI()
                 //self.present(self.tabbarController, animated: true, completion: nil)
                 //self.show(self.tabbarController, sender: self)

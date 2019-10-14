@@ -16,14 +16,36 @@ class InviteUserVC: UIViewController{
     private let cancelBtn = UIButton()
     
     //MARK:- Local Properties
-    private var datalist: [SearchUser] = [SearchUser]()
-    private var resultslist: [SearchUser] = [SearchUser]()
+    private var datalist = [SearchUser]()
+    private var resultslist = [SearchUser]()
     
+    //MARK:- Intent Properties
+    var boardID: Int?
+
     override func viewDidLoad() {
         super.viewDidLoad()
-       
-        addData()
+        
+        //addData()
         setupUI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        getUserListAPI { (error, userlist) in
+            if let error = error {
+                print(error.localizedDescription)
+                return
+            }
+            if let datalist = userlist {
+                for str in datalist {
+                    self.resultslist.append(str)
+                    self.datalist.append(str)
+                }
+                self.showUserTable.reloadData()
+            }
+            self.checkabledata()
+        }
     }
 }
 
@@ -40,14 +62,14 @@ extension InviteUserVC {
     }
     
     final private func setupNavBar(){
-           let navBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 44))
+        let navBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 44))
         view.addSubview(navBar)
         
         let navItem = UINavigationItem(title: "Invite member")
         let doneItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.stop, target: nil, action: #selector(backtoBar))
         navItem.leftBarButtonItem = doneItem
         navBar.setItems([navItem], animated: false)
-       }
+    }
     
     final private func setupSearchBox(){
         self.view.addSubview(searchBox)
@@ -94,23 +116,23 @@ extension InviteUserVC {
 extension InviteUserVC{
     final private func addData(){
         //datalist.append("test")
-        let a = SearchUser(name: "An", email: "ban@gmail.com")
-        
-        let b = SearchUser(name: "Bao", email: "hieu@g.com")
-        
-        let c = SearchUser(name: "Hieu", email: "hieu@apcs.vn")
-        
-        let d = SearchUser(name: "Huy", email: "huy@yahoo.com")
-        
-        let e = SearchUser(name: "Heo", email: "heo@utut.com")
-        
-        
-        
-        datalist.append(a)
-        datalist.append(b)
-        datalist.append(c)
-        datalist.append(d)
-        datalist.append(e)
+        //        let a = SearchUser(name: "An", email: "ban@gmail.com")
+        //
+        //        let b = SearchUser(name: "Bao", email: "hieu@g.com")
+        //
+        //        let c = SearchUser(name: "Hieu", email: "hieu@apcs.vn")
+        //
+        //        let d = SearchUser(name: "Huy", email: "huy@yahoo.com")
+        //
+        //        let e = SearchUser(name: "Heo", email: "heo@utut.com")
+        //
+        //
+        //
+        //        datalist.append(a)
+        //        datalist.append(b)
+        //        datalist.append(c)
+        //        datalist.append(d)
+        //        datalist.append(e)
         
         for str in datalist {
             resultslist.append(str)
@@ -124,6 +146,11 @@ extension InviteUserVC{
     func filter() {
         
         showUserTable.reloadData()
+    }
+    
+    final private func checkabledata(){
+        print("datalist: \(datalist.count)")
+        print("resultlist: \(resultslist.count)")
     }
     
 }
@@ -145,11 +172,11 @@ extension InviteUserVC{
     }
     
     @objc final private func textFieldDidChange(){
-           print("Text changed ...")
-           //addData()
-           updateTableView()
-
-       }
+        print("Text changed ...")
+        //addData()
+        updateTableView()
+        
+    }
 }
 //MARK:- tableView dataSource
 extension InviteUserVC: UITableViewDataSource{
@@ -169,7 +196,23 @@ extension InviteUserVC: UITableViewDataSource{
 
 //MARK:- tableview delegate
 extension InviteUserVC: UITableViewDelegate{
-   
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let alertController = UIAlertController(title: "Confirm invite", message: "Invite user to your board", preferredStyle: .alert)
+        
+        alertController.addAction(UIAlertAction(title: "Add", style: .default, handler: { (_) in
+            guard let text = alertController.textFields![0].text, !text.isEmpty else {
+                return
+            }
+            let currentcell = tableView.cellForRow(at: indexPath)
+            if let email = currentcell?.textLabel?.text {
+                inviteBoardAPI(board: DashboardViewController.boards[self.boardID!], email: email)
+            }
+        }))
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        self.present(alertController, animated: true, completion: nil)
+        self.present(InviteUserVC(), animated: true, completion: nil)
+    }
 }
 
 //MARK:- textfield delegate
@@ -208,8 +251,8 @@ extension InviteUserVC: UITextFieldDelegate {
         updateTableView()
         return true
     }
-//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-//        self.view.endEditing(true)
-//        return false
-//    }
+    //    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    //        self.view.endEditing(true)
+    //        return false
+    //    }
 }
