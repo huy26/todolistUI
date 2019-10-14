@@ -15,29 +15,19 @@ final class DashBoardVM {
     
     public init(){
         self.user = User(firstName: "An", lastName: "", userPhone: "", birthDay: "", avatarURL: "", email: "asdadasd")
-        self.board = [Board]()
-        self.calendarLabel = getCurrentDateTime()
-    }
-    
-    public var usernameText: String {
-        return "Hello, \(user.firstName)"
-    }
-    
-    public var getBoard: [Board] {
-//        readBoardAPI { (error, boards) in
-//            if let error = error {
-//                print(error.localizedDescription)
-//                return
-//            }
-//            if let checkBoards = boards {
-//                self.board = checkBoards
-//            }
-//        }
         self.board = [Board(boardName: "test", items: []),Board(boardName: "sfads", items: [])]
-        return self.board
-    }
-    
-    public var getUser: User{
+        self.calendarLabel = getCurrentDateTime()
+        
+        readBoardAPI { (error, boards) in
+            if let error = error {
+                print(error.localizedDescription)
+                return
+            }
+            if let checkBoards = boards {
+                self.board = checkBoards
+            }
+        }
+        
         getUserAPI { (error, user) in
             if let error = error {
                 print(error.localizedDescription)
@@ -47,7 +37,35 @@ final class DashBoardVM {
                 self.user = checkUser
             }
         }
+    }
+    
+    
+    public var usernameText: String {
+        return "Hello, \(user.firstName)"
+    }
+    
+    public var getBoard: [Board] {
+        return self.board
+    }
+    
+    public var getUser: User{
         return self.user
+    }
+}
+
+extension DashBoardVM {
+    
+    // todo: configure here or inline ??
+    //    final func configure(view: DashboardViewController){
+    //        calendarLabel.text = getCurrentDateTime()
+    //        helloUserName.text = viewModel.usernameText
+    //        DashboardViewController.boards = viewModel.getBoard
+    //        collectionView.reloadData()
+    //    }
+    
+    final func setBoard(board: [Board]){
+        self.board = board
+        
     }
 }
 

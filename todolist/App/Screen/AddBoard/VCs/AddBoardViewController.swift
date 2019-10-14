@@ -32,8 +32,11 @@ final class AddBoardViewController: UIViewController {
         self.boardNameTextField.text = ""
         self.onDismiss?()
     }
-    
+}
+
     // MARK:- setupUI
+extension AddBoardViewController {
+    
     final private func setupNavBar(){
         let navBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 44))
         view.addSubview(navBar)
@@ -99,9 +102,9 @@ extension AddBoardViewController {
         let boardName = self.boardNameTextField.text!
         let newboard = Board(boardName: boardName, items: [])
         DashboardViewController.boards.append(newboard)
-        Board.setBoardCount(value: 1)
+        //Board.setBoardCount(value: 1)
         print(Board.count)
-        print("number of board after added: \(Board.count)")
+        print("number of board after added: \(DashboardViewController.boards.count)")
         uploadBoardAPI(board: newboard)
         self.dismiss(animated: true, completion: nil)
     }

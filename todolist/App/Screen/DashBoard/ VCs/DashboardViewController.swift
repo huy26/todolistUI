@@ -36,12 +36,12 @@ final class DashboardViewController: UIViewController {
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         
-        //        if let decoded  = UserDefaults.standard.data(forKey: "Board") {
-        //            let decodedTeams = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! [Board]
-        //            self.boards = decodedTeams
-        //            //checkcollectionview.reloadData()
-        //            collectionView.reloadData()
-        //        }
+//        if let decoded  = UserDefaults.standard.data(forKey: "Board") {
+//            let decodedTeams = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! [Board]
+//            self.boards = decodedTeams
+//            //checkcollectionview.reloadData()
+//            collectionView.reloadData()
+//        }
         
         setupBoardUI()
     }
@@ -52,30 +52,30 @@ final class DashboardViewController: UIViewController {
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
         self.navigationController?.isNavigationBarHidden = true
         
-//        readBoardAPI { (error, boards) in
-//            if let error = error {
-//                self.onGetBoardError(error: error)
-//                print(error.localizedDescription)
-//                return
-//            }
-//            if let boards = boards {
-//                UserDefaults.standard.removeObject(forKey: "Board")
-//                self.onReceivedBoards(boards: boards)
-//                self.collectionView.reloadData()
-//                return
-//            }
-//        }
-//
-//        getUserAPI { (error, user) in
-//            if let error = error {
-//                print(error.localizedDescription)
-//                return
-//            }
-//            if let userToPrint = user {
-//                self.helloUserName.text = "Hello, \(userToPrint.firstName)"
-//                return
-//            }
-//        }
+        //        readBoardAPI { (error, boards) in
+        //            if let error = error {
+        //                self.onGetBoardError(error: error)
+        //                print(error.localizedDescription)
+        //                return
+        //            }
+        //            if let boards = boards {
+        //                UserDefaults.standard.removeObject(forKey: "Board")
+        //                self.onReceivedBoards(boards: boards)
+        //                self.collectionView.reloadData()
+        //                return
+        //            }
+        //        }
+        //
+        //        getUserAPI { (error, user) in
+        //            if let error = error {
+        //                print(error.localizedDescription)
+        //                return
+        //            }
+        //            if let userToPrint = user {
+        //                self.helloUserName.text = "Hello, \(userToPrint.firstName)"
+        //                return
+        //            }
+        //        }
         
         initBoard()
     }
@@ -83,11 +83,12 @@ final class DashboardViewController: UIViewController {
 
 //MARK:- Init from viewModel
 extension DashboardViewController{
+    //MARK:- REVIEW
     final private func initBoard(){
         calendarLabel.text = getCurrentDateTime()
+        helloUserName.text = viewModel.usernameText
         DashboardViewController.boards = viewModel.getBoard
         collectionView.reloadData()
-        helloUserName.text = viewModel.usernameText
     }
 }
 
@@ -213,10 +214,14 @@ extension DashboardViewController {
         present(alertController, animated: true)
     }
     
+    
+    
     @objc final private func showAddBoardVC(_ sender: UIButton){
         addboardVC.onDismiss = {
             print("Board dismiss")
             self.collectionView.reloadData()
+            //MARK:- REVIEW
+            self.viewModel.setBoard(board: DashboardViewController.boards)
         }
         self.present(self.addboardVC, animated: true, completion: nil)
     }
@@ -235,19 +240,19 @@ extension DashboardViewController {
     }
     
     @objc final private func inviteUser(sender: UIButton) {
-//        let alertController = UIAlertController(title: "Invite User", message: "Enter user email", preferredStyle: .alert)
-//        alertController.addTextField { (textfield) in
-//            textfield.placeholder = "Email"
-//        }
-//        alertController.addAction(UIAlertAction(title: "Add", style: .default, handler: { (_) in
-//            guard let text = alertController.textFields![0].text, !text.isEmpty else {
-//                return
-//            }
-//            let indexPath = sender.tag
-//            inviteBoardAPI(board: DashboardViewController.boards[indexPath], email: text)
-//        }))
-//        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-//        self.present(alertController, animated: true, completion: nil)
+        //        let alertController = UIAlertController(title: "Invite User", message: "Enter user email", preferredStyle: .alert)
+        //        alertController.addTextField { (textfield) in
+        //            textfield.placeholder = "Email"
+        //        }
+        //        alertController.addAction(UIAlertAction(title: "Add", style: .default, handler: { (_) in
+        //            guard let text = alertController.textFields![0].text, !text.isEmpty else {
+        //                return
+        //            }
+        //            let indexPath = sender.tag
+        //            inviteBoardAPI(board: DashboardViewController.boards[indexPath], email: text)
+        //        }))
+        //        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        //        self.present(alertController, animated: true, completion: nil)
         self.present(InviteUserVC(), animated: true, completion: nil)
     }
     
@@ -318,13 +323,13 @@ extension DashboardViewController: UICollectionViewDataSource,UICollectionViewDe
         //        horizonalBarLeftAnchorConstraint?.constant = scrollView.contentOffset.x / 4
     }
     
-//    final private func getCurrentDateTime() {
-//        let formatter = DateFormatter()
-//        formatter.dateStyle = .long
-//        formatter.dateFormat = "EE, dd MMM"
-//        let str = formatter.string(from: Date())
-//        calendarLabel.text = str
-//    }
+    //    final private func getCurrentDateTime() {
+    //        let formatter = DateFormatter()
+    //        formatter.dateStyle = .long
+    //        formatter.dateFormat = "EE, dd MMM"
+    //        let str = formatter.string(from: Date())
+    //        calendarLabel.text = str
+    //    }
 }
 
 //MARK:- TextFieldDelegate
