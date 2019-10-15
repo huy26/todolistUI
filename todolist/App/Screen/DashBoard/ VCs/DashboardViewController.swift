@@ -12,8 +12,8 @@ import FirebaseAuth
 import Foundation
 
 final class DashboardViewController: UIViewController {
+    
     //MARK:- UI Properties
-    private let viewModel = DashBoardVM()
     private var calendarLabel = UILabel()
     private var helloUserName = UILabel()
     private let barView = UIView()
@@ -23,7 +23,7 @@ final class DashboardViewController: UIViewController {
     private let addBoardBtn = UIButton()
     
     //MARK:- Local Properties
-    
+    private let viewModel = DashBoardVM()
     var checkTextField: String?
     
     
@@ -61,7 +61,7 @@ extension DashboardViewController{
         calendarLabel.text = getCurrentDateTime()
         helloUserName.text = viewModel.usernameText
         viewModel.requestGetBoard()
-    
+        viewModel.getUser()
     }
 }
 
@@ -294,6 +294,10 @@ extension DashboardViewController: DashBoardVMDelegate {
     
     func onBoardChangeData(_ vm: DashBoardVM, data: [Board]) {
         collectionView.reloadData()
+    }
+    
+    func onUserChangeData(_ vm: DashBoardVM, data: User) {
+        helloUserName.text = viewModel.usernameText
     }
     
     

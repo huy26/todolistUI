@@ -15,8 +15,6 @@ import UIKit
 import MobileCoreServices
 import OneSignal
 
-//private let url = "http://192.168.0.150:4000/api/user"
-
 func getUserAPI (onCompleted: @escaping ((Error?, User?)-> Void)) {
     //var data = User(firstName: "", lastName: "", userPhone: "", birthDay: "", avatarURL: "", email: "")
     var data: User?

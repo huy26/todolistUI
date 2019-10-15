@@ -24,6 +24,7 @@
 		0438E26E2333780E00BCBEC8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0438E26D2333780D00BCBEC8 /* GoogleService-Info.plist */; };
 		043B6BC52331EF0700F264E8 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043B6BC42331EF0700F264E8 /* Task.swift */; };
 		0440BECC2354A86000859E32 /* Reuse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0440BECB2354A86000859E32 /* Reuse.swift */; };
+		0445DF622355FB72007F583A /* ProfileVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0445DF612355FB72007F583A /* ProfileVM.swift */; };
 		0446382C2350AD890044DFE9 /* InviteUserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0446382B2350AD890044DFE9 /* InviteUserVC.swift */; };
 		044638312350C20B0044DFE9 /* SearchUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044638302350C20B0044DFE9 /* SearchUser.swift */; };
 		044638342350CA010044DFE9 /* UserInfo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 044638322350CA010044DFE9 /* UserInfo.xcdatamodeld */; };
@@ -103,6 +104,7 @@
 		0438E26D2333780D00BCBEC8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		043B6BC42331EF0700F264E8 /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		0440BECB2354A86000859E32 /* Reuse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reuse.swift; sourceTree = "<group>"; };
+		0445DF612355FB72007F583A /* ProfileVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVM.swift; sourceTree = "<group>"; };
 		0446382B2350AD890044DFE9 /* InviteUserVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteUserVC.swift; sourceTree = "<group>"; };
 		044638302350C20B0044DFE9 /* SearchUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUser.swift; sourceTree = "<group>"; };
 		044638332350CA010044DFE9 /* UserInfo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = UserInfo.xcdatamodel; sourceTree = "<group>"; };
@@ -240,6 +242,14 @@
 			path = VM;
 			sourceTree = "<group>";
 		};
+		0445DF602355FB45007F583A /*  VM */ = {
+			isa = PBXGroup;
+			children = (
+				0445DF612355FB72007F583A /* ProfileVM.swift */,
+			);
+			path = " VM";
+			sourceTree = "<group>";
+		};
 		044638272350AD050044DFE9 /* InviteUser */ = {
 			isa = PBXGroup;
 			children = (
@@ -362,6 +372,7 @@
 		045304DD23505EC700F133F3 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				0445DF602355FB45007F583A /*  VM */,
 				045304DE23505ECE00F133F3 /* VCs */,
 			);
 			path = Profile;
@@ -723,6 +734,7 @@
 				044638312350C20B0044DFE9 /* SearchUser.swift in Sources */,
 				042E52002334C76E00030E5E /* StatusCollectionViewCell.swift in Sources */,
 				04FBCBB523474150005C74F6 /* ProfileViewController.swift in Sources */,
+				0445DF622355FB72007F583A /* ProfileVM.swift in Sources */,
 				042E47EE23542E92007A7009 /* DashBoardVM.swift in Sources */,
 				043B6BC52331EF0700F264E8 /* Task.swift in Sources */,
 				045304EA23505FD900F133F3 /* UserAPI.swift in Sources */,

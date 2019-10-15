@@ -29,19 +29,46 @@ final class ProfileViewController: UIViewController {
     private var lastnameTextField = UITextField()
     private var birthdayTextField = UITextField()
     
+    private var viewModel = ProfileVM()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        initDelegate()
         setupUI()
     }
     
-    // MARK:- Setup UI
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        initUser()
+    }
+}
+
+//MARK:- Init
+extension ProfileViewController {
+    final private func initUser(){
+        viewModel.resquestUserAPI()
+        userNameLabel.text = viewModel.getUserFirstName() + " " + viewModel.getUserLastName()
+        emailLabel.text = viewModel.getUserEmail()
+        firstnameTextField.placeholder = viewModel.getUserFirstName()
+        lastnameTextField.placeholder = viewModel.getUserLastName()
+        birthdayTextField.placeholder = viewModel.getUserBirth()
+    }
+    
+    final private func initDelegate(){
+        viewModel.delegate = self
+        firstnameTextField.delegate = self
+        lastnameTextField.delegate = self
+        birthdayTextField.delegate = self
+    }
+}
+
+// MARK:- Setup UI
+extension ProfileViewController {
     
     final private func setupUI(){
-        
         setupProfileUI()
         setupLogOutBtn()
-        setProfilefromAPI()
         setupProfileSetting()
         
         self.navigationController?.isNavigationBarHidden = true
@@ -203,13 +230,13 @@ final class ProfileViewController: UIViewController {
         birthdayTextField.inputView = datePicker
     }
     
-    final private func setProfilefromAPI(){
-        self.userNameLabel.text = User.getNamePrint()
-        print("username : \(User.getNamePrint())")
-        
-        self.emailLabel.text = User.getemailPrint()
-        print("email: \(User.getemailPrint())")
-    }
+    //    final private func setProfilefromAPI(){
+    //        self.userNameLabel.text = User.getNamePrint()
+    //        print("username : \(User.getNamePrint())")
+    //
+    //        self.emailLabel.text = User.getemailPrint()
+    //        print("email: \(User.getemailPrint())")
+    //    }
 }
 
 //MARK:- Action functions
@@ -242,34 +269,56 @@ extension ProfileViewController {
         let lastname = lastnameTextField.text
         let birthday = birthdayTextField.text
         
-        if checkTextField() {
-            let currentuser = Auth.auth().currentUser
-            if currentuser != nil{
-                
-                updateUserAPI(firstName: firstname!, lastName: lastname!, userPhone: "", birthDay: birthday! , avatarURL: "", email: "")
-                _sender.flash()
-                getUserAPI { (error, user) in
-                    if let error = error {
-                        print(error.localizedDescription)
-                        return
-                    }
-                    if let userToPrint = user {
-                        self.userNameLabel.text = User.getNamePrint()
-                        self.emailLabel.text = User.getemailPrint()
-                        return
-                    }
-                }
-            }
+        
+        let currentuser = Auth.auth().currentUser
+        if currentuser != nil{
+            
+            updateUserAPI(firstName: firstname!, lastName: lastname!, userPhone: "", birthDay: birthday! , avatarURL: "", email: "")
+            _sender.flash()
+            //                getUserAPI { (error, user) in
+            //                    if let error = error {
+            //                        print(error.localizedDescription)
+            //                        return
+            //                    }
+            //                    if let userToPrint = user {
+            //                        self.userNameLabel.text = User.getNamePrint()
+            //                        self.emailLabel.text = User.getemailPrint()
+            //                        return
+            //                    }
+            //                }
+            self.viewModel.setUser(newuser: User(firstName: firstname!, lastName: lastname!, userPhone: "", birthDay: birthday! , avatarURL: "", email: ""))
+            self.viewModel.resquestUserAPI()
+            
         }
+        
     }
 }
 
 //MARK:- private function
 extension ProfileViewController{
-    final private func checkTextField() -> Bool {
-        if self.firstnameTextField.text == "" || self.lastnameTextField.text == "" || self.birthday.text == "" {
-            return false
-        }
-        return true
+    //    final private func checkTextField() -> Bool {
+    //        if self.firstnameTextField.text == "" || self.lastnameTextField.text == "" || self.birthday.text == "" {
+    //            return false
+    //        }
+    //        return true
+    //    }
+    
+    final private func clearTextField(){
+        firstnameTextField.text = ""
+        lastnameTextField.text = ""
+        birthdayTextField.text = ""
+    }
+}
+
+//MARK:- profileVM delegate
+extension ProfileViewController: ProfileVMdelegate {
+    func onProfileChangeData(_ vm: ProfileVM, data: User) {
+        initUser()
+    }
+}
+
+extension ProfileViewController: UITextFieldDelegate{
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        textField.placeholder = ""
     }
 }

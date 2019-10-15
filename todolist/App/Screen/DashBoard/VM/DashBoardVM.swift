@@ -10,6 +10,8 @@ import Foundation
 
 protocol DashBoardVMDelegate: class {
     func onBoardChangeData(_ vm: DashBoardVM, data: [Board])
+    
+    func onUserChangeData(_ vm: DashBoardVM, data: User)
 }
 
 final class DashBoardVM {
@@ -27,7 +29,11 @@ final class DashBoardVM {
     }
     
     
-    private var user: User
+    private var user: User {
+        didSet {
+            self.delegate?.onUserChangeData(self, data: self.user)
+        }
+    }
     private var calendarLabel: String?
     //private var boardDetail: String?
     
@@ -60,7 +66,7 @@ extension DashBoardVM{
         }
     }
     
-    public var getUser: User{
+    public func getUser(){
         getUserAPI { (error, user) in
             if let error = error {
                 print(error.localizedDescription)
@@ -70,7 +76,6 @@ extension DashBoardVM{
                 self.user = checkUser
             }
         }
-        return self.user
     }
 }
 
