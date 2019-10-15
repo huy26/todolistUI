@@ -14,6 +14,9 @@ final class AddBoardViewController: UIViewController {
     private let colorImageView1 = UIView()
     private let colorImageView2 = UIView()
     
+    //MARK:- Intent Properties
+    var viewModel = DashBoardVM()
+    
     var onDismiss: (()->Void)?
     
     override func viewDidLoad() {
@@ -101,10 +104,12 @@ extension AddBoardViewController {
     @objc final private func addBoard (_ sender: Any){
         let boardName = self.boardNameTextField.text!
         let newboard = Board(boardName: boardName, items: [])
-        DashboardViewController.boards.append(newboard)
+        //DashboardViewController.boards.append(newboard)
+        viewModel.addBoard(board: newboard)
         //Board.setBoardCount(value: 1)
         print(Board.count)
-        print("number of board after added: \(DashboardViewController.boards.count)")
+        //print("number of board after added: \(DashboardViewController.boards.count)")
+        print("number of board after added: \(viewModel.getBoardCount())")
         uploadBoardAPI(board: newboard)
         self.dismiss(animated: true, completion: nil)
     }

@@ -23,8 +23,6 @@ final class DashboardViewController: UIViewController {
     private let addBoardBtn = UIButton()
     
     //MARK:- Local Properties
-    static var boards = [Board]() // Todo: create getInstance() + change to private
-    //static var boards = [Board(boardName: "test", items: [])]
     
     var checkTextField: String?
     
@@ -35,47 +33,21 @@ final class DashboardViewController: UIViewController {
         collectionView.register(DashboardCollectionViewCell.self, forCellWithReuseIdentifier: cellReuseIndentifier)
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
-        
-//        if let decoded  = UserDefaults.standard.data(forKey: "Board") {
-//            let decodedTeams = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! [Board]
-//            self.boards = decodedTeams
-//            //checkcollectionview.reloadData()
-//            collectionView.reloadData()
-//        }
+        viewModel.delegate = self
+        //        if let decoded  = UserDefaults.standard.data(forKey: "Board") {
+        //            let decodedTeams = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! [Board]
+        //            self.boards = decodedTeams
+        //            //checkcollectionview.reloadData()
+        //            collectionView.reloadData()
+        //        }
         
         setupBoardUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //DashboardViewController.boards = UserDefaults.standard.object(forKey: "Board") as! [Board]
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
         self.navigationController?.isNavigationBarHidden = true
-        
-        //        readBoardAPI { (error, boards) in
-        //            if let error = error {
-        //                self.onGetBoardError(error: error)
-        //                print(error.localizedDescription)
-        //                return
-        //            }
-        //            if let boards = boards {
-        //                UserDefaults.standard.removeObject(forKey: "Board")
-        //                self.onReceivedBoards(boards: boards)
-        //                self.collectionView.reloadData()
-        //                return
-        //            }
-        //        }
-        //
-        //        getUserAPI { (error, user) in
-        //            if let error = error {
-        //                print(error.localizedDescription)
-        //                return
-        //            }
-        //            if let userToPrint = user {
-        //                self.helloUserName.text = "Hello, \(userToPrint.firstName)"
-        //                return
-        //            }
-        //        }
         
         initBoard()
     }
@@ -85,10 +57,11 @@ final class DashboardViewController: UIViewController {
 extension DashboardViewController{
     //MARK:- REVIEW
     final private func initBoard(){
+        
         calendarLabel.text = getCurrentDateTime()
         helloUserName.text = viewModel.usernameText
-        DashboardViewController.boards = viewModel.getBoard
-        collectionView.reloadData()
+        viewModel.requestGetBoard()
+    
     }
 }
 
@@ -159,17 +132,6 @@ extension DashboardViewController {
     }
     
     
-    final private func onReceivedBoards(boards: [Board]) {
-        DashboardViewController.boards = boards
-        let encodeData = NSKeyedArchiver.archivedData(withRootObject: DashboardViewController.boards)
-        UserDefaults.standard.set(encodeData, forKey: "Board")
-        print("set value")
-    }
-    
-    final private func onGetBoardError(error: Error) {
-        print(error.localizedDescription)
-    }
-    
 }
 
 // MARK:- Action Functions
@@ -186,29 +148,19 @@ extension DashboardViewController {
             }
             
             let newboard = Board(boardName: text, items: [])
-            DashboardViewController.boards.append(newboard)
+            //DashboardViewController.boards.append(newboard)
+            self.viewModel.addBoard(board: newboard)
             Board.setBoardCount(value: 1)
-            print(Board.count)
-            print(DashboardViewController.boards.count)
-            let indexPath = IndexPath(row: DashboardViewController.boards.count - 1, section: 0)
+            //print(DashboardViewController.boards.count)
+            print(self.viewModel.getBoardCount())
+            //let indexPath = IndexPath(row: DashboardViewController.boards.count - 1, section: 0)
+            let indexPath = IndexPath(row: self.viewModel.getBoardCount() - 1, section: 0)
             print("number of board after added: \(Board.count)")
             print("indexPath: \(indexPath)")
             self.collectionView.insertItems(at: [indexPath])
             self.collectionView.scrollToItem(at: indexPath, at: UICollectionView.ScrollPosition.centeredHorizontally, animated: true)
             uploadBoardAPI(board: newboard)
-            readBoardAPI { (error, boards) in
-                if let error = error {
-                    self.onGetBoardError(error: error)
-                    print(error.localizedDescription)
-                    return
-                }
-                if let boards = boards {
-                    UserDefaults.standard.removeObject(forKey: "Board")
-                    self.onReceivedBoards(boards: boards)
-                    self.collectionView.reloadData()
-                    return
-                }
-            }
+            self.viewModel.requestGetBoard()
         }))
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         present(alertController, animated: true)
@@ -220,9 +172,9 @@ extension DashboardViewController {
         addboardVC.onDismiss = {
             print("Board dismiss")
             self.collectionView.reloadData()
-            //MARK:- REVIEW
-            self.viewModel.setBoard(board: DashboardViewController.boards)
+            //self.viewModel.setBoard(board: DashboardViewController.boards)
         }
+        addboardVC.viewModel = self.viewModel
         self.present(self.addboardVC, animated: true, completion: nil)
     }
     
@@ -230,8 +182,10 @@ extension DashboardViewController {
         let alertController = UIAlertController(title: "Confirm Delete", message: "There is no way to undo this operation.", preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "Delete", style: .destructive, handler:{ (_) in
             let indexPath = sender.tag
-            deleteBoardAPI(board: DashboardViewController.boards[indexPath])
-            DashboardViewController.boards.remove(at: indexPath)
+            //deleteBoardAPI(board: DashboardViewController.boards[indexPath])
+            //DashboardViewController.boards.remove(at: indexPath)
+            deleteBoardAPI(board: self.viewModel.returnBoardAtIndex(index: indexPath))
+            self.viewModel.removeBoard(index: indexPath)
             Board.setBoardCount(value: -1)
             self.collectionView.reloadData()
         }))
@@ -240,20 +194,10 @@ extension DashboardViewController {
     }
     
     @objc final private func inviteUser(sender: UIButton) {
-        //        let alertController = UIAlertController(title: "Invite User", message: "Enter user email", preferredStyle: .alert)
-        //        alertController.addTextField { (textfield) in
-        //            textfield.placeholder = "Email"
-        //        }
-        //        alertController.addAction(UIAlertAction(title: "Add", style: .default, handler: { (_) in
-        //            guard let text = alertController.textFields![0].text, !text.isEmpty else {
-        //                return
-        //            }
-        //            let indexPath = sender.tag
-        //            inviteBoardAPI(board: DashboardViewController.boards[indexPath], email: text)
-        //        }))
-        //        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        //        self.present(alertController, animated: true, completion: nil)
-        self.present(InviteUserVC(), animated: true, completion: nil)
+        let inviteVC = InviteUserVC()
+        inviteVC.viewModel = self.viewModel
+        inviteVC.boardID = sender.tag
+        self.present(inviteVC, animated: true, completion: nil)
     }
     
 }
@@ -265,20 +209,18 @@ extension DashboardViewController: UICollectionViewDataSource,UICollectionViewDe
         
         //let vc = BoardViewController()
         let vc = BoardViewController()
-        vc.boardID = DashboardViewController.boards[indexPath.item].boardID!
-        vc.boardName = DashboardViewController.boards[indexPath.item].boardName!
+        vc.boardID = viewModel.returnBoardAtIndex(index: indexPath.item).boardID!
+        //vc.boardName = DashboardViewController.boards[indexPath.item].boardName!
+        vc.boardName = viewModel.getBoardNameAtindex(index: indexPath.item)
         vc.boardIndex = indexPath.item
+        vc.viewModel = viewModel
         vc.hidesBottomBarWhenPushed = true
-        //boardVC.modalPresentationStyle = .overFullScreen
-        
-        //self.tabBarController?.navigationController?.pushViewController(vc, animated: true)
         self.show(vc, sender: self)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        //print("number of board: \(Board.getBoardCount())")
-        print("number of items in section: \(DashboardViewController.boards.count)")
-        return DashboardViewController.boards.count
+        print("number of items in section: \(viewModel.getBoardCount())")
+        return viewModel.getBoardCount()
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -286,20 +228,23 @@ extension DashboardViewController: UICollectionViewDataSource,UICollectionViewDe
         
         cell?.deleteBoardBtn.tag = indexPath.item
         cell?.addUserBtn.tag = indexPath.item
-        cell?.boardTitleLabel.text = DashboardViewController.boards[indexPath.row].boardName
+        cell?.boardTitleLabel.text = viewModel.getBoardNameAtindex(index: indexPath.item)
         cell?.boardTitleLabel.textColor = .white
         
         var text = ""
-        for items in DashboardViewController.boards[indexPath.item].detail{
-            let totalTask = DashboardViewController.boards[indexPath.item].totalTasks
+       
+        for items in viewModel.returnBoardAtIndex(index: indexPath.item).detail{
+            //let totalTask = DashboardViewController.boards[indexPath.item].totalTasks
+            let totalTask = viewModel.returnBoardAtIndex(index: indexPath.item).totalTasks
             print("status: \(items.status ?? "")")
             print("number of this status: \(items.count ?? 0)")
             let itemText = "\(items.status!): \(items.count!) / \(totalTask)\n"
             text = String(format: "%@ %@", text, itemText)
         }
+        print("board deail: \(text)")
         
         cell?.deleteBoardBtn.addTarget(self, action: #selector(deleteBoard(sender:)), for: .touchUpInside)
-        cell?.board = DashboardViewController.boards[indexPath.row]
+        cell?.board = viewModel.returnBoardAtIndex(index: indexPath.row)
         cell?.textLabel.text = text
         cell?.addUserBtn.addTarget(self, action: #selector(inviteUser(sender:)), for: .touchUpInside)
         
@@ -345,4 +290,11 @@ extension DashboardViewController: UITextFieldDelegate {
 }
 
 
-
+extension DashboardViewController: DashBoardVMDelegate {
+    
+    func onBoardChangeData(_ vm: DashBoardVM, data: [Board]) {
+        collectionView.reloadData()
+    }
+    
+    
+}

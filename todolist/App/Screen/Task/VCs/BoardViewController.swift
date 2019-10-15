@@ -28,6 +28,8 @@ class BoardViewController: UIViewController {
     var collectionView = UICollectionView(frame: .infinite, collectionViewLayout: UICollectionViewFlowLayout.init())
     let footerID = "footerID"
     
+    var viewModel: DashBoardVM?
+    
     private var checkTextField: String? //check board Title if are the same
     
     override func viewDidLoad() {
@@ -94,6 +96,7 @@ class BoardViewController: UIViewController {
             make.width.equalTo(100)
         }
         boardTextField.text = boardName
+        boardTextField.delegate = self
         self.navigationItem.titleView = boardTextField
        }
     
@@ -402,7 +405,8 @@ extension BoardViewController: UITextFieldDelegate {
             let alertController = UIAlertController(title: "Change board name", message: nil, preferredStyle: .alert)
             
             alertController.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (_) in
-                updateBoardAPI(board: DashboardViewController.boards[self.boardIndex!], newName: textField.text!)
+                //updateBoardAPI(board: DashboardViewController.boards[self.boardIndex!], newName: textField.text!)
+                updateBoardAPI(board: self.viewModel!.returnBoardAtIndex(index: self.boardIndex!), newName: textField.text!)
                 self.checkTextField = textField.text
             }))
             alertController.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
@@ -412,7 +416,7 @@ extension BoardViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
-        return true
+        return false
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {

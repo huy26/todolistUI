@@ -86,10 +86,10 @@ extension DashboardCollectionViewCell{
         textLabel.snp.makeConstraints{ make in
             make.top.equalTo(boardTitleLabel.snp.bottom)
             make.bottom.equalTo(barView.snp.top)
-            make.bottom.equalToSuperview()
             make.width.equalToSuperview()
         }
         textLabel.textColor = .white
+        textLabel.numberOfLines = 0
         
         self.contentView.addSubview(addUserBtn)
         addUserBtn.snp.makeConstraints{make in

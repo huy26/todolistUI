@@ -21,7 +21,7 @@ class InviteUserVC: UIViewController{
     
     //MARK:- Intent Properties
     var boardID: Int?
-
+    var viewModel: DashBoardVM?
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -115,25 +115,7 @@ extension InviteUserVC {
 //MARK: private function
 extension InviteUserVC{
     final private func addData(){
-        //datalist.append("test")
-        //        let a = SearchUser(name: "An", email: "ban@gmail.com")
-        //
-        //        let b = SearchUser(name: "Bao", email: "hieu@g.com")
-        //
-        //        let c = SearchUser(name: "Hieu", email: "hieu@apcs.vn")
-        //
-        //        let d = SearchUser(name: "Huy", email: "huy@yahoo.com")
-        //
-        //        let e = SearchUser(name: "Heo", email: "heo@utut.com")
-        //
-        //
-        //
-        //        datalist.append(a)
-        //        datalist.append(b)
-        //        datalist.append(c)
-        //        datalist.append(d)
-        //        datalist.append(e)
-        
+
         for str in datalist {
             resultslist.append(str)
         }
@@ -201,17 +183,15 @@ extension InviteUserVC: UITableViewDelegate{
         let alertController = UIAlertController(title: "Confirm invite", message: "Invite user to your board", preferredStyle: .alert)
         
         alertController.addAction(UIAlertAction(title: "Add", style: .default, handler: { (_) in
-            guard let text = alertController.textFields![0].text, !text.isEmpty else {
-                return
-            }
+
             let currentcell = tableView.cellForRow(at: indexPath)
             if let email = currentcell?.textLabel?.text {
-                inviteBoardAPI(board: DashboardViewController.boards[self.boardID!], email: email)
+                //inviteBoardAPI(board: DashboardViewController.boards[self.boardID!], email: email)
+                inviteBoardAPI(board: self.viewModel!.returnBoardAtIndex(index: self.boardID!), email: email)
             }
         }))
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         self.present(alertController, animated: true, completion: nil)
-        self.present(InviteUserVC(), animated: true, completion: nil)
     }
 }
 
