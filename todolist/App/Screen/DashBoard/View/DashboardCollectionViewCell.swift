@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 final class DashboardCollectionViewCell: UICollectionViewCell {
     
     //MARK:- UI Properties
@@ -23,18 +24,35 @@ final class DashboardCollectionViewCell: UICollectionViewCell {
     
     //MARK:- Local Properties
     private let color = [UIColor.orange, UIColor.white, UIColor.purple,UIColor.blue]
-    var board: Board?
+    var boardID = "" {
+        didSet {
+            InitGuest()
+        }
+    }
+    var guestCount = 0
+    var viewModel = GuestVm()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        viewModel.delegate = self
         setupCell()
         setupGuestTableView()
-        
+        //InitGuest()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+//MARK:- Init
+extension DashboardCollectionViewCell{
+    final private func InitGuest(){
+        if boardID != ""{
+            viewModel.requestGetGuest(boardID: boardID)
+            guestCollectionView.reloadData()
+        }
     }
 }
 
@@ -121,7 +139,7 @@ extension DashboardCollectionViewCell{
 //MARK:- Datasource
 extension DashboardCollectionViewCell: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return color.count
+        return viewModel.getGuestCount()
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -146,5 +164,14 @@ extension DashboardCollectionViewCell: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 5
     }
+
+}
+
+//MARK:- ViewModel delegate
+extension DashboardCollectionViewCell: GuestVmDelegate{
+    func onGuestListChange(_ vm: GuestVm, data: [User]) {
+        guestCollectionView.reloadData()
+    }
+
 
 }

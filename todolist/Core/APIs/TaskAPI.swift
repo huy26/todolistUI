@@ -17,6 +17,8 @@ import OneSignal
 
 //private let url = "http://192.168.0.150:4000/api/user"
 
+
+
 func uploadtaskAPI(boardID: String, task: Task){
     let curuser = Auth.auth().currentUser
     curuser?.getIDTokenForcingRefresh(true) { (tokenID, error) in
@@ -59,7 +61,7 @@ func readTaskApi(boardID: String,onCompleted: @escaping ((Error?, [Task]?)-> Voi
                 debugPrint(error)
                 break
             }
-        }.responseArray{ (response: DataResponse<[Task]>) in
+        }.responseArray{ (response: AFDataResponse<[Task]>) in
             switch response.result {
             case let .success(value):
                 print(value.count)

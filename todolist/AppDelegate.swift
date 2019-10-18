@@ -74,7 +74,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 }
 
-extension AppDelegate {
+extension AppDelegate: OSSubscriptionObserver {
+    func onOSSubscriptionChanged(_ stateChanges: OSSubscriptionStateChanges!) {
+        if !stateChanges.from.subscribed && stateChanges.to.subscribed {
+            print("Subscribed for OneSignal push notifications!")
+            // get player ID
+            stateChanges.to.userId
+        }
+        print("SubscriptionStateChange: \n\(stateChanges)")
+    }
+    
     
     //MARK:- Setup Third Party Services
     final private func setupThirdPartyServices(launchOptions: [UIApplication.LaunchOptionsKey: Any]?) {
@@ -96,11 +105,23 @@ extension AppDelegate {
         
         OneSignal.inFocusDisplayType = OSNotificationDisplayType.notification;
         
+        OneSignal.add(self as OSSubscriptionObserver)
         
         OneSignal.promptForPushNotifications(userResponse: { accepted in
             print("User accepted notifications: \(accepted)")
         })
         
+        let status: OSPermissionSubscriptionState = OneSignal.getPermissionSubscriptionState()
+        
+        let hasPrompted = status.permissionStatus.hasPrompted
+        print("hasPrompted = \(hasPrompted)")
+        let userStatus = status.permissionStatus.status
+        print("userStatus = \(userStatus)")
+        
+        let isSubscribed = status.subscriptionStatus.subscribed
+        print("isSubscribed = \(isSubscribed)")
+        let userSubscriptionSetting = status.subscriptionStatus.userSubscriptionSetting
+        print("userSubscriptionSetting = \(userSubscriptionSetting)")
         
     }
 }

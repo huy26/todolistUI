@@ -106,8 +106,7 @@ extension AddBoardViewController {
         let newboard = Board(boardName: boardName, items: [])
         //DashboardViewController.boards.append(newboard)
         viewModel.addBoard(board: newboard)
-        //Board.setBoardCount(value: 1)
-        print(Board.count)
+
         //print("number of board after added: \(DashboardViewController.boards.count)")
         print("number of board after added: \(viewModel.getBoardCount())")
         uploadBoardAPI(board: newboard)

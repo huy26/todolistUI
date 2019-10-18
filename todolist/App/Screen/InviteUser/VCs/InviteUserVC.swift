@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import CoreData
+import OneSignal
 
 class InviteUserVC: UIViewController{
     //MARK:- UI Properties
@@ -188,6 +188,8 @@ extension InviteUserVC: UITableViewDelegate{
             if let email = currentcell?.textLabel?.text {
                 //inviteBoardAPI(board: DashboardViewController.boards[self.boardID!], email: email)
                 inviteBoardAPI(board: self.viewModel!.returnBoardAtIndex(index: self.boardID!), email: email)
+                OneSignal.sendTag("email", value: email)	
+                self.backtoBar()
             }
         }))
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))

@@ -19,7 +19,8 @@ class Board: NSObject, Encodable, Mappable, NSCoding {
     var detail = [Detail]()
     var totalTasks: Int = 0
     var invited = [String]()
-    static var count: Int = 0
+    var guest = [User]()
+    //static var count: Int = 0
     
     init(boardName: String, items: [String] ) {
         self.boardName = boardName
@@ -29,6 +30,7 @@ class Board: NSObject, Encodable, Mappable, NSCoding {
         self.detail = [Detail]()
         self.invited = [""]
         self.totalTasks = 0
+        self.guest = [User]()
         //Board.count += 1
     }
     
@@ -43,6 +45,7 @@ class Board: NSObject, Encodable, Mappable, NSCoding {
         self.detail <- map["details"]
         self.totalTasks <- map["totalTasks"]
         self.invited <- map["invited"]
+        self.guest <- map["users"]
     }
     
     required init?(coder: NSCoder) {
@@ -58,12 +61,10 @@ class Board: NSObject, Encodable, Mappable, NSCoding {
             self.items = items as! [String]
         }
         self.totalTasks = coder.decodeInteger(forKey: "boardTotalTasks")
-        //        self.status = coder.decodeObject(forKey: "boardStatus") as! String
+        //self.status = coder.decodeObject(forKey: "boardStatus") as! String
         //self.userID = coder.decodeObject(forKey: "boardUserID") as! String
         //Board.count = coder.decodeObject(forKey: "boardCount") as! Int
-        if let count = coder.decodeObject(forKey: "boardCount") {
-            Board.count = count as! Int
-        }
+    
     }
     
     func encode(with coder: NSCoder) {
@@ -75,26 +76,25 @@ class Board: NSObject, Encodable, Mappable, NSCoding {
         coder.encode(items, forKey: "boardItems")
         //coder.encode(userID, forKey: "boardUserID")
         coder.encode(status, forKey: "boardStatus")
-        coder.encode(Board.count, forKey: "boardCount")
-        print(Board.count)
         coder.encode(totalTasks, forKey: "boardTotalTasks")
     }
     
     
     
     static func getBoardCount () -> Int {
-        return Board.count
+        return 0
+        //return Board.count
     }
-    
+
     static func setBoardCount (value: Int) {
-        Board.count += value
+        //Board.count += value
     }
-    
+
     static func resetBoardCount(value: Int) {
-        Board.count = value
+        //Board.count = value
     }
-    
+
     func changeBoardName(value: String){
-        self.boardName = value
+        //self.boardName = value
     }
 }

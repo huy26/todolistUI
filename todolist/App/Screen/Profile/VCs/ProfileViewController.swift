@@ -8,10 +8,13 @@
 
 import UIKit
 import FirebaseAuth
+import OneSignal
 
 final class ProfileViewController: UIViewController {
     
     //MARK:- UI Properties
+    private let scrollview = UIScrollView()
+    private let container = UIView()
     private let datePicker = UIDatePicker()
     private let backgroundView = UIView()
     private let userNameLabel = UILabel()
@@ -24,6 +27,10 @@ final class ProfileViewController: UIViewController {
     private let aboutLabel = UILabel()
     private let decorateView = UIView()
     private let saveBtn = UIButton()
+    private let decoView = UIView()
+    private let notiSwitch = UISwitch()
+    private let settingLabel = UILabel()
+    private let setNotiLabel = UILabel()
     
     private var firstnameTextField = UITextField()
     private var lastnameTextField = UITextField()
@@ -61,26 +68,65 @@ extension ProfileViewController {
         lastnameTextField.delegate = self
         birthdayTextField.delegate = self
     }
+    
+    final private func checkSubcribe(){
+        let status: OSPermissionSubscriptionState = OneSignal.getPermissionSubscriptionState()
+        
+        let isSubscribed = status.subscriptionStatus.subscribed
+        print("isSubscribed = \(isSubscribed)")
+        
+        if isSubscribed == true {
+            notiSwitch.setOn(true, animated: true)
+        }
+    }
 }
 
 // MARK:- Setup UI
 extension ProfileViewController {
     
     final private func setupUI(){
+        setupScroll()
         setupProfileUI()
-        setupLogOutBtn()
         setupProfileSetting()
-        
+        setupSetting()
+        setupLogOutBtn()
+        checkSubcribe()
         self.navigationController?.isNavigationBarHidden = true
     }
     
+    final private func setupScroll(){
+        self.view.addSubview(scrollview)
+        scrollview.snp.makeConstraints { (make) in
+            make.width.equalToSuperview()
+            make.height.equalToSuperview()
+            make.top.equalToSuperview()
+            make.bottom.equalToSuperview()
+        }
+        scrollview.delegate = self
+        
+        scrollview.backgroundColor = UIColor.white
+        scrollview.alwaysBounceVertical = true
+        scrollview.showsHorizontalScrollIndicator = false
+        
+        
+        scrollview.addSubview(container)
+        container.snp.makeConstraints { (make) in
+            make.top.bottom.equalTo(self.scrollview)
+            make.left.right.equalTo(self.scrollview)
+            make.width.equalTo(self.scrollview)
+            make.height.equalTo(self.scrollview).offset(20)
+        }
+
+    }
+    
+    
     final private func setupProfileUI(){
-        self.view.backgroundColor = .white
+        container.backgroundColor = .white
         //        self.tabBarController?.view.snp.makeConstraints{ make in
         //            make.bottom.equalToSuperview()
         //        }
         
-        self.view.addSubview(backgroundView)
+        container.addSubview(backgroundView)
         backgroundView.snp.makeConstraints{ make in
             make.width.equalToSuperview()
             make.top.equalToSuperview()
@@ -88,7 +134,7 @@ extension ProfileViewController {
         }
         backgroundView.backgroundColor = UIColor(red:1.00, green:0.19, blue:0.31, alpha:1.0)
         
-        self.view.addSubview(userNameLabel)
+        container.addSubview(userNameLabel)
         userNameLabel.snp.makeConstraints{ make in
             make.centerX.equalToSuperview()
             make.top.equalToSuperview().offset(40)
@@ -96,7 +142,7 @@ extension ProfileViewController {
         userNameLabel.textColor = .white
         userNameLabel.text = ""
         
-        self.view.addSubview(profileImage)
+        container.addSubview(profileImage)
         profileImage.snp.makeConstraints{ make in
             make.centerX.equalToSuperview()
             make.size.equalTo(70)
@@ -109,7 +155,7 @@ extension ProfileViewController {
         profileImage.backgroundColor = .white
         profileImage.contentMode = .scaleAspectFill
         
-        self.view.addSubview(emailLabel)
+        container.addSubview(emailLabel)
         emailLabel.snp.makeConstraints{ make in
             make.top.equalTo(profileImage).offset(80)
             make.centerX.equalToSuperview()
@@ -118,25 +164,10 @@ extension ProfileViewController {
         emailLabel.textColor = .white
     }
     
-    final private func setupLogOutBtn(){
-        self.view.addSubview(logOutBtn)
-        logOutBtn.snp.makeConstraints{ make in
-            make.centerX.equalToSuperview()
-            make.bottom.equalTo(view.safeArea.bottom).offset(-20)
-            make.width.equalTo(70)
-            make.height.equalTo(30)
-        }
-        logOutBtn.setTitle("Log Out", for: .normal)
-        logOutBtn.setTitleColor(.black, for: .normal)
-        logOutBtn.layer.cornerRadius = 10
-        logOutBtn.backgroundColor = UIColor(red: 0x00, green: 0x00, blue: 0x00,alpha: 0.1)
-        logOutBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .bold)
-        logOutBtn.addTarget(self, action: #selector(logOutTapped), for: .touchUpInside)
-    }
     
     final private func setupProfileSetting(){
         
-        self.view.addSubview(aboutLabel)
+        container.addSubview(aboutLabel)
         aboutLabel.snp.makeConstraints { (make) in
             make.top.equalTo(backgroundView.snp.bottom).offset(35)
             make.left.equalToSuperview().offset(46)
@@ -148,7 +179,7 @@ extension ProfileViewController {
         
         
         
-        self.view.addSubview(firtnameLb)
+        container.addSubview(firtnameLb)
         firtnameLb.snp.makeConstraints { (make) in
             make.top.equalTo(aboutLabel.snp.bottom).offset(30)
             make.left.equalToSuperview().offset(46)
@@ -157,7 +188,7 @@ extension ProfileViewController {
         }
         firtnameLb.text = "First Name"
         
-        self.view.addSubview(firstnameTextField)
+        container.addSubview(firstnameTextField)
         firstnameTextField.snp.makeConstraints { (make) in
             make.top.equalTo(firtnameLb.snp.bottom).offset(8)
             make.left.equalToSuperview().offset(46)
@@ -167,7 +198,7 @@ extension ProfileViewController {
         }
         firstnameTextField.borderStyle = .roundedRect
         
-        self.view.addSubview(lastnameLb)
+        container.addSubview(lastnameLb)
         lastnameLb.snp.makeConstraints { (make) in
             make.top.equalTo(firstnameTextField.snp.bottom).offset(11)
             make.left.equalToSuperview().offset(46)
@@ -175,7 +206,7 @@ extension ProfileViewController {
         }
         lastnameLb.text = "Last Name"
         
-        self.view.addSubview(lastnameTextField)
+        container.addSubview(lastnameTextField)
         lastnameTextField.snp.makeConstraints { (make) in
             make.top.equalTo(lastnameLb.snp.bottom).offset(8)
             make.left.equalToSuperview().offset(46)
@@ -184,7 +215,7 @@ extension ProfileViewController {
         }
         lastnameTextField.borderStyle = .roundedRect
         
-        self.view.addSubview(birthday)
+        container.addSubview(birthday)
         birthday.snp.makeConstraints { (make) in
             make.top.equalTo(lastnameTextField.snp.bottom).offset(11)
             make.left.equalToSuperview().offset(46)
@@ -192,7 +223,7 @@ extension ProfileViewController {
         }
         birthday.text = "Birthday"
         
-        self.view.addSubview(birthdayTextField)
+        container.addSubview(birthdayTextField)
         birthdayTextField.snp.makeConstraints { (make) in
             make.top.equalTo(birthday.snp.bottom).offset(8)
             make.left.equalToSuperview().offset(46)
@@ -203,7 +234,7 @@ extension ProfileViewController {
         
         //MARK:- save button
         
-        self.view.addSubview(saveBtn)
+        container.addSubview(saveBtn)
         saveBtn.snp.makeConstraints{ make in
             make.top.equalTo(birthdayTextField.snp.bottom).offset(15)
             make.left.equalToSuperview().offset(46)
@@ -215,8 +246,65 @@ extension ProfileViewController {
         saveBtn.backgroundColor = .systemGreen
         saveBtn.layer.cornerRadius = 10
         
+        container.addSubview(decoView)
+        decoView.snp.makeConstraints{ make in
+            make.top.equalTo(saveBtn.snp.bottom).offset(15)
+            make.width.equalToSuperview()
+            make.height.equalTo(1)
+        }
+        decoView.backgroundColor = .lightGray
+        
         showdatePicker()
     }
+    
+    //MARK:- setup Setting
+    final private func setupSetting(){
+        container.addSubview(settingLabel)
+        settingLabel.snp.makeConstraints{ make in
+            make.top.equalTo(saveBtn.snp.bottom).offset(30)
+            make.left.equalToSuperview().offset(46)
+            make.height.equalTo(21)
+        }
+        settingLabel.text = "Setting"
+        settingLabel.font = UIFont.systemFont(ofSize: 25, weight: .semibold)
+        
+        container.addSubview(setNotiLabel)
+        setNotiLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(settingLabel.snp.bottom).offset(30)
+            make.left.equalToSuperview().offset(46)
+            //make.width.equalTo(83)
+            make.height.equalTo(21)
+        }
+        setNotiLabel.text = "Enable Notification"
+        
+        container.addSubview(notiSwitch)
+        notiSwitch.snp.makeConstraints { (make) in
+            make.top.equalTo(settingLabel.snp.bottom).offset(30)
+            make.right.equalToSuperview().offset(-46)
+            //make.width.equalTo(83)
+            make.height.equalTo(21)
+        }
+        notiSwitch.addTarget(self, action: #selector(onNotiSwitchChange(state:)), for: .valueChanged)
+        
+    }
+    
+    //MARK:- Logout Btn
+    final private func setupLogOutBtn(){
+        container.addSubview(logOutBtn)
+        logOutBtn.snp.makeConstraints{ make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(setNotiLabel.snp.bottom).offset(20)
+            make.width.equalTo(70)
+            make.height.equalTo(30)
+        }
+        logOutBtn.setTitle("Log Out", for: .normal)
+        logOutBtn.setTitleColor(.black, for: .normal)
+        logOutBtn.layer.cornerRadius = 10
+        logOutBtn.backgroundColor = UIColor(red: 0x00, green: 0x00, blue: 0x00,alpha: 0.1)
+        logOutBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .bold)
+        logOutBtn.addTarget(self, action: #selector(logOutTapped), for: .touchUpInside)
+    }
+    
     
     private final func showdatePicker() {
         datePicker.datePickerMode = .date
@@ -241,6 +329,14 @@ extension ProfileViewController {
 
 //MARK:- Action functions
 extension ProfileViewController {
+    
+    @objc final private func onNotiSwitchChange(state: UISwitch) {
+        if state.isOn {
+            OneSignal.setSubscription(true)
+        } else {
+            OneSignal.setSubscription(false)
+        }
+    }
     
     @objc final private func donedatePicker() {
         let formatter = DateFormatter()
@@ -320,5 +416,18 @@ extension ProfileViewController: ProfileVMdelegate {
 extension ProfileViewController: UITextFieldDelegate{
     func textFieldDidBeginEditing(_ textField: UITextField) {
         textField.placeholder = ""
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+
+    }
+}
+
+extension ProfileViewController: UIScrollViewDelegate{
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        scrollView.contentOffset = CGPoint(x: 0, y: self.scrollview.contentOffset.y)
+        scrollView.isDirectionalLockEnabled = true
     }
 }

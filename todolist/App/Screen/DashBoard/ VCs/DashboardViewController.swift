@@ -49,6 +49,10 @@ final class DashboardViewController: UIViewController {
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
         self.navigationController?.isNavigationBarHidden = true
         
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.isTranslucent = true
+        
         initBoard()
     }
 }
@@ -57,7 +61,6 @@ final class DashboardViewController: UIViewController {
 extension DashboardViewController{
     //MARK:- REVIEW
     final private func initBoard(){
-        
         calendarLabel.text = getCurrentDateTime()
         helloUserName.text = viewModel.usernameText
         viewModel.requestGetBoard()
@@ -155,7 +158,7 @@ extension DashboardViewController {
             print(self.viewModel.getBoardCount())
             //let indexPath = IndexPath(row: DashboardViewController.boards.count - 1, section: 0)
             let indexPath = IndexPath(row: self.viewModel.getBoardCount() - 1, section: 0)
-            print("number of board after added: \(Board.count)")
+            print("number of board after added: \(self.viewModel.getBoardCount())")
             print("indexPath: \(indexPath)")
             self.collectionView.insertItems(at: [indexPath])
             self.collectionView.scrollToItem(at: indexPath, at: UICollectionView.ScrollPosition.centeredHorizontally, animated: true)
@@ -244,10 +247,11 @@ extension DashboardViewController: UICollectionViewDataSource,UICollectionViewDe
         print("board deail: \(text)")
         
         cell?.deleteBoardBtn.addTarget(self, action: #selector(deleteBoard(sender:)), for: .touchUpInside)
-        cell?.board = viewModel.returnBoardAtIndex(index: indexPath.row)
+        cell?.boardID = viewModel.getBoardIDatIndex(index: indexPath.row)
         cell?.textLabel.text = text
         cell?.addUserBtn.addTarget(self, action: #selector(inviteUser(sender:)), for: .touchUpInside)
-        
+        //viewModel.requestGetGuest(boardID: viewModel.getBoardIDatIndex(index: indexPath.row))
+        cell?.guestCount = viewModel.getGuestCount()
         return cell!
     }
     
@@ -291,6 +295,9 @@ extension DashboardViewController: UITextFieldDelegate {
 
 
 extension DashboardViewController: DashBoardVMDelegate {
+    func onGuestListChange(_ vm: DashBoardVM, data: [User]) {
+        collectionView.reloadData()
+    }
     
     func onBoardChangeData(_ vm: DashBoardVM, data: [Board]) {
         collectionView.reloadData()

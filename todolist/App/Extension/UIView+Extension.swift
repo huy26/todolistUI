@@ -49,3 +49,8 @@ func getCurrentDateTime() -> String{
     let str = formatter.string(from: Date())
     return str
 }
+
+extension UIApplication {
+    
+}
+

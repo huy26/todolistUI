@@ -57,7 +57,7 @@ func readBoardAPI(onCompleted: @escaping ((Error?, [Board]?)-> Void)) {
                     break
                 }
         }
-        .responseArray { (response: DataResponse<[Board]>) in
+        .responseArray { (response: AFDataResponse<[Board]>) in
             print("try to map board")
             //let board = response.result
             if  (response.response?.statusCode) != nil {
@@ -150,7 +150,7 @@ func deleteBoardAPI(board: Board) {
             newurl,
             method: .delete,
             parameters: board,
-            encoder: URLEncodedFormParameterEncoder(destination: .httpBody),
+            encoder: JSONParameterEncoder.default,
             headers: header
         )
             .responseString(completionHandler: { data in
@@ -246,3 +246,4 @@ func inviteBoardAPI (board: Board, email: String){
         
     })
 }
+

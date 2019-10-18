@@ -12,6 +12,8 @@ protocol DashBoardVMDelegate: class {
     func onBoardChangeData(_ vm: DashBoardVM, data: [Board])
     
     func onUserChangeData(_ vm: DashBoardVM, data: User)
+    
+    func onGuestListChange(_ vm: DashBoardVM, data: [User])
 }
 
 final class DashBoardVM {
@@ -28,6 +30,14 @@ final class DashBoardVM {
         }
     }
     
+    private var guestList: [User]? {
+        didSet{
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.delegate?.onGuestListChange(self, data: self.guestList!)
+            }
+        }
+    }
     
     private var user: User {
         didSet {
@@ -44,7 +54,6 @@ final class DashBoardVM {
         self.calendarLabel = getCurrentDateTime()
         
     }
-    
     
     public var usernameText: String {
         return "Hello, \(user.firstName)"
@@ -77,6 +86,18 @@ extension DashBoardVM{
             }
         }
     }
+    
+    final func requestGetGuest(boardID: String){
+        getGuestListAPI(boardID: boardID) { (error, user) in
+            if let error = error {
+                debugPrint(error)
+                return
+            }
+            if let checkuser = user {
+                self.guestList = user
+            }
+        }
+    }
 }
 
 //MARK:- add get set BOARD
@@ -100,6 +121,10 @@ extension DashBoardVM {
         return self.board.count
     }
     
+    final func getBoardIDatIndex(index: Int) -> String{
+        return board[index].boardID ?? "-1"
+    }
+    
     final func removeBoard(index: Int){
         self.board.remove(at: index)
     }
@@ -110,6 +135,10 @@ extension DashBoardVM {
     
     final func getBoardNameAtindex(index: Int) -> String {
         return board[index].boardName ?? "no board name"
+    }
+    
+    final func getGuestCount() -> Int {
+        return guestList?.count ?? -1 //return -1 if nil
     }
     
 }
