@@ -140,7 +140,7 @@ func updateTaskAPI(task: Task, boardID: String) {
         ]
         print("Task update: \(task.taskID!)")
         
-        guard let newurl = URL(string: "http://192.168.2.12:4000/api/user/board/\(boardID)/task/\(task.taskID)") else { return }
+        guard let newurl = URL(string: "http://103.221.223.126:4000/api/user/board/\(boardID)/task/\(task.taskID)") else { return }
         AF.request(
             newurl,
             method: .put,

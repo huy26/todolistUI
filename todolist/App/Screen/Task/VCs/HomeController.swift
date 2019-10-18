@@ -1,37 +1,38 @@
-
 //
-//  BoardViewController.swift
-//  todolist
+//  HomeController.swift
+//  TestSlideMenu
 //
-//  Created by Mac on 19/09/2019.
+//  Created by Mac on 17/10/2019.
 //  Copyright © 2019 Mac. All rights reserved.
 //
+
 import UIKit
 import Firebase
 import FirebaseAuth
 import MobileCoreServices
 
-class TaskVC: UIViewController {
+class HomeController: UIViewController {
+    
     var tasks = [Task]()
     var boardID = ""
     var boardName = ""  // for board title
     var boardIndex: Int?    //for updateboardAPI
     static var taskID = ""
-    var status = [Status]()
     var deleteTask = ""
     //var tableView = UITableView()
     var horizonalBarLeftAnchorConstraint: NSLayoutConstraint?
-
+    
     var checkCollectionview = UICollectionView(frame: .infinite, collectionViewLayout: UICollectionViewFlowLayout.init())
     let layout = UICollectionViewFlowLayout()
     let layout2 = UICollectionViewFlowLayout()
     var collectionView = UICollectionView(frame: .infinite, collectionViewLayout: UICollectionViewFlowLayout.init())
     let footerID = "footerID"
     private var checkTextField: String? //check board Title if are the same
-    
+    private var navbackground = UIView()
     
     var TaskVM: TaskVM
-    
+    var isExpanded = false
+    var menuController: UIViewController!
     init(VM: TaskVM) {
         self.TaskVM = VM
         super.init(nibName: nil, bundle: nil)
@@ -41,6 +42,8 @@ class TaskVC: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    var delegate: HomeControllerDelegate?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -48,24 +51,31 @@ class TaskVC: UIViewController {
         let selectedIndexPath = NSIndexPath(item: 0, section: 0)
         checkCollectionview.selectItem(at: selectedIndexPath as IndexPath, animated: false, scrollPosition: [])
         getCurrentDateTime()
-//        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-//        self.navigationController?.navigationBar.shadowImage = UIImage()
-//        self.navigationController?.navigationBar.isTranslucent = true
-//        //        if let decoded  = UserDefaults.standard.data(forKey: "Tasks")
+        
+        //        //        if let decoded  = UserDefaults.standard.data(forKey: "Tasks")
         //        {
         //            let decodedTasks = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! [Task]
         //            self.tasks = decodedTasks
         //        }
         // updateCollectionViewItem(with: view.bounds.size)
         checkCollectionview.register(UICollectionViewCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: footerID)
-        //self.navigationController?.isNavigationBarHidden = true
-       //TaskVM.getTask()
+        view.backgroundColor = .white
+        // Do any additional setup after loading the view.
+        //configureNavigationBar()
         TaskVM.delegate = self
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+        self.navigationController?.isNavigationBarHidden = false
+    }
+
 }
 
-//MARK: - ACTION FUNCTIONS
-extension TaskVC {
+extension HomeController {
+    
+    
     @IBAction func onLogout(_ sender: Any) {
         
         let firebaseAuth = Auth.auth()
@@ -78,6 +88,7 @@ extension TaskVC {
         }
         
     }
+    
     @objc func addListTapped(_ sender: Any) {
         let alertController = UIAlertController(title: "Add Status", message: nil, preferredStyle: .alert)
         alertController.addTextField{(textField) in
@@ -89,7 +100,7 @@ extension TaskVC {
             }
             
             self.TaskVM.status.append(Status(name: text, items: []))
-            let addedIndexPath = IndexPath(item: self.status.count - 1, section: 0)
+            let addedIndexPath = IndexPath(item: self.TaskVM.status.count - 1, section: 0)
             
             self.checkCollectionview.insertItems(at: [addedIndexPath])
             self.checkCollectionview.scrollToItem(at: addedIndexPath, at: UICollectionView.ScrollPosition.centeredHorizontally, animated: true)
@@ -102,11 +113,28 @@ extension TaskVC {
         present(alertController, animated: true)
         
     }
+    
+    
 }
+
+
 // MARK: - PRIVATE FUNCTIONS
-extension TaskVC {
+extension HomeController {
     
     private func setupUI() {
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.isTranslucent = true
+        
+        self.view.addSubview(navbackground)
+        navbackground.snp.makeConstraints { (make) in
+            make.top.equalToSuperview()
+            make.height.equalTo(100)
+            make.left.right.equalToSuperview()
+        }
+        navbackground.backgroundColor = UIColor.orange
+        
+        
         view.backgroundColor = UIColor.white
         layout.scrollDirection = .horizontal
         layout2.scrollDirection = .horizontal
@@ -139,7 +167,7 @@ extension TaskVC {
         collectionView.isPagingEnabled = true
         collectionView.backgroundColor = UIColor.white
         
-        setupBarTitle()
+      //  setupBarTitle()
     }
     
     final private func setupBarTitle(){
@@ -149,14 +177,9 @@ extension TaskVC {
         }
         boardTextField.text = boardName
         self.navigationItem.titleView = boardTextField
-       }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        
-        
     }
+    
+    
     func getCurrentDateTime() {
         let formatter = DateFormatter()
         formatter.dateStyle = .long
@@ -231,7 +254,7 @@ extension TaskVC {
 }
 
 
-extension TaskVC: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+extension HomeController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return TaskVM.status.count
     }
@@ -317,7 +340,7 @@ extension TaskVC: UICollectionViewDataSource, UICollectionViewDelegate, UICollec
     
 }
 
-extension TaskVC: UIDropInteractionDelegate {
+extension HomeController: UIDropInteractionDelegate {
     
     func dropInteraction(_ interaction: UIDropInteraction, sessionDidUpdate session: UIDropSession) -> UIDropProposal {
         return UIDropProposal(operation: .move)
@@ -354,7 +377,7 @@ extension TaskVC: UIDropInteractionDelegate {
     }
 }
 
-extension TaskVC: UITextFieldDelegate {
+extension HomeController: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         print("editing title")
         if textField.text != checkTextField{
@@ -379,7 +402,7 @@ extension TaskVC: UITextFieldDelegate {
     }
 }
 
-extension TaskVC: TaskVMDelegate {
+extension HomeController: TaskVMDelegate {
     func onStatusChangeData(_ vm: TaskVM, data: [Status]) {
         collectionView.reloadData()
         checkCollectionview.reloadData()
@@ -387,4 +410,3 @@ extension TaskVC: TaskVMDelegate {
     
     
 }
-

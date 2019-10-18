@@ -7,4 +7,4 @@
 //
 
 
-let url = "http://192.168.2.12:4000/api/user"
+let url = "http://103.221.223.126:4000/api/user"

@@ -120,7 +120,7 @@ func uploadBoardAPI(board: Board){
         ]
         print(board.boardName!)
         
-        guard let newurl = URL(string: "http://192.168.2.12:4000/api/user/board") else { return }
+        guard let newurl = URL(string: "http://103.221.223.126:4000/api/user/board") else { return }
         AF.request(
             newurl,
             method: .post,
@@ -161,7 +161,7 @@ func deleteBoardAPI(board: Board) {
         ]
         print(board.boardID!)
         
-        guard let newurl = URL(string: "http://192.168.2.12:4000/api/user/board/\(board.boardID!)") else { return }
+        guard let newurl = URL(string: "http://103.221.223.126:4000/api/user/board/\(board.boardID!)") else { return }
         
         AF.request(
             newurl,
@@ -203,7 +203,7 @@ func updateBoardAPI(board: Board, newName: String) {
         ]
         print(board.boardID!)
         
-        guard let newurl = URL(string: "http://192.168.2.12:4000/api/user/board/\(board.boardID!)") else { return }
+        guard let newurl = URL(string: "http://103.221.223.126:4000/api/user/board/\(board.boardID!)") else { return }
         board.changeBoardName(value: newName)
         AF.request(
             newurl,

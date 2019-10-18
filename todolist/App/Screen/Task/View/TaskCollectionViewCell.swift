@@ -2,7 +2,7 @@ import UIKit
 import MobileCoreServices
 class TaskCollectionViewCell: UICollectionViewCell {
 
-
+    
     private let footerID = "TableFooter"
     private var tableView = UITableView()
     //var task: Task?
@@ -26,10 +26,12 @@ class TaskCollectionViewCell: UICollectionViewCell {
     }
     
     
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    weak var parentVC: TaskVC?
+    weak var parentVC: HomeController?
+    weak var vc1: ContainerController?
     var status: Status?
     var boardID: String?
     override func awakeFromNib() {
@@ -65,7 +67,7 @@ extension TaskCollectionViewCell{
             data.items.append(Task(taskName: text, status: self.status!.name!))
             let addedIndexPath = IndexPath(item: data.items.count - 1, section: 0)
             self.tableView.insertRows(at: [addedIndexPath], with: .automatic)
-            self.tableView.scrollToRow(at: addedIndexPath, at: UITableView.ScrollPosition.bottom, animated: true) 
+            self.tableView.scrollToRow(at: addedIndexPath, at: UITableView.ScrollPosition.bottom, animated: true)
             uploadtaskAPI(boardID: self.boardID!, task: Task(taskName: text, status: data.name!))
             readTaskApi(boardID: self.boardID!, onCompleted: { (error, tasks) in
                 if let error = error {
@@ -77,7 +79,7 @@ extension TaskCollectionViewCell{
                     //UserDefaults.standard.removeObject(forKey: "Board")
                     self.parentVC?.TaskVM.onreciveTask(tasks: tasks)
 
-                    self.parentVC?.status.last?.items.last?.taskID = tasks.last?.taskID
+                    self.parentVC?.TaskVM.status.last?.items.last?.taskID = tasks.last?.taskID
 //                    self.parentVC?.checkCollectionview.reloadData()
 //                    self.parentVC?.collectionView.reloadData()
                     return
@@ -131,17 +133,18 @@ extension TaskCollectionViewCell: UITableViewDataSource, UITableViewDelegate {
         cell.backgroundColor = UIColor.clear
         cell.StatusName.text = "\(status!.items[indexPath.row].taskName!)"
         cell.DeleteButton.addTarget(self, action: #selector(deleteTask), for: .touchUpInside)
-        return cell	
+        return cell
     }
     
     
   
-
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = TaskDetailVCViewController()
         vc.task = self.status?.items[indexPath.row]
         vc.boardID = self.boardID!
-        parentVC?.navigationController?.pushViewController(vc, animated: true)
+        self.parentVC?.navigationController?.pushViewController(vc, animated: true)
+
 
         
         tableView.deselectRow(at: indexPath, animated: true)

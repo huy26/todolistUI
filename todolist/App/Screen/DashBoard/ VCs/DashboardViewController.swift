@@ -34,7 +34,6 @@ final class DashboardViewController: UIViewController {
         collectionView.register(DashboardCollectionViewCell.self, forCellWithReuseIdentifier: cellReuseIndentifier)
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
-        
         //        if let decoded  = UserDefaults.standard.data(forKey: "Board") {
         //            let decodedTeams = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! [Board]
         //            self.boards = decodedTeams
@@ -49,8 +48,11 @@ final class DashboardViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         //DashboardViewController.boards = UserDefaults.standard.object(forKey: "Board") as! [Board]
-        self.navigationController?.setNavigationBarHidden(true, animated: animated)
-        self.navigationController?.isNavigationBarHidden = true
+//        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+//        self.navigationController?.isNavigationBarHidden = true
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.isTranslucent = true
         
         readBoardAPI { (error, boards) in
             if let error = error {
@@ -246,16 +248,19 @@ extension DashboardViewController: UICollectionViewDataSource,UICollectionViewDe
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        //let vc = BoardViewController()
-        let vc = TaskVC(VM: TaskVM(status: [], tasks: [], boardID: DashboardViewController.boards[indexPath.item].boardID!))
-        vc.boardID = DashboardViewController.boards[indexPath.item].boardID!
-        vc.boardName = DashboardViewController.boards[indexPath.item].boardName!
-        vc.boardIndex = indexPath.item
+//        let vc = TaskVC(VM: TaskVM(status: [], tasks: [], boardID: DashboardViewController.boards[indexPath.item].boardID!))
+       
+//        vc.boardName = DashboardViewController.boards[indexPath.item].boardName!
+//        vc.boardIndex = indexPath.item
+        
+        let vc = ContainerController()
+         vc.boardID = DashboardViewController.boards[indexPath.item].boardID!
+        vc.invited = DashboardViewController.boards[indexPath.item].invited
         vc.hidesBottomBarWhenPushed = true
         //boardVC.modalPresentationStyle = .overFullScreen
         
         //self.tabBarController?.navigationController?.pushViewController(vc, animated: true)
-        self.show(vc, sender: self)
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
