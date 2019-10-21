@@ -25,19 +25,19 @@ class TaskVM {
         }
     }
     var tasks = [Task]()
-    var boardID: String
+    var board: Board
     
-    init (status: [Status], tasks: [Task], boardID: String) {
+    init (status: [Status], tasks: [Task], board: Board) {
         self.status = status
         self.tasks = tasks
-        self.boardID = boardID
+        self.board = board
         getTask()
     }
     
     
     
     func getTask () {
-        readTaskApi(boardID: boardID) { (error, tasks) in
+        readTaskApi(boardID: board.boardID!) { (error, tasks) in
             if let error = error {
                 self.getonTaskerror(error: error)
                 print(error.localizedDescription)

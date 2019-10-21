@@ -253,9 +253,7 @@ extension DashboardViewController: UICollectionViewDataSource,UICollectionViewDe
 //        vc.boardName = DashboardViewController.boards[indexPath.item].boardName!
 //        vc.boardIndex = indexPath.item
         
-        let vc = ContainerController()
-         vc.boardID = DashboardViewController.boards[indexPath.item].boardID!
-        vc.invited = DashboardViewController.boards[indexPath.item].invited
+        let vc = ContainerController(VM: TaskVM(status: [], tasks: [], board: DashboardViewController.boards[indexPath.item]))
         vc.hidesBottomBarWhenPushed = true
         //boardVC.modalPresentationStyle = .overFullScreen
         

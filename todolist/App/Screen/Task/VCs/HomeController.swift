@@ -13,12 +13,11 @@ import MobileCoreServices
 
 class HomeController: UIViewController {
     
-    var tasks = [Task]()
     var boardID = ""
     var boardName = ""  // for board title
     var boardIndex: Int?    //for updateboardAPI
-    static var taskID = ""
-    var deleteTask = ""
+//    static var taskID = ""
+//    var deleteTask = ""
     //var tableView = UITableView()
     var horizonalBarLeftAnchorConstraint: NSLayoutConstraint?
     
@@ -357,13 +356,11 @@ extension HomeController: UIDropInteractionDelegate {
                 if let (dataSource, sourceIndexPath, tableView) = session.localDragSession?.localContext as? (Status, IndexPath, UITableView) {
                     
                     tableView.beginUpdates()
-                    for i in self.tasks{
-                        print("Task:\(i.taskName) \(i.taskID) \(i.status)")
-                    }
+
                     let item = dataSource.items[sourceIndexPath.row]
                     dataSource.items.remove(at: sourceIndexPath.row)
                     
-                    if let item = self.tasks.first (where: { (task) -> Bool in
+                    if let item = self.TaskVM.tasks.first (where: { (task) -> Bool in
                         return task.taskID == item.taskID
                     }){}
                     //self.tasks.remove(at: sourceIndexPath.item)

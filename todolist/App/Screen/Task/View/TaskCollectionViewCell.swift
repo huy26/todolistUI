@@ -2,12 +2,14 @@ import UIKit
 import MobileCoreServices
 class TaskCollectionViewCell: UICollectionViewCell {
 
-    
     private let footerID = "TableFooter"
     private var tableView = UITableView()
     //var task: Task?
+
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        
         self.contentView.addSubview(tableView)
         tableView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()

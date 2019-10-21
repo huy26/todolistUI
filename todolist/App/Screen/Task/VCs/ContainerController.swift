@@ -10,8 +10,15 @@ import UIKit
 
 class ContainerController: UIViewController {
 
-    var boardID = ""
-    var invited = [String]()
+    var TaskVM: TaskVM
+    init(VM: TaskVM) {
+        self.TaskVM = VM
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     //var menuController: UIViewController!
     var centerController: UIViewController!
     var isExpanded = false
@@ -51,7 +58,7 @@ class ContainerController: UIViewController {
         return .lightContent
     }
     func configureHomeController() {
-        let homeController = HomeController(VM: TaskVM(status: [], tasks: [], boardID: self.boardID))
+        let homeController = HomeController(VM: TaskVM)
         homeController.delegate = self
         centerController = UINavigationController(rootViewController: homeController)
         
@@ -63,8 +70,8 @@ class ContainerController: UIViewController {
    
     
     func configureMenuController() {
-            let menuController = MenuController()
-            menuController.setup(invited: self.invited)
+            let menuController = MenuController(VM: TaskVM)
+            menuController.setup(invited: self.TaskVM.board.invited)
             view.insertSubview(menuController.view, at: 0)
             addChild(menuController)
             menuController.didMove(toParent: self)
