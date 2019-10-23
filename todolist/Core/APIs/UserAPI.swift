@@ -15,7 +15,7 @@ import UIKit
 import MobileCoreServices
 import OneSignal
 
-//private let url = "http://192.168.0.150:4000/api/user"
+
 
 func getUserAPI (onCompleted: @escaping ((Error?, User?)-> Void)) {
     //var data = User(firstName: "", lastName: "", userPhone: "", birthDay: "", avatarURL: "", email: "")
@@ -23,7 +23,9 @@ func getUserAPI (onCompleted: @escaping ((Error?, User?)-> Void)) {
     let currentUser = Auth.auth().currentUser
     currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
         if error != nil {
-            print("get token failed")
+
+            print("get token failed user")
+
             return;
         }
      
@@ -33,7 +35,8 @@ func getUserAPI (onCompleted: @escaping ((Error?, User?)-> Void)) {
             "tokenID": "\(idToken!)",
         ]
         AF.request(url, method: .get,parameters: data,encoder: URLEncodedFormParameterEncoder(destination: .httpBody), headers: header)
-            .responseDecodable{ (response: DataResponse<User>) in
+
+            .responseDecodable{ (response: AFDataResponse<User>) in
                 switch response.result {
                 case let .success(value):
                     debugPrint(value)
@@ -48,10 +51,47 @@ func getUserAPI (onCompleted: @escaping ((Error?, User?)-> Void)) {
                     break
                 }
         }
-        
+
+
     }
     
 }
+
+
+func getUserListAPI(onCompleted: @escaping ((Error?, [SearchUser]?)-> Void)){
+    
+    var data: [SearchUser]?
+    let currentUser = Auth.auth().currentUser
+    currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
+        if error != nil {
+            print("get token failed user")
+            return;
+        }
+        
+        
+        //let idToken = returnFirebaseToken()
+        let header: HTTPHeaders = []
+        
+        let listuser = url + "/lists"
+        print("list user: \(listuser)")
+        
+        AF.request(listuser, method: .get,parameters: data,encoder: URLEncodedFormParameterEncoder(destination: .httpBody), headers: header)
+            .responseArray{ (response: AFDataResponse<[SearchUser]>) in
+                switch response.result {
+                case let .success(value):
+                    debugPrint(value)
+                    data = value
+                    onCompleted(nil, value)
+                    break
+                case let .failure(error):
+                    debugPrint(error)
+                    onCompleted(error, nil)
+                    break
+                }
+        }
+    }
+}
+
 
 func uploadUserAPI(firstName: String, lastName: String, userPhone: String, birthDay: String, avatarURL: String, email: String){
     
@@ -60,7 +100,8 @@ func uploadUserAPI(firstName: String, lastName: String, userPhone: String, birth
     let currentUser = Auth.auth().currentUser
     currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
         if error != nil {
-            print("get token failed")
+
+            print("get token failed user")
             return;
         }
         
@@ -89,7 +130,8 @@ func updateUserAPI(firstName: String, lastName: String, userPhone: String, birth
     let currentUser = Auth.auth().currentUser
     currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
         if error != nil {
-            print("get token failed")
+
+            print("get token failed user")
             return;
         }
         
@@ -111,3 +153,46 @@ func updateUserAPI(firstName: String, lastName: String, userPhone: String, birth
         print("http resquest succeed")
     }
 }
+
+
+func getGuestListAPI(boardID: String, onCompleted: @escaping ((Error?, [User]?)-> Void)) {
+    
+    var user: [User]?
+    
+    let currentUser = Auth.auth().currentUser
+      currentUser?.getIDTokenForcingRefresh(true, completion: { (idToken, error) in
+          if error != nil {
+              print("get token failed board")
+              return
+          }
+        
+          guard let idToken = idToken else {
+              return
+          }
+        
+          let header: HTTPHeaders = [
+              "tokenID": idToken,
+          ]
+        
+          let newurl = url + "/board/\(boardID as! String)/invited"
+          print("guest boardID: \(boardID)")
+          AF.request(newurl, method: .get, parameters: user, encoder: JSONParameterEncoder.default, headers: header)
+            .responseArray{ (response: AFDataResponse<[User]>) in
+                          switch response.result {
+                          case let .success(value):
+                              debugPrint(value)
+                              user = value
+                              onCompleted(nil, user)
+                              break
+                          case let .failure(error):
+                              debugPrint(error)
+                              onCompleted(error, nil)
+                              break
+                          }
+                  }
+          print(idToken)
+          print("http resquest succeed")
+          
+      })
+}
+

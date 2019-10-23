@@ -6,12 +6,14 @@ class DescriptionVC: UIViewController {
     var task: Task?
     var boardID: String?
     private var background = UIView()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         if task!.des != nil {
             textField.text = task!.des
         }
+
         setupUI()
     }
 }
@@ -55,7 +57,7 @@ extension DescriptionVC{
 
     
 extension DescriptionVC {
-        
+    
     @objc func cancel() {
         self.navigationController?.popViewController(animated: true)
     }
@@ -72,7 +74,5 @@ extension DescriptionVC {
         self.navigationController?.popViewController(animated: true)
         
     }
-
-    
 
 }

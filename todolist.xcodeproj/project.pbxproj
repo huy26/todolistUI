@@ -26,6 +26,13 @@
 		045304F0235060E400F133F3 /* TaskAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045304EF235060E400F133F3 /* TaskAPI.swift */; };
 		045304F6235069AF00F133F3 /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045304F5235069AF00F133F3 /* URL.swift */; };
 		04812944235424B0006E02F8 /* SignInVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04812943235424B0006E02F8 /* SignInVM.swift */; };
+		048A9645235FF88100BD5558 /* AddBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048A9644235FF87400BD5558 /* AddBoardViewController.swift */; };
+		048A9649235FF8E000BD5558 /* InviteUserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048A9648235FF8E000BD5558 /* InviteUserVC.swift */; };
+		048A964D235FFB4500BD5558 /* GuestVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048A964B235FFB4500BD5558 /* GuestVM.swift */; };
+		048A964E235FFB4500BD5558 /* DashBoardVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048A964C235FFB4500BD5558 /* DashBoardVM.swift */; };
+		048A9651235FFBA400BD5558 /* ProfileVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048A9650235FFBA300BD5558 /* ProfileVM.swift */; };
+		048A9653235FFD4E00BD5558 /* Reuse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048A9652235FFD4E00BD5558 /* Reuse.swift */; };
+		048A9655236005FF00BD5558 /* SearchUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048A9654236005FF00BD5558 /* SearchUser.swift */; };
 		0491CBD32330D9AC00040E51 /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0491CBD22330D9AC00040E51 /* ForgotPasswordViewController.swift */; };
 		0498C3F8234D8BC000F99C10 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0498C3F7234D8BC000F99C10 /* TableViewCell.swift */; };
 		0498C401234D8DD700F99C10 /* DescriptionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0498C400234D8DD700F99C10 /* DescriptionVC.swift */; };
@@ -52,7 +59,6 @@
 		04FC1599233B5FE00091FC4E /* boardDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FC1598233B5FE00091FC4E /* boardDetail.swift */; };
 		04FD9B5D23459FE000B3B937 /* plus icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 04FD9B5C23459FE000B3B937 /* plus icon.png */; };
 		04FD9B5F2345B32000B3B937 /* delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 04FD9B5E2345B32000B3B937 /* delete.png */; };
-		04FD9B612345F1B900B3B937 /* AddBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD9B602345F1B900B3B937 /* AddBoardViewController.swift */; };
 		19487009F44A812F71221642 /* Pods_todolist.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCD6641ED4628F3A1B0A7E29 /* Pods_todolist.framework */; };
 		48C9574E85212C187A96D1C6 /* Pods_OneSignalNotifactionServiceExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08F99FA431964972FA15E4C4 /* Pods_OneSignalNotifactionServiceExtension.framework */; };
 /* End PBXBuildFile section */
@@ -105,6 +111,13 @@
 		045304EF235060E400F133F3 /* TaskAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskAPI.swift; sourceTree = "<group>"; };
 		045304F5235069AF00F133F3 /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
 		04812943235424B0006E02F8 /* SignInVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInVM.swift; sourceTree = "<group>"; };
+		048A9644235FF87400BD5558 /* AddBoardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddBoardViewController.swift; sourceTree = "<group>"; };
+		048A9648235FF8E000BD5558 /* InviteUserVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteUserVC.swift; sourceTree = "<group>"; };
+		048A964B235FFB4500BD5558 /* GuestVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuestVM.swift; sourceTree = "<group>"; };
+		048A964C235FFB4500BD5558 /* DashBoardVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashBoardVM.swift; sourceTree = "<group>"; };
+		048A9650235FFBA300BD5558 /* ProfileVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileVM.swift; sourceTree = "<group>"; };
+		048A9652235FFD4E00BD5558 /* Reuse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reuse.swift; sourceTree = "<group>"; };
+		048A9654236005FF00BD5558 /* SearchUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchUser.swift; sourceTree = "<group>"; };
 		0491CBD22330D9AC00040E51 /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
 		0498C3F7234D8BC000F99C10 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		0498C400234D8DD700F99C10 /* DescriptionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionVC.swift; sourceTree = "<group>"; };
@@ -131,7 +144,6 @@
 		04FC1598233B5FE00091FC4E /* boardDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = boardDetail.swift; sourceTree = "<group>"; };
 		04FD9B5C23459FE000B3B937 /* plus icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "plus icon.png"; sourceTree = "<group>"; };
 		04FD9B5E2345B32000B3B937 /* delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delete.png; sourceTree = "<group>"; };
-		04FD9B602345F1B900B3B937 /* AddBoardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBoardViewController.swift; sourceTree = "<group>"; };
 		08F99FA431964972FA15E4C4 /* Pods_OneSignalNotifactionServiceExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OneSignalNotifactionServiceExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1766941EBC64548E0D0C76EF /* Pods-todolist.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-todolist.debug.xcconfig"; path = "Target Support Files/Pods-todolist/Pods-todolist.debug.xcconfig"; sourceTree = "<group>"; };
 		4137EA9C9A2636C8F2312CF1 /* Pods-OneSignalNotifactionServiceExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotifactionServiceExtension.release.xcconfig"; path = "Target Support Files/Pods-OneSignalNotifactionServiceExtension/Pods-OneSignalNotifactionServiceExtension.release.xcconfig"; sourceTree = "<group>"; };
@@ -229,6 +241,8 @@
 		045304D323505D3A00F133F3 /* Screen */ = {
 			isa = PBXGroup;
 			children = (
+				048A9646235FF8E000BD5558 /* InviteUser */,
+				048A9642235FF87400BD5558 /* AddBoard */,
 				0498C3FF234D8DB600F99C10 /* TaskDetail */,
 				045304E123505F1B00F133F3 /* Task */,
 				045304DF23505ED900F133F3 /* TabBar */,
@@ -293,6 +307,7 @@
 		045304DA23505E5000F133F3 /* DashBoard */ = {
 			isa = PBXGroup;
 			children = (
+				048A964A235FFB4500BD5558 /* VM */,
 				045304DC23505E8700F133F3 /* View */,
 				045304DB23505E6800F133F3 /*  VCs */,
 			);
@@ -303,7 +318,6 @@
 			isa = PBXGroup;
 			children = (
 				04FC1594233B5ECE0091FC4E /* DashboardViewController.swift */,
-				04FD9B602345F1B900B3B937 /* AddBoardViewController.swift */,
 			);
 			path = " VCs";
 			sourceTree = "<group>";
@@ -320,6 +334,7 @@
 		045304DD23505EC700F133F3 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				048A964F235FFBA300BD5558 /*  VM */,
 				045304DE23505ECE00F133F3 /* VCs */,
 			);
 			path = Profile;
@@ -412,6 +427,7 @@
 		045304F12350612F00F133F3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				048A9654236005FF00BD5558 /* SearchUser.swift */,
 				04FA8FCE232F720C00EFEA29 /* User.swift */,
 				0498DBEC2328ED70005C5666 /* Board.swift */,
 				043B6BC42331EF0700F264E8 /* Task.swift */,
@@ -424,6 +440,7 @@
 		045304F2235066C900F133F3 /* Constants */ = {
 			isa = PBXGroup;
 			children = (
+				048A9652235FFD4E00BD5558 /* Reuse.swift */,
 				045304F5235069AF00F133F3 /* URL.swift */,
 			);
 			path = Constants;
@@ -451,6 +468,56 @@
 				04812943235424B0006E02F8 /* SignInVM.swift */,
 			);
 			path = VMs;
+			sourceTree = "<group>";
+		};
+		048A9642235FF87400BD5558 /* AddBoard */ = {
+			isa = PBXGroup;
+			children = (
+				048A9643235FF87400BD5558 /* VCs */,
+			);
+			name = AddBoard;
+			path = todolist/App/Screen/AddBoard;
+			sourceTree = SOURCE_ROOT;
+		};
+		048A9643235FF87400BD5558 /* VCs */ = {
+			isa = PBXGroup;
+			children = (
+				048A9644235FF87400BD5558 /* AddBoardViewController.swift */,
+			);
+			path = VCs;
+			sourceTree = "<group>";
+		};
+		048A9646235FF8E000BD5558 /* InviteUser */ = {
+			isa = PBXGroup;
+			children = (
+				048A9647235FF8E000BD5558 /* VCs */,
+			);
+			path = InviteUser;
+			sourceTree = "<group>";
+		};
+		048A9647235FF8E000BD5558 /* VCs */ = {
+			isa = PBXGroup;
+			children = (
+				048A9648235FF8E000BD5558 /* InviteUserVC.swift */,
+			);
+			path = VCs;
+			sourceTree = "<group>";
+		};
+		048A964A235FFB4500BD5558 /* VM */ = {
+			isa = PBXGroup;
+			children = (
+				048A964B235FFB4500BD5558 /* GuestVM.swift */,
+				048A964C235FFB4500BD5558 /* DashBoardVM.swift */,
+			);
+			path = VM;
+			sourceTree = "<group>";
+		};
+		048A964F235FFBA300BD5558 /*  VM */ = {
+			isa = PBXGroup;
+			children = (
+				048A9650235FFBA300BD5558 /* ProfileVM.swift */,
+			);
+			path = " VM";
 			sourceTree = "<group>";
 		};
 		0498C3FF234D8DB600F99C10 /* TaskDetail */ = {
@@ -672,8 +739,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				049EE2D0235980C200AA48A5 /* ContainerController.swift in Sources */,
+				048A9645235FF88100BD5558 /* AddBoardViewController.swift in Sources */,
 				040891DC232254E50025EE37 /* ViewController.swift in Sources */,
 				045304F0235060E400F133F3 /* TaskAPI.swift in Sources */,
+				048A9655236005FF00BD5558 /* SearchUser.swift in Sources */,
 				049A68D5235568D50031B3D0 /* TaskVM.swift in Sources */,
 				04FC1596233B5ECE0091FC4E /* DashboardCollectionViewCell.swift in Sources */,
 				04FA8FCF232F720C00EFEA29 /* User.swift in Sources */,
@@ -685,23 +754,27 @@
 				044F1C65234EE1DE009F58BA /* GuestCollectionViewCell.swift in Sources */,
 				040891EC23225F1D0025EE37 /* SignupViewViewController.swift in Sources */,
 				045304F6235069AF00F133F3 /* URL.swift in Sources */,
-				04FD9B612345F1B900B3B937 /* AddBoardViewController.swift in Sources */,
 				049EE2D4235980C200AA48A5 /* MenuController.swift in Sources */,
+				048A964E235FFB4500BD5558 /* DashBoardVM.swift in Sources */,
 				0491CBD32330D9AC00040E51 /* ForgotPasswordViewController.swift in Sources */,
 				049EE2D2235980C200AA48A5 /* HomeController.swift in Sources */,
 				04FC1599233B5FE00091FC4E /* boardDetail.swift in Sources */,
 				0498C3F8234D8BC000F99C10 /* TableViewCell.swift in Sources */,
 				04FBCBB3234740B3005C74F6 /* TabBarController.swift in Sources */,
+				048A9651235FFBA400BD5558 /* ProfileVM.swift in Sources */,
 				0498DBED2328ED70005C5666 /* Board.swift in Sources */,
 				0498C406234D9EC900F99C10 /* UIView+Extension.swift in Sources */,
+				048A964D235FFB4500BD5558 /* GuestVM.swift in Sources */,
 				045304EC2350601700F133F3 /* BoardAPI.swift in Sources */,
 				042E52002334C76E00030E5E /* StatusCollectionViewCell.swift in Sources */,
 				04FBCBB523474150005C74F6 /* ProfileViewController.swift in Sources */,
 				04812944235424B0006E02F8 /* SignInVM.swift in Sources */,
+				048A9653235FFD4E00BD5558 /* Reuse.swift in Sources */,
 				043B6BC52331EF0700F264E8 /* Task.swift in Sources */,
 				045304EA23505FD900F133F3 /* UserAPI.swift in Sources */,
 				049EE2D3235980C200AA48A5 /* MenuOptionCell.swift in Sources */,
 				04FC1597233B5ECE0091FC4E /* DashboardViewController.swift in Sources */,
+				048A9649235FF8E000BD5558 /* InviteUserVC.swift in Sources */,
 				049EE2D1235980C200AA48A5 /* Protocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

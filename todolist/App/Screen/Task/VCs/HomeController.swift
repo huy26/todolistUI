@@ -375,19 +375,19 @@ extension HomeController: UIDropInteractionDelegate {
 }
 
 extension HomeController: UITextFieldDelegate {
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        print("editing title")
-        if textField.text != checkTextField{
-            let alertController = UIAlertController(title: "Change board name", message: nil, preferredStyle: .alert)
-            
-            alertController.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (_) in
-                updateBoardAPI(board: DashboardViewController.boards[self.boardIndex!], newName: textField.text!)
-                self.checkTextField = textField.text
-            }))
-            alertController.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
-            present(alertController,animated: true)
-        }
-    }
+//    func textFieldDidEndEditing(_ textField: UITextField) {
+//        print("editing title")
+//        if textField.text != checkTextField{
+//            let alertController = UIAlertController(title: "Change board name", message: nil, preferredStyle: .alert)
+//
+//            alertController.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (_) in
+//                updateBoardAPI(board: DashboardViewController.viewModel.board[self.boardIndex!], newName: textField.text!)
+//                self.checkTextField = textField.text
+//            }))
+//            alertController.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+//            present(alertController,animated: true)
+//        }
+//    }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()

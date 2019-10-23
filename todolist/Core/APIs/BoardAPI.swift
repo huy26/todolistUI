@@ -16,24 +16,9 @@ import MobileCoreServices
 import OneSignal
 
 
-func APIboard(board: Board){
-    let currentuser = Auth.auth().currentUser
-    currentuser?.getIDTokenForcingRefresh(true, completion: { tokenID, error in
-        if error != nil {
-            print ("Fail to get token")
-            return
-        }
-        guard let tokenID = tokenID else {return}
-        let headers: HTTPHeaders = [
-            "tokenID": tokenID
-        ]
-        AF.request(url + "/board", method: .post, parameters: board, encoder: URLEncodedFormParameterEncoder.default, headers: headers).responseData(completionHandler: {data in
-            print ("==> Raw data \(data)")
-        }).responseJSON(completionHandler: {dataJSON in
-            print ("==>data JSON \(dataJSON)")
-        })
-    })
-}
+
+
+  
 
 
 func readBoardAPI(onCompleted: @escaping ((Error?, [Board]?)-> Void)) {
@@ -44,7 +29,9 @@ func readBoardAPI(onCompleted: @escaping ((Error?, [Board]?)-> Void)) {
     let currentUser = Auth.auth().currentUser
     currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
         if error != nil {
-            print("get token failed")
+
+            print("get token failed board")
+
             return;
         }
         
@@ -74,8 +61,10 @@ func readBoardAPI(onCompleted: @escaping ((Error?, [Board]?)-> Void)) {
                     break
                 }
         }
-        .responseArray { (response: DataResponse<[Board]>) in
-            print("try to map")
+
+        .responseArray { (response: AFDataResponse<[Board]>) in
+            print("try to map board")
+
             //let board = response.result
             if  (response.response?.statusCode) != nil {
                 switch(response.result){
@@ -91,7 +80,9 @@ func readBoardAPI(onCompleted: @escaping ((Error?, [Board]?)-> Void)) {
                 case let .failure(error):
                     print("case error")
                     onCompleted(error, nil)
-                    print(error.localizedDescription)
+
+                    debugPrint(error)
+
                     break
                 }
             }
@@ -100,14 +91,16 @@ func readBoardAPI(onCompleted: @escaping ((Error?, [Board]?)-> Void)) {
         print(idToken)
         print("http resquest succeed")
     }
-    
+
 }
 func uploadBoardAPI(board: Board){
     
     let currentUser = Auth.auth().currentUser
     currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
         if error != nil {
-            print("get token failed")
+
+            print("get token failed board")
+
             return;
         }
         
@@ -120,7 +113,9 @@ func uploadBoardAPI(board: Board){
         ]
         print(board.boardName!)
         
-        guard let newurl = URL(string: "http://103.221.223.126:4000/api/user/board") else { return }
+
+        guard let newurl = URL(string: "\(url)/board") else { return }
+
         AF.request(
             newurl,
             method: .post,
@@ -148,7 +143,9 @@ func deleteBoardAPI(board: Board) {
     let currentUser = Auth.auth().currentUser
     currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
         if error != nil {
-            print("get token failed")
+
+            print("get token failed board")
+
             return;
         }
         
@@ -161,13 +158,17 @@ func deleteBoardAPI(board: Board) {
         ]
         print(board.boardID!)
         
-        guard let newurl = URL(string: "http://103.221.223.126:4000/api/user/board/\(board.boardID!)") else { return }
+
+        guard let newurl = URL(string: "\(url)/board/\(board.boardID!)") else { return }
+
         
         AF.request(
             newurl,
             method: .delete,
             parameters: board,
-            encoder: URLEncodedFormParameterEncoder(destination: .httpBody),
+
+            encoder: JSONParameterEncoder.default,
+
             headers: header
         )
             .responseString(completionHandler: { data in
@@ -190,7 +191,9 @@ func updateBoardAPI(board: Board, newName: String) {
     let currentUser = Auth.auth().currentUser
     currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
         if error != nil {
-            print("get token failed")
+
+            print("get token failed board")
+
             return;
         }
         
@@ -203,7 +206,9 @@ func updateBoardAPI(board: Board, newName: String) {
         ]
         print(board.boardID!)
         
-        guard let newurl = URL(string: "http://103.221.223.126:4000/api/user/board/\(board.boardID!)") else { return }
+
+        guard let newurl = URL(string: "\(url)/board/\(board.boardID!)") else { return }
+
         board.changeBoardName(value: newName)
         AF.request(
             newurl,
@@ -232,7 +237,9 @@ func inviteBoardAPI (board: Board, email: String){
     let currentUser = Auth.auth().currentUser
     currentUser?.getIDTokenForcingRefresh(true, completion: { (idToken, error) in
         if error != nil {
-            print("get token failed")
+
+            print("get token failed board")
+
             return
         }
         guard let idToken = idToken else {
@@ -263,3 +270,4 @@ func inviteBoardAPI (board: Board, email: String){
         
     })
 }
+

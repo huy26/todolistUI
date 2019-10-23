@@ -20,6 +20,7 @@ class TaskDetailVCViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
         
         setupUI()
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
@@ -28,6 +29,10 @@ class TaskDetailVCViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
+        setupUI()
+        // Do any additional setup after loading the view.
+
     }
     
 
@@ -78,7 +83,7 @@ class TaskDetailVCViewController: UIViewController {
         
     }
     
-    
+
     @objc func editDescription(){
         let vc = DescriptionVC()
         vc.task = self.task

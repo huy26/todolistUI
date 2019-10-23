@@ -41,3 +41,16 @@ extension UIButton {
         layer.add(flash, forKey: nil)
     }
 }
+
+//MARK: Get Date + Time for Title
+func getCurrentDateTime() -> String{
+    let formatter = DateFormatter()
+    formatter.dateStyle = .long
+    formatter.dateFormat = "EE, dd MMM"
+    let str = formatter.string(from: Date())
+    return str
+}
+
+extension UIApplication {
+    
+}
