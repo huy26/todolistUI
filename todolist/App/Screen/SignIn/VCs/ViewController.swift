@@ -32,27 +32,37 @@ class ViewController: UIViewController {
 
         self.emailTextField.delegate = self
         self.passwordTextField.delegate = self
-        
-//        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), for: .default)
-//        self.navigationController!.navigationBar.shadowImage = UIImage()
-//        self.navigationController!.navigationBar.isTranslucent = true
+
         setupLoginUI()
         
-//        tabbarController.modalPresentationStyle = .fullScreen
-//        tabbarController.navigationController?.setNavigationBarHidden(true, animated: false)
-//        tabbarController.navigationController?.isNavigationBarHidden = true
+        
         
         // MARK:- auto login
         let currentuser = Auth.auth().currentUser
         if currentuser != nil{
-            //getUserAPI()
-            //self.show(tabbarController, sender: self)
-            //self.present(tabbarController, animated: true, completion: nil)
-//            self.navigationController?.isNavigationBarHidden = true
-            self.navigationController?.pushViewController(tabbarController, animated: true)
+            getUserAPI { (error, user) in
+                if let error = error {
+                    return
+                }
+                if user != nil {
+                    self.navigationController?.pushViewController(self.tabbarController, animated: true)
+                }
+            }
         }
     }
-    
+}
+
+//MARK:- Private function
+extension ViewController {
+    final private func showLoginAlert(){
+        let alertController = UIAlertController(title: "Login failed", message: "email or password is incorrect", preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
+        self.present(alertController,animated: true)
+    }
+}
+
+//MARK:- setupUI
+extension ViewController {
     final private func setupLoginUI() {
         self.view.backgroundColor = .white
         setupImageView()
@@ -136,7 +146,7 @@ class ViewController: UIViewController {
         passwordTextField.autocapitalizationType = .none
         passwordTextField.isSecureTextEntry = true
     }
-    
+    //MARK: Button
     final private func setupForgotBtn(){
         self.view.addSubview(forgotPasswordBtn)
         forgotPasswordBtn.snp.makeConstraints{ make in
@@ -180,35 +190,41 @@ class ViewController: UIViewController {
         signUpBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .light)
         signUpBtn.addTarget(self, action: #selector(onSignup(_:)), for: .touchUpInside)
     }
-    
+}
+
+ //MARK:- Action Function
+extension ViewController {
+   
     @objc final private func onSignup(_ sender: Any) {
 
         //self.show(SignupViewViewController(), sender: self)
 
         let vc = SignupViewViewController()
         self.navigationController?.pushViewController(vc, animated: true)
-
+        
     }
     
     @objc final private func signinTapped(_ sender: Any) {
         let username = emailTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         let password = passwordTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-                Auth.auth().signIn(withEmail: username, password: password) { (result, error) in
+        Auth.auth().signIn(withEmail: username, password: password) { (result, error) in
             if error != nil {
                 print (error!.localizedDescription)
-                
-                let alertController = UIAlertController(title: "Login failed", message: "email or password is incorrect", preferredStyle: .alert)
-                alertController.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
-                self.present(alertController,animated: true)
+                self.showLoginAlert()
             }
             else{
-                //getUserAPI()
-                //self.present(self.tabbarController, animated: true, completion: nil)
-                //self.show(self.tabbarController, sender: self)
-                //self.present(DashboardViewController(), animated: true, completion: nil)
-                self.navigationController?.pushViewController(self.tabbarController, animated: true)
-                self.emailTextField.text = ""
-                self.passwordTextField.text = ""
+                getUserAPI { (error, user) in
+                    if let error = error {
+                        debugPrint(error)
+                        self.showLoginAlert()
+                    }
+                    if let user = user {
+                        self.navigationController?.pushViewController(self.tabbarController, animated: true)
+                        self.emailTextField.text = ""
+                        self.passwordTextField.text = ""
+                    }
+                }
+                
             }
         }
     }
@@ -225,3 +241,4 @@ extension ViewController: UITextFieldDelegate {
         return false
     }
 }
+

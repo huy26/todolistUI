@@ -75,8 +75,8 @@ PODS:
     - GoogleUtilities/Network (~> 6.0)
     - "GoogleUtilities/NSData+zlib (~> 6.0)"
     - nanopb (~> 0.3.901)
-  - GoogleDataTransport (3.0.1)
-  - GoogleDataTransportCCTSupport (1.2.1):
+  - GoogleDataTransport (3.0.0)
+  - GoogleDataTransportCCTSupport (1.2.0):
     - GoogleDataTransport (~> 3.0)
     - nanopb (~> 0.3.901)
   - GoogleUtilities/AppDelegateSwizzler (6.3.1):
@@ -124,6 +124,7 @@ PODS:
   - OneSignal (2.11.2)
   - Protobuf (3.10.0)
   - SnapKit (5.0.1)
+  - SVProgressHUD (2.2.5)
   - SwiftyJSON (5.0.0)
   - Swinject (2.7.1)
 
@@ -136,11 +137,12 @@ DEPENDENCIES:
   - Firebase/Firestore
   - OneSignal (< 3.0, >= 2.6.2)
   - SnapKit
+  - SVProgressHUD
   - SwiftyJSON
   - Swinject
 
 SPEC REPOS:
-  trunk:
+  https://github.com/CocoaPods/Specs.git:
     - Alamofire
     - AlamofireObjectMapper
     - BoringSSL-GRPC
@@ -168,6 +170,8 @@ SPEC REPOS:
     - SnapKit
     - SwiftyJSON
     - Swinject
+  trunk:
+    - SVProgressHUD
 
 SPEC CHECKSUMS:
   Alamofire: f9450d3c7f6bea2ad62e7a541c3e9b186c7991d6
@@ -183,8 +187,8 @@ SPEC CHECKSUMS:
   FirebaseFirestore: 5a9e9a14305336e8d1a4f915a45ecf0f5d6dcaec
   FirebaseInstanceID: 550df9be1f99f751d8fcde3ac342a1e21a0e6c42
   GoogleAppMeasurement: 434cc7be25e71dc04b8d0e3079125127b330e84a
-  GoogleDataTransport: 166f9b9f82cbf60a204e8fe2daa9db3e3ec1fb15
-  GoogleDataTransportCCTSupport: f6ab1962e9dc05ab1fb938b795e5b310209edeec
+  GoogleDataTransport: f6fe28f43e3a300736854260961ad485b473edc5
+  GoogleDataTransportCCTSupport: 862418a8cdda520c4dd4af83a756d04efe4a6990
   GoogleUtilities: f895fde57977df4e0233edda0dbeac490e3703b6
   "gRPC-C++": 9dfe7b44821e7b3e44aacad2af29d2c21f7cde83
   gRPC-Core: c9aef9a261a1247e881b18059b84d597293c9947
@@ -195,9 +199,10 @@ SPEC CHECKSUMS:
   OneSignal: 4e3e68bb6c29975286a2fa910cb49132bc6e20bb
   Protobuf: a4dc852ad69c027ca2166ed287b856697814375b
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
+  SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
   Swinject: ddf78b8486dd9b71a667b852cad919ab4484478e
 
-PODFILE CHECKSUM: ab38271f566f5372bfa3f07019e0f830b02a4b83
+PODFILE CHECKSUM: edf366f7002bf1addf4264c7dc66150e60295933
 
 COCOAPODS: 1.8.4

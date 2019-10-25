@@ -24,6 +24,7 @@ final class DashboardCollectionViewCell: UICollectionViewCell {
     
     //MARK:- Local Properties
     private let color = [UIColor.orange, UIColor.white, UIColor.purple,UIColor.blue]
+
     var boardID = "" {
         didSet {
             InitGuest()
@@ -31,20 +32,24 @@ final class DashboardCollectionViewCell: UICollectionViewCell {
     }
     var guestCount = 0
     var viewModel = GuestVm()
+
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+
         viewModel.delegate = self
         setupCell()
-        setupGuestTableView()
+        guestCollecionView()
         //InitGuest()
+
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
 
 //MARK:- Init
 extension DashboardCollectionViewCell{
@@ -55,6 +60,7 @@ extension DashboardCollectionViewCell{
         }
     }
 }
+
 
 //MARK:- SetupUI
 extension DashboardCollectionViewCell{
@@ -104,10 +110,12 @@ extension DashboardCollectionViewCell{
         textLabel.snp.makeConstraints{ make in
             make.top.equalTo(boardTitleLabel.snp.bottom)
             make.bottom.equalTo(barView.snp.top)
+
             make.width.equalToSuperview()
         }
         textLabel.textColor = .white
         textLabel.numberOfLines = 0
+
         
         self.contentView.addSubview(addUserBtn)
         addUserBtn.snp.makeConstraints{make in
@@ -120,7 +128,7 @@ extension DashboardCollectionViewCell{
     }
     
 
-    final private func setupGuestTableView() {
+    final private func guestCollecionView() {
         self.contentView.addSubview(guestCollectionView)
         guestCollectionView.snp.makeConstraints{ make in
             make.top.equalTo(barView).offset(5)
@@ -133,13 +141,19 @@ extension DashboardCollectionViewCell{
         guestCollectionView.dataSource = self
         guestCollectionView.delegate = self
         guestCollectionView.register(GuestCollectionViewCell.self,forCellWithReuseIdentifier: "Cell")
+        
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        guestCollectionView.collectionViewLayout = layout
     }
 }
 
 //MARK:- Datasource
 extension DashboardCollectionViewCell: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+
         return viewModel.getGuestCount()
+
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -166,6 +180,7 @@ extension DashboardCollectionViewCell: UICollectionViewDelegateFlowLayout{
     }
 
 }
+
 
 //MARK:- ViewModel delegate
 extension DashboardCollectionViewCell: GuestVmDelegate{

@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import OneSignal
+
 import CoreData
 
 @UIApplicationMain
@@ -30,6 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         return true
     }
+
     
     lazy var persistentContainer: NSPersistentContainer = {
         /*
@@ -84,6 +86,7 @@ extension AppDelegate: OSSubscriptionObserver {
         print("SubscriptionStateChange: \n\(stateChanges)")
     }
     
+
     
     //MARK:- Setup Third Party Services
     final private func setupThirdPartyServices(launchOptions: [UIApplication.LaunchOptionsKey: Any]?) {
@@ -96,6 +99,7 @@ extension AppDelegate: OSSubscriptionObserver {
     final private func setupPushNotification(application: UIApplication, launchOptions: [UIApplication.LaunchOptionsKey: Any]?) {
         
         //MARK:- OneSignal
+
         let onesignalInitSettings = [kOSSettingsKeyAutoPrompt: false]
         
         OneSignal.initWithLaunchOptions(launchOptions,
@@ -122,6 +126,8 @@ extension AppDelegate: OSSubscriptionObserver {
         print("isSubscribed = \(isSubscribed)")
         let userSubscriptionSetting = status.subscriptionStatus.userSubscriptionSetting
         print("userSubscriptionSetting = \(userSubscriptionSetting)")
+        
+
         
     }
 }

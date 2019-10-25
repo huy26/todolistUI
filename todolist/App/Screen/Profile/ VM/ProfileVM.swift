@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SVProgressHUD
 
 protocol ProfileVMdelegate: class {
     func onProfileChangeData(_
@@ -35,15 +36,20 @@ final class ProfileVM {
 //MARK:- API function
 extension ProfileVM{
     final func resquestUserAPI(){
-        getUserAPI { (error, user) in
-            if let error = error {
-                print(error.localizedDescription)
-                return
-            }
-            if let checkUser = user {
-                self.user = checkUser
+        SVProgressHUD.show()
+        DispatchQueue.main.asyncAfter(deadline: .now()) {
+            getUserAPI { (error, user) in
+                if let error = error {
+                    print(error.localizedDescription)
+                    SVProgressHUD.dismiss()
+                }
+                if let checkUser = user {
+                    self.user = checkUser
+                    SVProgressHUD.dismiss()
+                }
             }
         }
+        
     }
 }
 

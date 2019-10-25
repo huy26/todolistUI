@@ -13,7 +13,7 @@ final class AddBoardViewController: UIViewController {
     private var boardNameTextField = UITextField()
     private let colorImageView1 = UIView()
     private let colorImageView2 = UIView()
-    
+    private let backgroundView = UIView()
     //MARK:- Intent Properties
     var viewModel = DashBoardVM()
     
@@ -23,7 +23,6 @@ final class AddBoardViewController: UIViewController {
         super.viewDidLoad()
         
         
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
         
         setupNavBar()
         setupAddViewUI()
@@ -41,24 +40,32 @@ final class AddBoardViewController: UIViewController {
 extension AddBoardViewController {
     
     final private func setupNavBar(){
-        let navBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 44))
+        let height = CGFloat(64)
+        let navBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: height))
+        navBar.translatesAutoresizingMaskIntoConstraints = true
+        navBar.isTranslucent = true
+        navBar.delegate = self
         view.addSubview(navBar)
-        navBar.topAnchor.constraint(
-            equalTo: self.view.safeAreaLayoutGuide.topAnchor
-        ).isActive = true
-        
-        
+
+        navBar.snp.makeConstraints { (make) in
+            make.top.equalTo(view.safeArea.top)
+            make.left.right.equalToSuperview()
+        }
+
         let navItem = UINavigationItem(title: "Add Board")
         let doneItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.cancel, target: nil, action: #selector(backtoBoard(_:)))
         navItem.leftBarButtonItem = doneItem
         
         let addBoard = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.add, target: nil, action: #selector(addBoard(_:)))
         navItem.rightBarButtonItem = addBoard
-        navBar.setItems([navItem], animated: false)
+        navBar.items = [navItem]
     }
     
     final private func setupAddViewUI(){
         self.view.backgroundColor = UIColor(red:0.90, green:0.90, blue:0.90, alpha:1.0)
+        self.view.topAnchor.constraint(
+          equalTo: self.view.safeAreaLayoutGuide.topAnchor
+        ).isActive = true
         
         self.view.addSubview(boardNameTextField)
         boardNameTextField.snp.makeConstraints{ make in
@@ -112,11 +119,12 @@ extension AddBoardViewController {
         uploadBoardAPI(board: newboard)
         self.dismiss(animated: true, completion: nil)
     }
-    
 }
 
-extension AddBoardViewController: UIBarPositioningDelegate {
+extension AddBoardViewController: UINavigationBarDelegate {
     func position(for bar: UIBarPositioning) -> UIBarPosition {
         return .topAttached
     }
+    
 }
+

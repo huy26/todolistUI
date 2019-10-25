@@ -10,9 +10,10 @@ import UIKit
 import Firebase
 import FirebaseAuth
 import Foundation
+import SVProgressHUD
 
 final class DashboardViewController: UIViewController {
-    
+
     //MARK:- UI Properties
     private var calendarLabel = UILabel()
     private var helloUserName = UILabel()
@@ -20,6 +21,7 @@ final class DashboardViewController: UIViewController {
     private let addboardVC = AddBoardViewController()
     private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
     private let profileVC = UIViewController()
+
     private let addBoardBtn = UIButton()
     
     //MARK:- Local Properties
@@ -33,6 +35,7 @@ final class DashboardViewController: UIViewController {
         collectionView.register(DashboardCollectionViewCell.self, forCellWithReuseIdentifier: cellReuseIndentifier)
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
+
         viewModel.delegate = self
         //        if let decoded  = UserDefaults.standard.data(forKey: "Board") {
         //            let decodedTeams = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! [Board]
@@ -40,19 +43,23 @@ final class DashboardViewController: UIViewController {
         //            //checkcollectionview.reloadData()
         //            collectionView.reloadData()
         //        }
+
         
         setupBoardUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
         self.navigationController?.isNavigationBarHidden = true
         
+
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = true
         
+
         initBoard()
     }
 }
@@ -115,6 +122,7 @@ extension DashboardViewController {
         barView.backgroundColor = .lightGray
     }
     
+    //MARK: CollectionView
     final private func setupCollectionView(){
         self.view.addSubview(collectionView)
         collectionView.snp.makeConstraints{ make in
@@ -135,6 +143,8 @@ extension DashboardViewController {
     }
     
     
+
+
 }
 
 // MARK:- Action Functions
@@ -159,22 +169,25 @@ extension DashboardViewController {
             //let indexPath = IndexPath(row: DashboardViewController.boards.count - 1, section: 0)
             let indexPath = IndexPath(row: self.viewModel.getBoardCount() - 1, section: 0)
             print("number of board after added: \(self.viewModel.getBoardCount())")
+
             print("indexPath: \(indexPath)")
             self.collectionView.insertItems(at: [indexPath])
             self.collectionView.scrollToItem(at: indexPath, at: UICollectionView.ScrollPosition.centeredHorizontally, animated: true)
             uploadBoardAPI(board: newboard)
+
             self.viewModel.requestGetBoard()
+
         }))
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         present(alertController, animated: true)
     }
     
-    
-    
+
     @objc final private func showAddBoardVC(_ sender: UIButton){
         addboardVC.onDismiss = {
             print("Board dismiss")
             self.collectionView.reloadData()
+
             //self.viewModel.setBoard(board: DashboardViewController.boards)
         }
         addboardVC.viewModel = self.viewModel
@@ -185,11 +198,11 @@ extension DashboardViewController {
         let alertController = UIAlertController(title: "Confirm Delete", message: "There is no way to undo this operation.", preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "Delete", style: .destructive, handler:{ (_) in
             let indexPath = sender.tag
+
             //deleteBoardAPI(board: DashboardViewController.boards[indexPath])
             //DashboardViewController.boards.remove(at: indexPath)
             deleteBoardAPI(board: self.viewModel.returnBoardAtIndex(index: indexPath))
             self.viewModel.removeBoard(index: indexPath)
-            //Board.setBoardCount(value: -1)
             self.collectionView.reloadData()
         }))
         alertController.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
@@ -197,6 +210,7 @@ extension DashboardViewController {
     }
     
     @objc final private func inviteUser(sender: UIButton) {
+
         let inviteVC = InviteUserVC()
         inviteVC.viewModel = self.viewModel
         inviteVC.boardID = sender.tag
@@ -210,19 +224,23 @@ extension DashboardViewController: UICollectionViewDataSource,UICollectionViewDe
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        //let vc = BoardViewController()
-        let vc = BoardViewController()
-        vc.boardID = viewModel.returnBoardAtIndex(index: indexPath.item).boardID!
-        //vc.boardName = DashboardViewController.boards[indexPath.item].boardName!
-        vc.boardName = viewModel.getBoardNameAtindex(index: indexPath.item)
-        vc.boardIndex = indexPath.item
-        vc.viewModel = viewModel
+
+//        let vc = TaskVC(VM: TaskVM(status: [], tasks: [], boardID: DashboardViewController.boards[indexPath.item].boardID!))
+       
+//        vc.boardName = DashboardViewController.boards[indexPath.item].boardName!
+//        vc.boardIndex = indexPath.item
+        
+        let vc = ContainerController(VM: TaskVM(status: [], tasks: [], board: viewModel.getAllBoard()[indexPath.item]))
         vc.hidesBottomBarWhenPushed = true
-        self.show(vc, sender: self)
+        //boardVC.modalPresentationStyle = .overFullScreen
+        
+        //self.tabBarController?.navigationController?.pushViewController(vc, animated: true)
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("number of items in section: \(viewModel.getBoardCount())")
+        //print("number of board: \(Board.getBoardCount())")
+        print("number of items in section: \(viewModel.getAllBoard().count)")
         return viewModel.getBoardCount()
     }
     
@@ -231,27 +249,27 @@ extension DashboardViewController: UICollectionViewDataSource,UICollectionViewDe
         
         cell?.deleteBoardBtn.tag = indexPath.item
         cell?.addUserBtn.tag = indexPath.item
+
         cell?.boardTitleLabel.text = viewModel.getBoardNameAtindex(index: indexPath.item)
         cell?.boardTitleLabel.textColor = .white
         
         var text = ""
-       
-        for items in viewModel.returnBoardAtIndex(index: indexPath.item).detail{
-            //let totalTask = DashboardViewController.boards[indexPath.item].totalTasks
-            let totalTask = viewModel.returnBoardAtIndex(index: indexPath.item).totalTasks
+        for items in viewModel.getAllBoard()[indexPath.item].detail{
+            let totalTask = viewModel.getAllBoard()[indexPath.item].totalTasks
+
             print("status: \(items.status ?? "")")
             print("number of this status: \(items.count ?? 0)")
             let itemText = "\(items.status!): \(items.count!) / \(totalTask)\n"
             text = String(format: "%@ %@", text, itemText)
         }
-        print("board deail: \(text)")
+
         
         cell?.deleteBoardBtn.addTarget(self, action: #selector(deleteBoard(sender:)), for: .touchUpInside)
         cell?.boardID = viewModel.getBoardIDatIndex(index: indexPath.row)
         cell?.textLabel.text = text
         cell?.addUserBtn.addTarget(self, action: #selector(inviteUser(sender:)), for: .touchUpInside)
-        //viewModel.requestGetGuest(boardID: viewModel.getBoardIDatIndex(index: indexPath.row))
-        cell?.guestCount = viewModel.getGuestCount()
+        
+
         return cell!
     }
     
@@ -272,6 +290,7 @@ extension DashboardViewController: UICollectionViewDataSource,UICollectionViewDe
         //        horizonalBarLeftAnchorConstraint?.constant = scrollView.contentOffset.x / 4
     }
     
+
     //    final private func getCurrentDateTime() {
     //        let formatter = DateFormatter()
     //        formatter.dateStyle = .long
@@ -292,6 +311,7 @@ extension DashboardViewController: UITextFieldDelegate {
         return true
     }
 }
+
 
 
 extension DashboardViewController: DashBoardVMDelegate {

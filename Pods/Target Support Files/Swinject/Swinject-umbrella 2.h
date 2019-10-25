@@ -10,6 +10,7 @@
 #endif
 #endif
 
+#import "Swinject 5.h"
 #import "Swinject.h"
 
 FOUNDATION_EXPORT double SwinjectVersionNumber;

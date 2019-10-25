@@ -1,5 +1,7 @@
 # Uncomment the next line to define a global platform for your project
+
 # platform :ios, '11.0'
+
 
 target 'todolist' do
   # Comment the next line if you don't want to use dynamic frameworks
@@ -17,6 +19,7 @@ pod 'SwiftyJSON'
 pod 'AlamofireObjectMapper'
 pod 'SnapKit'
 pod 'Swinject'
+pod 'SVProgressHUD'
 # add pods for any other desired Firebase products
 # https://firebase.google.com/docs/ios/setup#available-pod
 end

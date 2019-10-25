@@ -18,6 +18,7 @@ class Board: NSObject, Encodable, Mappable, NSCoding {
     var userID: String? = ""
     var detail = [Detail]()
     var totalTasks: Int = 0
+
     var invited = [String]()
     var guest = [User]()
     //static var count: Int = 0
@@ -28,9 +29,11 @@ class Board: NSObject, Encodable, Mappable, NSCoding {
         self.boardID = ""
         self.status = ""
         self.detail = [Detail]()
+
         self.invited = [""]
         self.totalTasks = 0
         self.guest = [User]()
+
         //Board.count += 1
     }
     
@@ -45,6 +48,7 @@ class Board: NSObject, Encodable, Mappable, NSCoding {
         self.detail <- map["details"]
         self.totalTasks <- map["totalTasks"]
         self.invited <- map["invited"]
+
         self.guest <- map["users"]
     }
     
@@ -61,10 +65,12 @@ class Board: NSObject, Encodable, Mappable, NSCoding {
             self.items = items as! [String]
         }
         self.totalTasks = coder.decodeInteger(forKey: "boardTotalTasks")
+
         //self.status = coder.decodeObject(forKey: "boardStatus") as! String
         //self.userID = coder.decodeObject(forKey: "boardUserID") as! String
         //Board.count = coder.decodeObject(forKey: "boardCount") as! Int
     
+
     }
     
     func encode(with coder: NSCoder) {
@@ -76,12 +82,15 @@ class Board: NSObject, Encodable, Mappable, NSCoding {
         coder.encode(items, forKey: "boardItems")
         //coder.encode(userID, forKey: "boardUserID")
         coder.encode(status, forKey: "boardStatus")
+
+
         coder.encode(totalTasks, forKey: "boardTotalTasks")
     }
     
     
     
     static func getBoardCount () -> Int {
+
         return 0
         //return Board.count
     }

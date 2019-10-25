@@ -41,6 +41,7 @@ extension UIButton {
         layer.add(flash, forKey: nil)
     }
 }
+
 //MARK: Get Date + Time for Title
 func getCurrentDateTime() -> String{
     let formatter = DateFormatter()
@@ -53,4 +54,3 @@ func getCurrentDateTime() -> String{
 extension UIApplication {
     
 }
-

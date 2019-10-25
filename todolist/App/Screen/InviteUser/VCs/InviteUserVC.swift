@@ -64,6 +64,10 @@ extension InviteUserVC {
     final private func setupNavBar(){
         let navBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 44))
         view.addSubview(navBar)
+        navBar.snp.makeConstraints { (make) in
+            make.top.equalTo(view.safeArea.top)
+            make.left.right.equalToSuperview()
+        }
         
         let navItem = UINavigationItem(title: "Invite member")
         let doneItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.stop, target: nil, action: #selector(backtoBar))

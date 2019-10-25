@@ -8,11 +8,14 @@
 
 import UIKit
 import FirebaseAuth
+import SVProgressHUD
 import OneSignal
+
 
 final class ProfileViewController: UIViewController {
     
     //MARK:- UI Properties
+    
     private let scrollview = UIScrollView()
     private let container = UIView()
     private let datePicker = UIDatePicker()
@@ -47,6 +50,7 @@ final class ProfileViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         initUser()
     }
 }
@@ -55,11 +59,7 @@ final class ProfileViewController: UIViewController {
 extension ProfileViewController {
     final private func initUser(){
         viewModel.resquestUserAPI()
-        userNameLabel.text = viewModel.getUserFirstName() + " " + viewModel.getUserLastName()
-        emailLabel.text = viewModel.getUserEmail()
-        firstnameTextField.placeholder = viewModel.getUserFirstName()
-        lastnameTextField.placeholder = viewModel.getUserLastName()
-        birthdayTextField.placeholder = viewModel.getUserBirth()
+      
     }
     
     final private func initDelegate(){
@@ -69,16 +69,7 @@ extension ProfileViewController {
         birthdayTextField.delegate = self
     }
     
-    final private func checkSubcribe(){
-        let status: OSPermissionSubscriptionState = OneSignal.getPermissionSubscriptionState()
-        
-        let isSubscribed = status.subscriptionStatus.subscribed
-        print("isSubscribed = \(isSubscribed)")
-        
-        if isSubscribed == true {
-            notiSwitch.setOn(true, animated: true)
-        }
-    }
+  
 }
 
 // MARK:- Setup UI
@@ -94,6 +85,7 @@ extension ProfileViewController {
         self.navigationController?.isNavigationBarHidden = true
     }
     
+    //MARK: Scroll
     final private func setupScroll(){
         self.view.addSubview(scrollview)
         scrollview.snp.makeConstraints { (make) in
@@ -104,7 +96,7 @@ extension ProfileViewController {
         }
         scrollview.delegate = self
         
-        scrollview.backgroundColor = UIColor.white
+        scrollview.backgroundColor = UIColor(red:1.00, green:0.19, blue:0.31, alpha:1.0)
         scrollview.alwaysBounceVertical = true
         scrollview.showsHorizontalScrollIndicator = false
         
@@ -116,17 +108,14 @@ extension ProfileViewController {
             make.width.equalTo(self.scrollview)
             make.height.equalTo(self.scrollview).offset(20)
         }
-
+        
     }
     
     
     final private func setupProfileUI(){
         container.backgroundColor = .white
-        //        self.tabBarController?.view.snp.makeConstraints{ make in
-        //            make.bottom.equalToSuperview()
-        //        }
-        
         container.addSubview(backgroundView)
+        
         backgroundView.snp.makeConstraints{ make in
             make.width.equalToSuperview()
             make.top.equalToSuperview()
@@ -134,7 +123,9 @@ extension ProfileViewController {
         }
         backgroundView.backgroundColor = UIColor(red:1.00, green:0.19, blue:0.31, alpha:1.0)
         
+        
         container.addSubview(userNameLabel)
+        
         userNameLabel.snp.makeConstraints{ make in
             make.centerX.equalToSuperview()
             make.top.equalToSuperview().offset(40)
@@ -142,7 +133,9 @@ extension ProfileViewController {
         userNameLabel.textColor = .white
         userNameLabel.text = ""
         
+        
         container.addSubview(profileImage)
+        
         profileImage.snp.makeConstraints{ make in
             make.centerX.equalToSuperview()
             make.size.equalTo(70)
@@ -155,7 +148,9 @@ extension ProfileViewController {
         profileImage.backgroundColor = .white
         profileImage.contentMode = .scaleAspectFill
         
+        
         container.addSubview(emailLabel)
+        
         emailLabel.snp.makeConstraints{ make in
             make.top.equalTo(profileImage).offset(80)
             make.centerX.equalToSuperview()
@@ -163,6 +158,7 @@ extension ProfileViewController {
         emailLabel.text = "Email"
         emailLabel.textColor = .white
     }
+    
     
     
     final private func setupProfileSetting(){
@@ -178,7 +174,6 @@ extension ProfileViewController {
         aboutLabel.font = UIFont.systemFont(ofSize: 25, weight: .semibold)
         
         
-        
         container.addSubview(firtnameLb)
         firtnameLb.snp.makeConstraints { (make) in
             make.top.equalTo(aboutLabel.snp.bottom).offset(30)
@@ -188,7 +183,9 @@ extension ProfileViewController {
         }
         firtnameLb.text = "First Name"
         
+        
         container.addSubview(firstnameTextField)
+        
         firstnameTextField.snp.makeConstraints { (make) in
             make.top.equalTo(firtnameLb.snp.bottom).offset(8)
             make.left.equalToSuperview().offset(46)
@@ -198,13 +195,16 @@ extension ProfileViewController {
         }
         firstnameTextField.borderStyle = .roundedRect
         
+        
         container.addSubview(lastnameLb)
+        
         lastnameLb.snp.makeConstraints { (make) in
             make.top.equalTo(firstnameTextField.snp.bottom).offset(11)
             make.left.equalToSuperview().offset(46)
             make.height.equalTo(21)
         }
         lastnameLb.text = "Last Name"
+        
         
         container.addSubview(lastnameTextField)
         lastnameTextField.snp.makeConstraints { (make) in
@@ -215,7 +215,9 @@ extension ProfileViewController {
         }
         lastnameTextField.borderStyle = .roundedRect
         
+        
         container.addSubview(birthday)
+        
         birthday.snp.makeConstraints { (make) in
             make.top.equalTo(lastnameTextField.snp.bottom).offset(11)
             make.left.equalToSuperview().offset(46)
@@ -223,7 +225,9 @@ extension ProfileViewController {
         }
         birthday.text = "Birthday"
         
+        
         container.addSubview(birthdayTextField)
+        
         birthdayTextField.snp.makeConstraints { (make) in
             make.top.equalTo(birthday.snp.bottom).offset(8)
             make.left.equalToSuperview().offset(46)
@@ -233,8 +237,8 @@ extension ProfileViewController {
         birthdayTextField.borderStyle = .roundedRect
         
         //MARK:- save button
-        
         container.addSubview(saveBtn)
+        
         saveBtn.snp.makeConstraints{ make in
             make.top.equalTo(birthdayTextField.snp.bottom).offset(15)
             make.left.equalToSuperview().offset(46)
@@ -243,7 +247,8 @@ extension ProfileViewController {
         saveBtn.addTarget(self, action: #selector(saveProfile(_sender:)), for: .touchUpInside)
         saveBtn.setTitle("Save", for: .normal)
         saveBtn.setTitleColor(.white, for: .normal)
-        saveBtn.backgroundColor = .systemGreen
+        
+        saveBtn.backgroundColor = .green
         saveBtn.layer.cornerRadius = 10
         
         container.addSubview(decoView)
@@ -306,6 +311,7 @@ extension ProfileViewController {
     }
     
     
+    
     private final func showdatePicker() {
         datePicker.datePickerMode = .date
         let toolbar = UIToolbar()
@@ -318,6 +324,7 @@ extension ProfileViewController {
         birthdayTextField.inputView = datePicker
     }
     
+    
     //    final private func setProfilefromAPI(){
     //        self.userNameLabel.text = User.getNamePrint()
     //        print("username : \(User.getNamePrint())")
@@ -325,10 +332,12 @@ extension ProfileViewController {
     //        self.emailLabel.text = User.getemailPrint()
     //        print("email: \(User.getemailPrint())")
     //    }
+    
 }
 
 //MARK:- Action functions
 extension ProfileViewController {
+    
     
     @objc final private func onNotiSwitchChange(state: UISwitch) {
         if state.isOn {
@@ -337,6 +346,7 @@ extension ProfileViewController {
             OneSignal.setSubscription(false)
         }
     }
+    
     
     @objc final private func donedatePicker() {
         let formatter = DateFormatter()
@@ -359,39 +369,32 @@ extension ProfileViewController {
             print ("Error signing out: %@", signOutError)
         }
     }
-    
+    //MARK: Save Profile
     @objc final private func saveProfile(_sender: UIButton){
         let firstname = firstnameTextField.text
         let lastname = lastnameTextField.text
         let birthday = birthdayTextField.text
-        
-        
         let currentuser = Auth.auth().currentUser
         if currentuser != nil{
             
             updateUserAPI(firstName: firstname!, lastName: lastname!, userPhone: "", birthDay: birthday! , avatarURL: "", email: "")
             _sender.flash()
-            //                getUserAPI { (error, user) in
-            //                    if let error = error {
-            //                        print(error.localizedDescription)
-            //                        return
-            //                    }
-            //                    if let userToPrint = user {
-            //                        self.userNameLabel.text = User.getNamePrint()
-            //                        self.emailLabel.text = User.getemailPrint()
-            //                        return
-            //                    }
-            //                }
-            self.viewModel.setUser(newuser: User(firstName: firstname!, lastName: lastname!, userPhone: "", birthDay: birthday! , avatarURL: "", email: ""))
-            self.viewModel.resquestUserAPI()
             
+            self.viewModel.setUser(newuser: User(firstName: firstname!, lastName: lastname!, userPhone: "", birthDay: birthday! , avatarURL: "", email: ""))
+            SVProgressHUD.show()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 10.0) {
+                
+                self.viewModel.resquestUserAPI()
+            }
+            
+            SVProgressHUD.dismiss()
         }
-        
+        clearTextField()
     }
 }
-
 //MARK:- private function
 extension ProfileViewController{
+    
     //    final private func checkTextField() -> Bool {
     //        if self.firstnameTextField.text == "" || self.lastnameTextField.text == "" || self.birthday.text == "" {
     //            return false
@@ -404,12 +407,31 @@ extension ProfileViewController{
         lastnameTextField.text = ""
         birthdayTextField.text = ""
     }
+    
+    final private func checkSubcribe(){
+          let status: OSPermissionSubscriptionState = OneSignal.getPermissionSubscriptionState()
+          
+          let isSubscribed = status.subscriptionStatus.subscribed
+          print("isSubscribed = \(isSubscribed)")
+          
+          if isSubscribed == true {
+              notiSwitch.setOn(true, animated: true)
+          }
+      }
+    
+    final private func inflateFromVM(){
+        userNameLabel.text = viewModel.getUserFirstName() + " " + viewModel.getUserLastName()
+        emailLabel.text = viewModel.getUserEmail()
+        firstnameTextField.placeholder = viewModel.getUserFirstName()
+        lastnameTextField.placeholder = viewModel.getUserLastName()
+        birthdayTextField.placeholder = viewModel.getUserBirth()
+    }
 }
 
 //MARK:- profileVM delegate
 extension ProfileViewController: ProfileVMdelegate {
     func onProfileChangeData(_ vm: ProfileVM, data: User) {
-        initUser()
+        inflateFromVM()
     }
 }
 
@@ -421,7 +443,7 @@ extension ProfileViewController: UITextFieldDelegate{
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
-
+        
     }
 }
 
@@ -429,5 +451,6 @@ extension ProfileViewController: UIScrollViewDelegate{
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         scrollView.contentOffset = CGPoint(x: 0, y: self.scrollview.contentOffset.y)
         scrollView.isDirectionalLockEnabled = true
+        
     }
 }

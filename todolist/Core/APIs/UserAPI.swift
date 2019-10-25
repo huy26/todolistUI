@@ -16,13 +16,16 @@ import MobileCoreServices
 import OneSignal
 
 
+
 func getUserAPI (onCompleted: @escaping ((Error?, User?)-> Void)) {
     //var data = User(firstName: "", lastName: "", userPhone: "", birthDay: "", avatarURL: "", email: "")
     var data: User?
     let currentUser = Auth.auth().currentUser
     currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
         if error != nil {
+
             print("get token failed user")
+
             return;
         }
      
@@ -32,6 +35,7 @@ func getUserAPI (onCompleted: @escaping ((Error?, User?)-> Void)) {
             "tokenID": "\(idToken!)",
         ]
         AF.request(url, method: .get,parameters: data,encoder: URLEncodedFormParameterEncoder(destination: .httpBody), headers: header)
+
             .responseDecodable{ (response: AFDataResponse<User>) in
                 switch response.result {
                 case let .success(value):
@@ -47,9 +51,12 @@ func getUserAPI (onCompleted: @escaping ((Error?, User?)-> Void)) {
                     break
                 }
         }
+
+
     }
     
 }
+
 
 func getUserListAPI(onCompleted: @escaping ((Error?, [SearchUser]?)-> Void)){
     
@@ -85,6 +92,7 @@ func getUserListAPI(onCompleted: @escaping ((Error?, [SearchUser]?)-> Void)){
     }
 }
 
+
 func uploadUserAPI(firstName: String, lastName: String, userPhone: String, birthDay: String, avatarURL: String, email: String){
     
     let data = User(firstName: firstName, lastName: lastName, userPhone: userPhone, birthDay: birthDay, avatarURL: avatarURL, email: email)
@@ -92,6 +100,7 @@ func uploadUserAPI(firstName: String, lastName: String, userPhone: String, birth
     let currentUser = Auth.auth().currentUser
     currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
         if error != nil {
+
             print("get token failed user")
             return;
         }
@@ -121,6 +130,7 @@ func updateUserAPI(firstName: String, lastName: String, userPhone: String, birth
     let currentUser = Auth.auth().currentUser
     currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
         if error != nil {
+
             print("get token failed user")
             return;
         }
@@ -143,6 +153,7 @@ func updateUserAPI(firstName: String, lastName: String, userPhone: String, birth
         print("http resquest succeed")
     }
 }
+
 
 func getGuestListAPI(boardID: String, onCompleted: @escaping ((Error?, [User]?)-> Void)) {
     
@@ -184,3 +195,4 @@ func getGuestListAPI(boardID: String, onCompleted: @escaping ((Error?, [User]?)-
           
       })
 }
+

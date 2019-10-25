@@ -16,30 +16,35 @@
 		040891E4232254E60025EE37 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 040891E2232254E60025EE37 /* LaunchScreen.storyboard */; };
 		040891EC23225F1D0025EE37 /* SignupViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040891EB23225F1D0025EE37 /* SignupViewViewController.swift */; };
 		040E92812349F30C006CB93B /* TestPic.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 040E92802349F30C006CB93B /* TestPic.jpg */; };
-		0424541623361B7E00A0230F /* BoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0424541523361B7E00A0230F /* BoardViewController.swift */; };
-		042E47EE23542E92007A7009 /* DashBoardVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042E47ED23542E92007A7009 /* DashBoardVM.swift */; };
 		042E52002334C76E00030E5E /* StatusCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042E51FB2334C76800030E5E /* StatusCollectionViewCell.swift */; };
-		042E52012334C76E00030E5E /* BoardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042E51FC2334C76A00030E5E /* BoardCollectionViewCell.swift */; };
-		042E52032334C76E00030E5E /* BoardCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042E51FE2334C76E00030E5E /* BoardCollectionViewController.swift */; };
+		042E52012334C76E00030E5E /* TaskCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042E51FC2334C76A00030E5E /* TaskCollectionViewCell.swift */; };
 		0438E26E2333780E00BCBEC8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0438E26D2333780D00BCBEC8 /* GoogleService-Info.plist */; };
 		043B6BC52331EF0700F264E8 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043B6BC42331EF0700F264E8 /* Task.swift */; };
-		0440BECC2354A86000859E32 /* Reuse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0440BECB2354A86000859E32 /* Reuse.swift */; };
-		0445DF622355FB72007F583A /* ProfileVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0445DF612355FB72007F583A /* ProfileVM.swift */; };
-		0446382C2350AD890044DFE9 /* InviteUserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0446382B2350AD890044DFE9 /* InviteUserVC.swift */; };
-		044638312350C20B0044DFE9 /* SearchUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044638302350C20B0044DFE9 /* SearchUser.swift */; };
-		044638342350CA010044DFE9 /* UserInfo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 044638322350CA010044DFE9 /* UserInfo.xcdatamodeld */; };
-		0448EB852356C57200FE85BE /* GuestVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0448EB842356C57000FE85BE /* GuestVM.swift */; };
 		044F1C65234EE1DE009F58BA /* GuestCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044F1C64234EE1DE009F58BA /* GuestCollectionViewCell.swift */; };
 		045304EA23505FD900F133F3 /* UserAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045304E923505FD900F133F3 /* UserAPI.swift */; };
 		045304EC2350601700F133F3 /* BoardAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045304EB2350601700F133F3 /* BoardAPI.swift */; };
 		045304F0235060E400F133F3 /* TaskAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045304EF235060E400F133F3 /* TaskAPI.swift */; };
 		045304F6235069AF00F133F3 /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045304F5235069AF00F133F3 /* URL.swift */; };
+		04812944235424B0006E02F8 /* SignInVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04812943235424B0006E02F8 /* SignInVM.swift */; };
+		048A9645235FF88100BD5558 /* AddBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048A9644235FF87400BD5558 /* AddBoardViewController.swift */; };
+		048A9649235FF8E000BD5558 /* InviteUserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048A9648235FF8E000BD5558 /* InviteUserVC.swift */; };
+		048A964D235FFB4500BD5558 /* GuestVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048A964B235FFB4500BD5558 /* GuestVM.swift */; };
+		048A964E235FFB4500BD5558 /* DashBoardVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048A964C235FFB4500BD5558 /* DashBoardVM.swift */; };
+		048A9651235FFBA400BD5558 /* ProfileVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048A9650235FFBA300BD5558 /* ProfileVM.swift */; };
+		048A9653235FFD4E00BD5558 /* Reuse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048A9652235FFD4E00BD5558 /* Reuse.swift */; };
+		048A9655236005FF00BD5558 /* SearchUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048A9654236005FF00BD5558 /* SearchUser.swift */; };
 		0491CBD32330D9AC00040E51 /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0491CBD22330D9AC00040E51 /* ForgotPasswordViewController.swift */; };
 		0498C3F8234D8BC000F99C10 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0498C3F7234D8BC000F99C10 /* TableViewCell.swift */; };
 		0498C401234D8DD700F99C10 /* DescriptionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0498C400234D8DD700F99C10 /* DescriptionVC.swift */; };
 		0498C403234D8DFD00F99C10 /* TaskDetailVCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0498C402234D8DFD00F99C10 /* TaskDetailVCViewController.swift */; };
 		0498C406234D9EC900F99C10 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0498C405234D9EC900F99C10 /* UIView+Extension.swift */; };
 		0498DBED2328ED70005C5666 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0498DBEC2328ED70005C5666 /* Board.swift */; };
+		049A68D5235568D50031B3D0 /* TaskVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049A68D4235568D50031B3D0 /* TaskVM.swift */; };
+		049EE2D0235980C200AA48A5 /* ContainerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049EE2CB235980C200AA48A5 /* ContainerController.swift */; };
+		049EE2D1235980C200AA48A5 /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049EE2CC235980C200AA48A5 /* Protocol.swift */; };
+		049EE2D2235980C200AA48A5 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049EE2CD235980C200AA48A5 /* HomeController.swift */; };
+		049EE2D3235980C200AA48A5 /* MenuOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049EE2CE235980C200AA48A5 /* MenuOptionCell.swift */; };
+		049EE2D4235980C200AA48A5 /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049EE2CF235980C200AA48A5 /* MenuController.swift */; };
 		04F989682338D5ED00A062C4 /* Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F989672338D5ED00A062C4 /* Status.swift */; };
 		04FA8FCF232F720C00EFEA29 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FA8FCE232F720C00EFEA29 /* User.swift */; };
 		04FBCBB3234740B3005C74F6 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FBCBB2234740B3005C74F6 /* TabBarController.swift */; };
@@ -54,9 +59,8 @@
 		04FC1599233B5FE00091FC4E /* boardDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FC1598233B5FE00091FC4E /* boardDetail.swift */; };
 		04FD9B5D23459FE000B3B937 /* plus icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 04FD9B5C23459FE000B3B937 /* plus icon.png */; };
 		04FD9B5F2345B32000B3B937 /* delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 04FD9B5E2345B32000B3B937 /* delete.png */; };
-		04FD9B612345F1B900B3B937 /* AddBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD9B602345F1B900B3B937 /* AddBoardViewController.swift */; };
-		4B47D193BE57763235641DF2 /* Pods_todolist.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03FF37A2A0E1E1AC87C945A8 /* Pods_todolist.framework */; };
-		7C9ADB0B3E66F1C3F87440C9 /* Pods_OneSignalNotifactionServiceExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2D768BDA4A19FFAF4B2970B /* Pods_OneSignalNotifactionServiceExtension.framework */; };
+		43E38101D0878C92624726BB /* Pods_OneSignalNotifactionServiceExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4891FF5C7FDE0B97ACD7A53E /* Pods_OneSignalNotifactionServiceExtension.framework */; };
+		62C30297F8910937438C19BD /* Pods_todolist.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3214D95748F42100F1C10FA8 /* Pods_todolist.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,7 +88,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		03FF37A2A0E1E1AC87C945A8 /* Pods_todolist.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_todolist.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		04061FEB23435EBA0068B0BB /* Boards@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Boards@3x.png"; sourceTree = "<group>"; };
 		04061FF12344952E0068B0BB /* OneSignalNotifactionServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OneSignalNotifactionServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		04061FF32344952E0068B0BB /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
@@ -98,31 +101,35 @@
 		040891E5232254E60025EE37 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		040891EB23225F1D0025EE37 /* SignupViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewViewController.swift; sourceTree = "<group>"; };
 		040E92802349F30C006CB93B /* TestPic.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = TestPic.jpg; sourceTree = "<group>"; };
-		0424541523361B7E00A0230F /* BoardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardViewController.swift; sourceTree = "<group>"; };
-		042E47ED23542E92007A7009 /* DashBoardVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashBoardVM.swift; sourceTree = "<group>"; };
 		042E51FB2334C76800030E5E /* StatusCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusCollectionViewCell.swift; sourceTree = "<group>"; };
-		042E51FC2334C76A00030E5E /* BoardCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardCollectionViewCell.swift; sourceTree = "<group>"; };
-		042E51FE2334C76E00030E5E /* BoardCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardCollectionViewController.swift; sourceTree = "<group>"; };
+		042E51FC2334C76A00030E5E /* TaskCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskCollectionViewCell.swift; sourceTree = "<group>"; };
 		0438E26D2333780D00BCBEC8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		043B6BC42331EF0700F264E8 /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
-		043CAC322358450E00CEED2D /* OneSignalNotifactionServiceExtensionRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OneSignalNotifactionServiceExtensionRelease.entitlements; sourceTree = "<group>"; };
-		0440BECB2354A86000859E32 /* Reuse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reuse.swift; sourceTree = "<group>"; };
-		0445DF612355FB72007F583A /* ProfileVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVM.swift; sourceTree = "<group>"; };
-		0446382B2350AD890044DFE9 /* InviteUserVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteUserVC.swift; sourceTree = "<group>"; };
-		044638302350C20B0044DFE9 /* SearchUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUser.swift; sourceTree = "<group>"; };
-		044638332350CA010044DFE9 /* UserInfo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = UserInfo.xcdatamodel; sourceTree = "<group>"; };
-		0448EB842356C57000FE85BE /* GuestVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestVM.swift; sourceTree = "<group>"; };
 		044F1C64234EE1DE009F58BA /* GuestCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuestCollectionViewCell.swift; sourceTree = "<group>"; };
 		045304E923505FD900F133F3 /* UserAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAPI.swift; sourceTree = "<group>"; };
 		045304EB2350601700F133F3 /* BoardAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardAPI.swift; sourceTree = "<group>"; };
 		045304EF235060E400F133F3 /* TaskAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskAPI.swift; sourceTree = "<group>"; };
 		045304F5235069AF00F133F3 /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
+		04812943235424B0006E02F8 /* SignInVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInVM.swift; sourceTree = "<group>"; };
+		048A9644235FF87400BD5558 /* AddBoardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddBoardViewController.swift; sourceTree = "<group>"; };
+		048A9648235FF8E000BD5558 /* InviteUserVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteUserVC.swift; sourceTree = "<group>"; };
+		048A964B235FFB4500BD5558 /* GuestVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuestVM.swift; sourceTree = "<group>"; };
+		048A964C235FFB4500BD5558 /* DashBoardVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashBoardVM.swift; sourceTree = "<group>"; };
+		048A9650235FFBA300BD5558 /* ProfileVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileVM.swift; sourceTree = "<group>"; };
+		048A9652235FFD4E00BD5558 /* Reuse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reuse.swift; sourceTree = "<group>"; };
+		048A9654236005FF00BD5558 /* SearchUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchUser.swift; sourceTree = "<group>"; };
 		0491CBD22330D9AC00040E51 /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
 		0498C3F7234D8BC000F99C10 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		0498C400234D8DD700F99C10 /* DescriptionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionVC.swift; sourceTree = "<group>"; };
 		0498C402234D8DFD00F99C10 /* TaskDetailVCViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailVCViewController.swift; sourceTree = "<group>"; };
 		0498C405234D9EC900F99C10 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		0498DBEC2328ED70005C5666 /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
+		049A68D4235568D50031B3D0 /* TaskVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskVM.swift; sourceTree = "<group>"; };
+		049EE2CB235980C200AA48A5 /* ContainerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerController.swift; sourceTree = "<group>"; };
+		049EE2CC235980C200AA48A5 /* Protocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Protocol.swift; sourceTree = "<group>"; };
+		049EE2CD235980C200AA48A5 /* HomeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
+		049EE2CE235980C200AA48A5 /* MenuOptionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuOptionCell.swift; sourceTree = "<group>"; };
+		049EE2CF235980C200AA48A5 /* MenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
 		04F989672338D5ED00A062C4 /* Status.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Status.swift; sourceTree = "<group>"; };
 		04FA8FCE232F720C00EFEA29 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		04FBCBB2234740B3005C74F6 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
@@ -137,12 +144,12 @@
 		04FC1598233B5FE00091FC4E /* boardDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = boardDetail.swift; sourceTree = "<group>"; };
 		04FD9B5C23459FE000B3B937 /* plus icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "plus icon.png"; sourceTree = "<group>"; };
 		04FD9B5E2345B32000B3B937 /* delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delete.png; sourceTree = "<group>"; };
-		04FD9B602345F1B900B3B937 /* AddBoardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBoardViewController.swift; sourceTree = "<group>"; };
-		15844CE71B789CD8B14D48F2 /* Pods-todolist.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-todolist.release.xcconfig"; path = "Target Support Files/Pods-todolist/Pods-todolist.release.xcconfig"; sourceTree = "<group>"; };
-		4AF6537C106D956855BD18DA /* Pods-OneSignalNotifactionServiceExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotifactionServiceExtension.debug.xcconfig"; path = "Target Support Files/Pods-OneSignalNotifactionServiceExtension/Pods-OneSignalNotifactionServiceExtension.debug.xcconfig"; sourceTree = "<group>"; };
-		A2D768BDA4A19FFAF4B2970B /* Pods_OneSignalNotifactionServiceExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OneSignalNotifactionServiceExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		ACF8625570CD50FBF6DD0E83 /* Pods-OneSignalNotifactionServiceExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotifactionServiceExtension.release.xcconfig"; path = "Target Support Files/Pods-OneSignalNotifactionServiceExtension/Pods-OneSignalNotifactionServiceExtension.release.xcconfig"; sourceTree = "<group>"; };
-		BD5B3BD0C4AD219A6CFCC3B3 /* Pods-todolist.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-todolist.debug.xcconfig"; path = "Target Support Files/Pods-todolist/Pods-todolist.debug.xcconfig"; sourceTree = "<group>"; };
+		0EEAFF260BC7B046542FB5CF /* Pods-OneSignalNotifactionServiceExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotifactionServiceExtension.release.xcconfig"; path = "Target Support Files/Pods-OneSignalNotifactionServiceExtension/Pods-OneSignalNotifactionServiceExtension.release.xcconfig"; sourceTree = "<group>"; };
+		3214D95748F42100F1C10FA8 /* Pods_todolist.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_todolist.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4891FF5C7FDE0B97ACD7A53E /* Pods_OneSignalNotifactionServiceExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OneSignalNotifactionServiceExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		55E8F900BC14015A09D90399 /* Pods-todolist.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-todolist.release.xcconfig"; path = "Target Support Files/Pods-todolist/Pods-todolist.release.xcconfig"; sourceTree = "<group>"; };
+		56ACA5D1C83EB7DEB19582E9 /* Pods-OneSignalNotifactionServiceExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotifactionServiceExtension.debug.xcconfig"; path = "Target Support Files/Pods-OneSignalNotifactionServiceExtension/Pods-OneSignalNotifactionServiceExtension.debug.xcconfig"; sourceTree = "<group>"; };
+		6743B16DB7062A857D52B314 /* Pods-todolist.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-todolist.debug.xcconfig"; path = "Target Support Files/Pods-todolist/Pods-todolist.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,7 +157,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7C9ADB0B3E66F1C3F87440C9 /* Pods_OneSignalNotifactionServiceExtension.framework in Frameworks */,
+				43E38101D0878C92624726BB /* Pods_OneSignalNotifactionServiceExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -158,7 +165,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4B47D193BE57763235641DF2 /* Pods_todolist.framework in Frameworks */,
+				62C30297F8910937438C19BD /* Pods_todolist.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -168,10 +175,10 @@
 		02A710536092FEDBEC6A988F /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				4AF6537C106D956855BD18DA /* Pods-OneSignalNotifactionServiceExtension.debug.xcconfig */,
-				ACF8625570CD50FBF6DD0E83 /* Pods-OneSignalNotifactionServiceExtension.release.xcconfig */,
-				BD5B3BD0C4AD219A6CFCC3B3 /* Pods-todolist.debug.xcconfig */,
-				15844CE71B789CD8B14D48F2 /* Pods-todolist.release.xcconfig */,
+				56ACA5D1C83EB7DEB19582E9 /* Pods-OneSignalNotifactionServiceExtension.debug.xcconfig */,
+				0EEAFF260BC7B046542FB5CF /* Pods-OneSignalNotifactionServiceExtension.release.xcconfig */,
+				6743B16DB7062A857D52B314 /* Pods-todolist.debug.xcconfig */,
+				55E8F900BC14015A09D90399 /* Pods-todolist.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -179,7 +186,6 @@
 		04061FF22344952E0068B0BB /* OneSignalNotifactionServiceExtension */ = {
 			isa = PBXGroup;
 			children = (
-				043CAC322358450E00CEED2D /* OneSignalNotifactionServiceExtensionRelease.entitlements */,
 				04061FF32344952E0068B0BB /* NotificationService.swift */,
 				04061FF52344952E0068B0BB /* Info.plist */,
 			);
@@ -193,7 +199,7 @@
 				04061FF22344952E0068B0BB /* OneSignalNotifactionServiceExtension */,
 				040891D7232254E50025EE37 /* Products */,
 				02A710536092FEDBEC6A988F /* Pods */,
-				C6154E3912C994F6318BB565 /* Frameworks */,
+				C3B9C6624402B6BDDF71D476 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -209,7 +215,6 @@
 		040891D8232254E50025EE37 /* todolist */ = {
 			isa = PBXGroup;
 			children = (
-				044638322350CA010044DFE9 /* UserInfo.xcdatamodeld */,
 				040891E5232254E60025EE37 /* Info.plist */,
 				04061FFD234498830068B0BB /* todolist.entitlements */,
 				040891D9232254E50025EE37 /* AppDelegate.swift */,
@@ -220,55 +225,6 @@
 				0438E26D2333780D00BCBEC8 /* GoogleService-Info.plist */,
 			);
 			path = todolist;
-			sourceTree = "<group>";
-		};
-		042E47EA23542D4F007A7009 /* AddBoard */ = {
-			isa = PBXGroup;
-			children = (
-				042E47EB23542DD3007A7009 /* VCs */,
-			);
-			path = AddBoard;
-			sourceTree = "<group>";
-		};
-		042E47EB23542DD3007A7009 /* VCs */ = {
-			isa = PBXGroup;
-			children = (
-				04FD9B602345F1B900B3B937 /* AddBoardViewController.swift */,
-			);
-			path = VCs;
-			sourceTree = "<group>";
-		};
-		042E47EC23542E5D007A7009 /* VM */ = {
-			isa = PBXGroup;
-			children = (
-				042E47ED23542E92007A7009 /* DashBoardVM.swift */,
-				0448EB842356C57000FE85BE /* GuestVM.swift */,
-			);
-			path = VM;
-			sourceTree = "<group>";
-		};
-		0445DF602355FB45007F583A /*  VM */ = {
-			isa = PBXGroup;
-			children = (
-				0445DF612355FB72007F583A /* ProfileVM.swift */,
-			);
-			path = " VM";
-			sourceTree = "<group>";
-		};
-		044638272350AD050044DFE9 /* InviteUser */ = {
-			isa = PBXGroup;
-			children = (
-				044638282350AD430044DFE9 /* VCs */,
-			);
-			path = InviteUser;
-			sourceTree = "<group>";
-		};
-		044638282350AD430044DFE9 /* VCs */ = {
-			isa = PBXGroup;
-			children = (
-				0446382B2350AD890044DFE9 /* InviteUserVC.swift */,
-			);
-			path = VCs;
 			sourceTree = "<group>";
 		};
 		045304D223505D2700F133F3 /* App */ = {
@@ -285,8 +241,8 @@
 		045304D323505D3A00F133F3 /* Screen */ = {
 			isa = PBXGroup;
 			children = (
-				042E47EA23542D4F007A7009 /* AddBoard */,
-				044638272350AD050044DFE9 /* InviteUser */,
+				048A9646235FF8E000BD5558 /* InviteUser */,
+				048A9642235FF87400BD5558 /* AddBoard */,
 				0498C3FF234D8DB600F99C10 /* TaskDetail */,
 				045304E123505F1B00F133F3 /* Task */,
 				045304DF23505ED900F133F3 /* TabBar */,
@@ -303,6 +259,7 @@
 			isa = PBXGroup;
 			children = (
 				045304D523505D5D00F133F3 /* VCs */,
+				048129422354249B006E02F8 /* VMs */,
 			);
 			path = SignIn;
 			sourceTree = "<group>";
@@ -350,7 +307,7 @@
 		045304DA23505E5000F133F3 /* DashBoard */ = {
 			isa = PBXGroup;
 			children = (
-				042E47EC23542E5D007A7009 /* VM */,
+				048A964A235FFB4500BD5558 /* VM */,
 				045304DC23505E8700F133F3 /* View */,
 				045304DB23505E6800F133F3 /*  VCs */,
 			);
@@ -377,7 +334,7 @@
 		045304DD23505EC700F133F3 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				0445DF602355FB45007F583A /*  VM */,
+				048A964F235FFBA300BD5558 /*  VM */,
 				045304DE23505ECE00F133F3 /* VCs */,
 			);
 			path = Profile;
@@ -410,6 +367,7 @@
 		045304E123505F1B00F133F3 /* Task */ = {
 			isa = PBXGroup;
 			children = (
+				049A68D3235567670031B3D0 /* VMs */,
 				045304E323505F3800F133F3 /* View */,
 				045304E223505F3100F133F3 /* VCs */,
 			);
@@ -419,8 +377,11 @@
 		045304E223505F3100F133F3 /* VCs */ = {
 			isa = PBXGroup;
 			children = (
-				0424541523361B7E00A0230F /* BoardViewController.swift */,
-				042E51FE2334C76E00030E5E /* BoardCollectionViewController.swift */,
+				049EE2CC235980C200AA48A5 /* Protocol.swift */,
+				049EE2CD235980C200AA48A5 /* HomeController.swift */,
+				049EE2CB235980C200AA48A5 /* ContainerController.swift */,
+				049EE2CF235980C200AA48A5 /* MenuController.swift */,
+				049EE2CE235980C200AA48A5 /* MenuOptionCell.swift */,
 			);
 			path = VCs;
 			sourceTree = "<group>";
@@ -428,7 +389,7 @@
 		045304E323505F3800F133F3 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				042E51FC2334C76A00030E5E /* BoardCollectionViewCell.swift */,
+				042E51FC2334C76A00030E5E /* TaskCollectionViewCell.swift */,
 				042E51FB2334C76800030E5E /* StatusCollectionViewCell.swift */,
 				0498C3F7234D8BC000F99C10 /* TableViewCell.swift */,
 			);
@@ -466,12 +427,12 @@
 		045304F12350612F00F133F3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				048A9654236005FF00BD5558 /* SearchUser.swift */,
+				04FA8FCE232F720C00EFEA29 /* User.swift */,
 				0498DBEC2328ED70005C5666 /* Board.swift */,
 				043B6BC42331EF0700F264E8 /* Task.swift */,
-				04FA8FCE232F720C00EFEA29 /* User.swift */,
 				04F989672338D5ED00A062C4 /* Status.swift */,
 				04FC1598233B5FE00091FC4E /* boardDetail.swift */,
-				044638302350C20B0044DFE9 /* SearchUser.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -479,8 +440,8 @@
 		045304F2235066C900F133F3 /* Constants */ = {
 			isa = PBXGroup;
 			children = (
+				048A9652235FFD4E00BD5558 /* Reuse.swift */,
 				045304F5235069AF00F133F3 /* URL.swift */,
-				0440BECB2354A86000859E32 /* Reuse.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -501,6 +462,64 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		048129422354249B006E02F8 /* VMs */ = {
+			isa = PBXGroup;
+			children = (
+				04812943235424B0006E02F8 /* SignInVM.swift */,
+			);
+			path = VMs;
+			sourceTree = "<group>";
+		};
+		048A9642235FF87400BD5558 /* AddBoard */ = {
+			isa = PBXGroup;
+			children = (
+				048A9643235FF87400BD5558 /* VCs */,
+			);
+			name = AddBoard;
+			path = todolist/App/Screen/AddBoard;
+			sourceTree = SOURCE_ROOT;
+		};
+		048A9643235FF87400BD5558 /* VCs */ = {
+			isa = PBXGroup;
+			children = (
+				048A9644235FF87400BD5558 /* AddBoardViewController.swift */,
+			);
+			path = VCs;
+			sourceTree = "<group>";
+		};
+		048A9646235FF8E000BD5558 /* InviteUser */ = {
+			isa = PBXGroup;
+			children = (
+				048A9647235FF8E000BD5558 /* VCs */,
+			);
+			path = InviteUser;
+			sourceTree = "<group>";
+		};
+		048A9647235FF8E000BD5558 /* VCs */ = {
+			isa = PBXGroup;
+			children = (
+				048A9648235FF8E000BD5558 /* InviteUserVC.swift */,
+			);
+			path = VCs;
+			sourceTree = "<group>";
+		};
+		048A964A235FFB4500BD5558 /* VM */ = {
+			isa = PBXGroup;
+			children = (
+				048A964B235FFB4500BD5558 /* GuestVM.swift */,
+				048A964C235FFB4500BD5558 /* DashBoardVM.swift */,
+			);
+			path = VM;
+			sourceTree = "<group>";
+		};
+		048A964F235FFBA300BD5558 /*  VM */ = {
+			isa = PBXGroup;
+			children = (
+				048A9650235FFBA300BD5558 /* ProfileVM.swift */,
+			);
+			path = " VM";
+			sourceTree = "<group>";
+		};
 		0498C3FF234D8DB600F99C10 /* TaskDetail */ = {
 			isa = PBXGroup;
 			children = (
@@ -517,11 +536,19 @@
 			path = Extension;
 			sourceTree = "<group>";
 		};
-		C6154E3912C994F6318BB565 /* Frameworks */ = {
+		049A68D3235567670031B3D0 /* VMs */ = {
 			isa = PBXGroup;
 			children = (
-				A2D768BDA4A19FFAF4B2970B /* Pods_OneSignalNotifactionServiceExtension.framework */,
-				03FF37A2A0E1E1AC87C945A8 /* Pods_todolist.framework */,
+				049A68D4235568D50031B3D0 /* TaskVM.swift */,
+			);
+			path = VMs;
+			sourceTree = "<group>";
+		};
+		C3B9C6624402B6BDDF71D476 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4891FF5C7FDE0B97ACD7A53E /* Pods_OneSignalNotifactionServiceExtension.framework */,
+				3214D95748F42100F1C10FA8 /* Pods_todolist.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -533,7 +560,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 04061FF92344952E0068B0BB /* Build configuration list for PBXNativeTarget "OneSignalNotifactionServiceExtension" */;
 			buildPhases = (
-				96154A533B1E57FC40DCE5EB /* [CP] Check Pods Manifest.lock */,
+				6DC5BED7211AA9A0C555F8E3 /* [CP] Check Pods Manifest.lock */,
 				04061FED2344952E0068B0BB /* Sources */,
 				04061FEE2344952E0068B0BB /* Frameworks */,
 				04061FEF2344952E0068B0BB /* Resources */,
@@ -551,12 +578,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 040891E8232254E60025EE37 /* Build configuration list for PBXNativeTarget "todolist" */;
 			buildPhases = (
-				87F402F38AC920339F291B58 /* [CP] Check Pods Manifest.lock */,
+				0BF42ECB4E720DE1716F44C1 /* [CP] Check Pods Manifest.lock */,
 				040891D2232254E50025EE37 /* Sources */,
 				040891D3232254E50025EE37 /* Frameworks */,
 				040891D4232254E50025EE37 /* Resources */,
 				04061FFC2344952E0068B0BB /* Embed App Extensions */,
-				0BA87187A209688D1374A356 /* [CP] Embed Pods Frameworks */,
+				27320850C084C055D427E653 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -635,24 +662,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0BA87187A209688D1374A356 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-todolist/Pods-todolist-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-todolist/Pods-todolist-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-todolist/Pods-todolist-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		87F402F38AC920339F291B58 /* [CP] Check Pods Manifest.lock */ = {
+		0BF42ECB4E720DE1716F44C1 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -674,7 +684,24 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		96154A533B1E57FC40DCE5EB /* [CP] Check Pods Manifest.lock */ = {
+		27320850C084C055D427E653 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-todolist/Pods-todolist-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-todolist/Pods-todolist-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-todolist/Pods-todolist-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6DC5BED7211AA9A0C555F8E3 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -711,40 +738,44 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				049EE2D0235980C200AA48A5 /* ContainerController.swift in Sources */,
+				048A9645235FF88100BD5558 /* AddBoardViewController.swift in Sources */,
 				040891DC232254E50025EE37 /* ViewController.swift in Sources */,
 				045304F0235060E400F133F3 /* TaskAPI.swift in Sources */,
+				048A9655236005FF00BD5558 /* SearchUser.swift in Sources */,
+				049A68D5235568D50031B3D0 /* TaskVM.swift in Sources */,
 				04FC1596233B5ECE0091FC4E /* DashboardCollectionViewCell.swift in Sources */,
 				04FA8FCF232F720C00EFEA29 /* User.swift in Sources */,
 				0498C401234D8DD700F99C10 /* DescriptionVC.swift in Sources */,
-				042E52012334C76E00030E5E /* BoardCollectionViewCell.swift in Sources */,
+				042E52012334C76E00030E5E /* TaskCollectionViewCell.swift in Sources */,
 				04F989682338D5ED00A062C4 /* Status.swift in Sources */,
 				0498C403234D8DFD00F99C10 /* TaskDetailVCViewController.swift in Sources */,
 				040891DA232254E50025EE37 /* AppDelegate.swift in Sources */,
 				044F1C65234EE1DE009F58BA /* GuestCollectionViewCell.swift in Sources */,
-				0440BECC2354A86000859E32 /* Reuse.swift in Sources */,
 				040891EC23225F1D0025EE37 /* SignupViewViewController.swift in Sources */,
 				045304F6235069AF00F133F3 /* URL.swift in Sources */,
-				04FD9B612345F1B900B3B937 /* AddBoardViewController.swift in Sources */,
+				049EE2D4235980C200AA48A5 /* MenuController.swift in Sources */,
+				048A964E235FFB4500BD5558 /* DashBoardVM.swift in Sources */,
 				0491CBD32330D9AC00040E51 /* ForgotPasswordViewController.swift in Sources */,
+				049EE2D2235980C200AA48A5 /* HomeController.swift in Sources */,
 				04FC1599233B5FE00091FC4E /* boardDetail.swift in Sources */,
 				0498C3F8234D8BC000F99C10 /* TableViewCell.swift in Sources */,
-				044638342350CA010044DFE9 /* UserInfo.xcdatamodeld in Sources */,
-				0446382C2350AD890044DFE9 /* InviteUserVC.swift in Sources */,
 				04FBCBB3234740B3005C74F6 /* TabBarController.swift in Sources */,
+				048A9651235FFBA400BD5558 /* ProfileVM.swift in Sources */,
 				0498DBED2328ED70005C5666 /* Board.swift in Sources */,
-				042E52032334C76E00030E5E /* BoardCollectionViewController.swift in Sources */,
 				0498C406234D9EC900F99C10 /* UIView+Extension.swift in Sources */,
-				0448EB852356C57200FE85BE /* GuestVM.swift in Sources */,
+				048A964D235FFB4500BD5558 /* GuestVM.swift in Sources */,
 				045304EC2350601700F133F3 /* BoardAPI.swift in Sources */,
-				0424541623361B7E00A0230F /* BoardViewController.swift in Sources */,
-				044638312350C20B0044DFE9 /* SearchUser.swift in Sources */,
 				042E52002334C76E00030E5E /* StatusCollectionViewCell.swift in Sources */,
 				04FBCBB523474150005C74F6 /* ProfileViewController.swift in Sources */,
-				0445DF622355FB72007F583A /* ProfileVM.swift in Sources */,
-				042E47EE23542E92007A7009 /* DashBoardVM.swift in Sources */,
+				04812944235424B0006E02F8 /* SignInVM.swift in Sources */,
+				048A9653235FFD4E00BD5558 /* Reuse.swift in Sources */,
 				043B6BC52331EF0700F264E8 /* Task.swift in Sources */,
 				045304EA23505FD900F133F3 /* UserAPI.swift in Sources */,
+				049EE2D3235980C200AA48A5 /* MenuOptionCell.swift in Sources */,
 				04FC1597233B5ECE0091FC4E /* DashboardViewController.swift in Sources */,
+				048A9649235FF8E000BD5558 /* InviteUserVC.swift in Sources */,
+				049EE2D1235980C200AA48A5 /* Protocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -772,7 +803,7 @@
 /* Begin XCBuildConfiguration section */
 		04061FFA2344952E0068B0BB /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4AF6537C106D956855BD18DA /* Pods-OneSignalNotifactionServiceExtension.debug.xcconfig */;
+			baseConfigurationReference = 56ACA5D1C83EB7DEB19582E9 /* Pods-OneSignalNotifactionServiceExtension.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BQ962D3J94;
@@ -793,9 +824,8 @@
 		};
 		04061FFB2344952E0068B0BB /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = ACF8625570CD50FBF6DD0E83 /* Pods-OneSignalNotifactionServiceExtension.release.xcconfig */;
+			baseConfigurationReference = 0EEAFF260BC7B046542FB5CF /* Pods-OneSignalNotifactionServiceExtension.release.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = OneSignalNotifactionServiceExtension/OneSignalNotifactionServiceExtensionRelease.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BQ962D3J94;
 				INFOPLIST_FILE = OneSignalNotifactionServiceExtension/Info.plist;
@@ -931,7 +961,7 @@
 		};
 		040891E9232254E60025EE37 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BD5B3BD0C4AD219A6CFCC3B3 /* Pods-todolist.debug.xcconfig */;
+			baseConfigurationReference = 6743B16DB7062A857D52B314 /* Pods-todolist.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -953,7 +983,7 @@
 		};
 		040891EA232254E60025EE37 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 15844CE71B789CD8B14D48F2 /* Pods-todolist.release.xcconfig */;
+			baseConfigurationReference = 55E8F900BC14015A09D90399 /* Pods-todolist.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1004,19 +1034,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		044638322350CA010044DFE9 /* UserInfo.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				044638332350CA010044DFE9 /* UserInfo.xcdatamodel */,
-			);
-			currentVersion = 044638332350CA010044DFE9 /* UserInfo.xcdatamodel */;
-			path = UserInfo.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 040891CE232254E50025EE37 /* Project object */;
 }

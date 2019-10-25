@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SVProgressHUD
 
 protocol DashBoardVMDelegate: class {
     func onBoardChangeData(_ vm: DashBoardVM, data: [Board])
@@ -64,15 +65,21 @@ final class DashBoardVM {
 //MARK:- API function
 extension DashBoardVM{
     func requestGetBoard() {
-        readBoardAPI { (error, boards) in
-            if let error = error {
-                print(error.localizedDescription)
-                return
-            }
-            if let checkBoards = boards {
-                self.board = checkBoards
+        SVProgressHUD.show()
+        DispatchQueue.main.async {
+            readBoardAPI { (error, boards) in
+                if let error = error {
+                    print(error.localizedDescription)
+                    return
+                        SVProgressHUD.dismiss()
+                }
+                if let checkBoards = boards {
+                    self.board = checkBoards
+                    SVProgressHUD.dismiss()
+                }
             }
         }
+        
     }
     
     public func getUser(){
